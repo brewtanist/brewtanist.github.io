@@ -1,0 +1,132 @@
+name: Verify published Brewtanist brand site
+
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/verify-brand-site.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - name: Checkout expected content
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - name: Verify the public site, assets, SEO URLs and CMS entry
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import concurrent.futures
+          import hashlib
+          import json
+          import os
+          import time
+          import xml.etree.ElementTree as ET
+          from html.parser import HTMLParser
+          from pathlib import Path
+          from urllib.parse import urljoin, urlsplit, unquote, quote
+          from urllib.request import Request, urlopen
+
+          BASE = 'https://brewtanist.github.io/'
+          revision = os.environ['GITHUB_SHA']
+          def fetch(url):
+              req = Request(quote(url, safe=':/?&=%#-_.~'), headers={'User-Agent': 'Brewtanist-Launch-Verification/1.0', 'Cache-Control': 'no-cache'})
+              with urlopen(req, timeout=25) as response:
+                  assert response.status == 200, str(response.status) + ' ' + url
+                  return response.read(), response.headers.get('Content-Type', ''), response.geturl()
+
+          class Page(HTMLParser):
+              def __init__(self):
+                  super().__init__()
+                  self.meta = {}
+                  self.links = []
+                  self.images = []
+                  self.scripts = []
+                  self.jsonld = []
+                  self.h1 = []
+                  self.in_h1 = False
+                  self.in_json = False
+              def handle_starttag(self, tag, attrs):
+                  a = dict(attrs)
+                  if tag == 'meta':
+                      self.meta[a.get('property', a.get('name', ''))] = a.get('content', '')
+                  if tag == 'link': self.links.append(a)
+                  if tag == 'img': self.images.append(a)
+                  if tag == 'script' and a.get('src'): self.scripts.append(a['src'])
+                  if tag == 'h1': self.in_h1 = True
+                  if tag == 'br' and self.in_h1: self.h1.append(' ')
+                  if tag == 'script' and a.get('type') == 'application/ld+json':
+                      self.in_json = True
+                      self.jsonld.append('')
+              def handle_endtag(self, tag):
+                  if tag == 'h1': self.in_h1 = False
+                  if tag == 'script': self.in_json = False
+              def handle_data(self, data):
+                  if self.in_h1: self.h1.append(data)
+                  if self.in_json: self.jsonld[-1] += data
+
+          last_error = None
+          for attempt in range(15):
+              try:
+                  raw, ctype, final = fetch(BASE + '?verify=' + revision)
+                  text = raw.decode('utf-8')
+                  assert 'text/html' in ctype
+                  assert '{%' not in text and '{{ s.' not in text, 'Unrendered Jekyll template'
+                  page = Page()
+                  page.feed(text)
+                  assert any(a.get('rel') == 'canonical' and a.get('href') == BASE for a in page.links)
+                  assert page.meta['og:url'] == BASE
+                  data = [json.loads(s) for s in page.jsonld]
+                  assert any(d.get('@type') == 'CafeOrCoffeeShop' and d.get('url') == BASE and d.get('@id') == BASE + '#business' for d in data)
+                  expected = json.loads(Path('_data/brewtanist/home.json').read_text())['hero_title']
+                  assert ' '.join(''.join(page.h1).split()) == ' '.join(expected.split()), 'Hero differs from saved CMS content'
+                  robots, _, _ = fetch(BASE + 'robots.txt?verify=' + revision)
+                  assert BASE + 'sitemap.xml' in robots.decode('utf-8')
+                  sitemap, _, _ = fetch(BASE + 'sitemap.xml?verify=' + revision)
+                  assert ET.fromstring(sitemap).find('{*}url/{*}loc').text == BASE
+                  break
+              except Exception as e:
+                  last_error = e
+                  print('Waiting for deployed revision:', type(e).__name__, str(e), flush=True)
+                  if attempt == 14: raise
+                  time.sleep(10)
+
+          local_assets = set()
+          for image in page.images:
+              assert image.get('alt'), 'Image missing alt text'
+              local_assets.add(urljoin(BASE, image['src']))
+          for a in page.links:
+              if a.get('rel') == 'stylesheet' and a.get('href', '').startswith('/'):
+                  local_assets.add(urljoin(BASE, a['href']))
+          local_assets.update(urljoin(BASE, s) for s in page.scripts)
+          local_assets.add(page.meta['og:image'])
+          def check_asset(url):
+              assert urlsplit(url).netloc == 'brewtanist.github.io', 'Unexpected asset host: ' + url
+              blob, content_type, _ = fetch(url)
+              rel = unquote(urlsplit(url).path).lstrip('/')
+              expected = Path(rel)
+              assert expected.is_file(), 'Missing expected asset: ' + rel
+              assert hashlib.sha256(blob).digest() == hashlib.sha256(expected.read_bytes()).digest(), 'Published asset differs: ' + rel
+              if expected.suffix.lower() in ('.jpg', '.jpeg', '.png', '.webp'):
+                  assert content_type.startswith('image/'), content_type
+              return rel
+          with concurrent.futures.ThreadPoolExecutor(max_workers=5) as pool:
+              checked = list(pool.map(check_asset, sorted(local_assets)))
+          admin_raw, _, _ = fetch(BASE + 'admin/')
+          admin = Page()
+          admin.feed(admin_raw.decode('utf-8'))
+          assert 'noindex' in admin.meta.get('robots', '')
+          assert 'brewtanist/brewtanist.github.io' in admin_raw.decode('utf-8')
+          assert 'https://app.pagescms.org/' in admin_raw.decode('utf-8')
+          alias, _, _ = fetch(BASE + 'brewtanist/')
+          assert '0; url=' + BASE in alias.decode('utf-8')
+          report = {'result': 'PASS', 'public_url': BASE, 'expected_commit': revision, 'homepage_http': 200, 'canonical': BASE, 'og_url': page.meta['og:url'], 'schema': 'CafeOrCoffeeShop URL verified', 'cms_hero_content': 'matches saved content', 'visible_image_elements': len(page.images), 'checked_asset_files': checked, 'admin_http': 200, 'admin_noindex': True, 'robots': 'PASS', 'sitemap': 'PASS', 'legacy_brand_path_redirect': 'PASS', 'note': 'Pages CMS owner login is not tested by this public check.'}
+          Path('/tmp/brewtanist-verification.json').write_text(json.dumps(report, indent=2, ensure_ascii=False))
+          print(json.dumps(report, indent=2, ensure_ascii=False))
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as f:
+              f.write('# Brewtanist launch verification: PASS\n\nPublic website: ' + BASE + '\n\nHomepage, canonical, Open Graph, business schema, saved hero, public image/CSS/JS files, editor guide, robots and sitemap verified over HTTPS.\n')
+          PY

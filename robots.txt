@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /brewtanist/admin/
+
+Sitemap: https://brewtanist.github.io/sitemap.xml
