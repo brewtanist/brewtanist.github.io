@@ -1,0 +1,151 @@
+---
+layout: null
+permalink: /
+---
+{%- assign s = site.data.brewtanist.settings -%}
+{%- assign h = site.data.brewtanist.home -%}
+{%- assign c = site.data.brewtanist.coffee -%}
+{%- assign p = site.data.brewtanist.products -%}
+{%- assign r = site.data.brewtanist.roastery -%}
+{%- assign g = site.data.brewtanist.gallery -%}
+{%- assign f = site.data.brewtanist.faq -%}
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ s.seo_title | escape }}</title>
+<meta name="description" content="{{ s.seo_description | escape }}">
+<meta name="theme-color" content="#f7f3ea">
+<link rel="canonical" href="https://brewtanist.github.io/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="th_TH">
+<meta property="og:site_name" content="{{ s.brand | escape }}">
+<meta property="og:title" content="{{ s.seo_title | escape }}">
+<meta property="og:description" content="{{ s.seo_description | escape }}">
+<meta property="og:url" content="https://brewtanist.github.io/">
+<meta property="og:image" content="{{ s.social_image | absolute_url | escape }}">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bai+Jamjuree:wght@400;500;600;700&family=Lexend:wght@400;500;600;700&family=MuseoModerno:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/brewtanist/site.css?v=20260912">
+<script defer src="/brewtanist/site.js?v=20260912"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CafeOrCoffeeShop",
+  "@id": "https://brewtanist.github.io/#business",
+  "name": {{ s.brand | append: ' ' | append: s.descriptor | jsonify | replace: '</', '<\/' }},
+  "url": "https://brewtanist.github.io/",
+  "description": {{ s.seo_description | jsonify | replace: '</', '<\/' }},
+  "telephone": {{ s.phone | jsonify | replace: '</', '<\/' }},
+  "address": {"@type": "PostalAddress", "streetAddress": {{ s.address | jsonify | replace: '</', '<\/' }}, "addressCountry": "TH"},
+  "image": {{ s.social_image | absolute_url | jsonify | replace: '</', '<\/' }},
+  "hasMap": {{ s.maps | jsonify | replace: '</', '<\/' }},
+  "openingHoursSpecification": [{"@type": "OpeningHoursSpecification", "dayOfWeek": {{ s.days | jsonify }}, "opens": {{ s.opens | jsonify }}, "closes": {{ s.closes | jsonify }}}],
+  "servesCuisine": ["Coffee", "Matcha", "Bakery"],
+  "sameAs": [{{ s.facebook | jsonify | replace: '</', '<\/' }}, {{ s.instagram | jsonify | replace: '</', '<\/' }}, {{ s.tiktok | jsonify | replace: '</', '<\/' }}]
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">ข้ามไปยังเนื้อหา</a>
+{% if s.notice != '' %}<div class="announcement">{{ s.notice | escape }}</div>{% endif %}
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a class="wordmark" href="#top" aria-label="{{ s.brand | escape }} หน้าแรก">{{ s.brand | escape }}<small>{{ s.descriptor | escape }}</small></a>
+    <nav class="nav-links" aria-label="เมนูหลัก">
+      {% if h.story_visible != false %}<a href="#story">Our story</a>{% endif %}
+      {% if c.visible != false %}<a href="#coffee">Coffee</a>{% endif %}
+      {% if p.visible != false %}<a href="#products">Take home</a>{% endif %}
+      {% if g.visible != false %}<a href="#gallery">Gallery</a>{% endif %}
+      <a class="btn" href="#visit">Visit us</a>
+    </nav>
+    <details class="mobile-nav"><summary>เมนู <span aria-hidden="true">☰</span></summary><nav aria-label="เมนูมือถือ">
+      <a href="#top">หน้าแรก</a>
+      {% if h.story_visible != false %}<a href="#story">เรื่องราวของเรา</a>{% endif %}
+      {% if c.visible != false %}<a href="#coffee">Coffee</a>{% endif %}
+      {% if p.visible != false %}<a href="#products">Take home</a>{% endif %}
+      {% if r.visible != false %}<a href="#roastery">Roastery</a>{% endif %}
+      {% if g.visible != false %}<a href="#gallery">Gallery</a>{% endif %}
+      <a href="#visit">พิกัดและติดต่อ</a>
+    </nav></details>
+  </div>
+</header>
+<main id="main">
+  <section class="hero" id="top" aria-labelledby="hero-heading">
+    <div class="wrap hero-grid{% if h.hero_image_side == 'left' %} image-left{% endif %}">
+      <div class="hero-copy">
+        <span class="eyebrow">{{ h.hero_eyebrow | escape }}</span>
+        <h1 id="hero-heading">{{ h.hero_title | escape | newline_to_br }}</h1>
+        <p>{{ h.hero_text | escape }}</p>
+        <div class="buttons"><a class="btn" href="#visit">{{ h.hero_button | escape }}</a>{% if c.visible != false %}<a class="text-link" href="#coffee">{{ h.hero_second_button | escape }} <span aria-hidden="true">↓</span></a>{% endif %}</div>
+        <div class="hero-footnote">{{ s.opening_days | escape }} &nbsp; {{ s.opens | escape }}–{{ s.closes | escape }}</div>
+      </div>
+      <figure class="hero-visual">
+        <div class="photo"><img class="focus-{{ h.hero_position | default: 'center' | escape }}" src="{{ h.hero_image | escape }}" width="1600" height="1792" alt="{{ h.hero_alt | escape }}" fetchpriority="high" decoding="async"></div>
+        <div class="hero-label"><strong>{{ s.brand | escape }}</strong>{{ s.descriptor | escape }}</div>
+        <figcaption>{{ h.hero_caption | escape }}</figcaption>
+      </figure>
+    </div>
+  </section>
+  <div class="wrap info-strip" aria-label="ข้อมูลร้านโดยย่อ">
+    <div><small>Location</small><strong>ศรีมหาโพธิ · ปราจีนบุรี</strong></div>
+    <div><small>Find us</small><strong>Shell คลองรั้ง · 304</strong></div>
+    <div><small>{{ s.opening_days | escape }}</small><strong>{{ s.opens | escape }}–{{ s.closes | escape }}</strong></div>
+    <div><small>Payment</small><strong>{{ s.payment | escape }}</strong></div>
+  </div>
+  {% if h.story_visible != false %}
+  <section class="section" id="story" aria-labelledby="story-heading"><div class="wrap story">
+    <figure class="story-photo"><img class="focus-{{ h.story_position | default: 'center' | escape }}" src="{{ h.story_image | escape }}" width="1200" height="1344" alt="{{ h.story_alt | escape }}" loading="lazy" decoding="async"><figcaption class="photo-caption"><span>{{ h.story_caption | escape }}</span><span>01 / Our story</span></figcaption></figure>
+    <div class="story-copy"><span class="eyebrow">Rooted in curiosity</span><h2 id="story-heading">{{ h.story_title | escape | newline_to_br }}</h2><div class="prose"><p>{{ h.story_text | escape | newline_to_br }}</p></div><div class="story-tag"><span aria-hidden="true">✳</span><span>Coffee · Plants · Design</span></div></div>
+  </div></section>
+  {% endif %}
+  {% if c.visible != false %}
+  <section class="section" id="coffee" aria-labelledby="coffee-heading"><div class="wrap">
+    <div class="section-head"><div><span class="eyebrow">02 / At the coffee bar</span><h2 id="coffee-heading">{{ c.title | escape | newline_to_br }}</h2></div><p>{{ c.description | escape }}</p></div>
+    <div class="coffee-grid">{% for card in c.cards %}{% if card.visible != false %}<article class="coffee-card"><figure><img class="focus-{{ card.position | default: 'center' | escape }}" src="{{ card.image | escape }}" width="800" height="920" alt="{{ card.alt | escape }}" loading="lazy" decoding="async"></figure><span class="eyebrow">{{ card.label | escape }}</span><h3>{{ card.title | escape }}</h3><p>{{ card.text | escape }}</p></article>{% endif %}{% endfor %}</div>
+  </div></section>
+  {% endif %}
+  {% if p.visible != false %}
+  <section class="section products-section" id="products" aria-labelledby="products-heading"><div class="wrap">
+    <div class="section-head"><div><span class="eyebrow">03 / Beyond the café</span><h2 id="products-heading">{{ p.title | escape | newline_to_br }}</h2></div><p>{{ p.description | escape }}</p></div>
+    <div class="product-grid">{% for item in p.items %}{% if item.visible != false %}<article class="product-card"><div class="product-stage {{ item.theme | escape }}"><span class="product-index">HOUSE BLEND / {{ forloop.index | prepend: '0' }}</span><img src="{{ item.image | escape }}" width="900" height="900" alt="{{ item.alt | escape }}" loading="lazy" decoding="async"></div><div class="product-body"><small>{{ item.profile | escape }}</small><h3>{{ item.name | escape }}</h3><div class="notes">{{ item.notes | escape }}</div><p>{{ item.description | escape }}</p></div></article>{% endif %}{% endfor %}</div>
+    <div class="products-bottom"><p>{{ p.note | escape }}</p>{% if s.shopee != '' %}<a class="btn outline" href="{% include brewtanist-url.html url=s.shopee %}" target="_blank" rel="noopener noreferrer">{{ p.button | escape }}</a>{% endif %}</div>
+  </div></section>
+  {% endif %}
+  {% if r.visible != false %}
+  <section class="section roastery" id="roastery" aria-labelledby="roastery-heading"><div class="wrap">
+    <div class="roastery-grid"><div><span class="eyebrow">04 / The Coffee Roaster</span><h2 id="roastery-heading">{{ r.title | escape | newline_to_br }}</h2><p class="intro">{{ r.description | escape }}</p></div><div class="process">{% for step in r.steps %}<article class="process-step"><span>{{ forloop.index | prepend: '0' }}</span><div><h3>{{ step.title | escape }}</h3><p>{{ step.text | escape }}</p></div></article>{% endfor %}</div></div>
+    {% if r.image and r.image != '' %}<figure class="roastery-photo"><img class="focus-{{ r.position | default: 'center' | escape }}" src="{{ r.image | escape }}" width="1600" height="900" alt="{{ r.alt | escape }}" loading="lazy" decoding="async"><figcaption>{{ r.caption | escape }}</figcaption></figure>{% endif %}
+  </div></section>
+  {% endif %}
+  {% if g.visible != false %}
+  <section class="section" id="gallery" aria-labelledby="gallery-heading"><div class="wrap">
+    <div class="section-head"><div><span class="eyebrow">05 / Look around</span><h2 id="gallery-heading">{{ g.title | escape | newline_to_br }}</h2></div><p>{{ g.description | escape }}</p></div>
+    <div class="gallery-grid">{% for image in g.images %}{% if image.visible != false %}<figure class="gallery-item"><img class="focus-{{ image.position | default: 'center' | escape }}" src="{{ image.image | escape }}" width="800" height="1000" alt="{{ image.alt | escape }}" loading="lazy" decoding="async"><figcaption><span>{{ forloop.index | prepend: '0' }}</span>{{ image.caption | escape }}</figcaption></figure>{% endif %}{% endfor %}</div>
+    {% if s.instagram != '' %}<div class="gallery-foot"><a class="text-link" href="{% include brewtanist-url.html url=s.instagram %}" target="_blank" rel="noopener noreferrer">More from Brewtanist on Instagram <span aria-hidden="true">↗</span></a></div>{% endif %}
+  </div></section>
+  {% endif %}
+  <section class="section" id="visit" aria-labelledby="visit-heading"><div class="wrap visit-grid">
+    <div><span class="eyebrow">06 / Come say hello</span><h2 id="visit-heading">{{ h.visit_title | escape | newline_to_br }}</h2><p class="intro">{{ h.visit_text | escape }}</p>
+      <dl class="visit-details"><div><dt>ที่อยู่ / LOCATION</dt><dd>{{ s.address | escape }}<br>{{ s.location_note | escape }}</dd></div><div><dt>เวลาเปิด / HOURS</dt><dd>{{ s.opening_days | escape }}<br>{{ s.opens | escape }}–{{ s.closes | escape }} น.</dd></div><div><dt>โทรศัพท์ / PHONE</dt><dd><a href="tel:{{ s.phone | remove: ' ' | remove: '-' | escape }}">{{ s.phone | escape }}</a></dd></div><div><dt>ชำระเงิน / PAYMENT</dt><dd>{{ s.payment | escape }}</dd></div></dl>
+      <a class="btn" href="{% include brewtanist-url.html url=s.maps %}" target="_blank" rel="noopener noreferrer">เปิด Google Maps</a>
+    </div><figure class="visit-photo"><img class="focus-{{ h.visit_position | default: 'center' | escape }}" src="{{ h.visit_image | escape }}" width="1000" height="1250" alt="{{ h.visit_alt | escape }}" loading="lazy" decoding="async"></figure>
+  </div></section>
+  {% if f.visible != false %}
+  <section class="section" id="faq" aria-labelledby="faq-heading"><div class="wrap faq-grid"><div><span class="eyebrow">A few things to know</span><h2 id="faq-heading">{{ f.title | escape }}</h2></div><div class="faq-list">
+    <details><summary>{{ s.brand | escape }} อยู่ตรงไหน?</summary><p>{{ s.address | escape }} {{ s.location_note | escape }}</p></details>
+    <details><summary>ร้านเปิดกี่โมง?</summary><p>{{ s.opening_days | escape }} {{ s.opens | escape }}–{{ s.closes | escape }} น.</p></details>
+    {% for item in f.items %}<details><summary>{{ item.question | escape }}</summary><p>{{ item.answer | escape }}</p></details>{% endfor %}
+  </div></div></section>
+  {% endif %}
+</main>
+<footer class="footer"><div class="wrap"><div class="footer-top"><div><div class="footer-title">{{ s.brand | escape }}.</div><p>{{ s.descriptor | escape }}</p></div><div class="footer-social">
+  {% if s.facebook != '' %}<a class="text-link" href="{% include brewtanist-url.html url=s.facebook %}" target="_blank" rel="noopener noreferrer">Facebook ↗</a>{% endif %}
+  {% if s.instagram != '' %}<a class="text-link" href="{% include brewtanist-url.html url=s.instagram %}" target="_blank" rel="noopener noreferrer">Instagram ↗</a>{% endif %}
+  {% if s.tiktok != '' %}<a class="text-link" href="{% include brewtanist-url.html url=s.tiktok %}" target="_blank" rel="noopener noreferrer">TikTok ↗</a>{% endif %}
+</div></div><div class="footer-bottom"><span>© {{ site.time | date: '%Y' }} {{ s.brand | escape }} · {{ s.notice | escape }}</span><span><a href="/admin/">จัดการเว็บไซต์</a></span></div></div></footer>
+</body>
+</html>
