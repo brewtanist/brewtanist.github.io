@@ -1,0 +1,157 @@
+name: Import approved Brewtanist website
+
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/import-brewtanist.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: brewtanist-initial-import
+  cancel-in-progress: false
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout destination
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: main
+          fetch-depth: 1
+
+      - name: Copy approved content and adapt the brand URL
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import hashlib
+          import json
+          import re
+          import shutil
+          import subprocess
+          import tempfile
+          from pathlib import Path
+          from urllib.parse import unquote, urlsplit
+
+          SOURCE = 'https://github.com/pumplcrs-hub/pumplcrs-hub.github.io.git'
+          REV = '70202b9492d3846ae07c06cd391d373867252f6a'
+          OLD = 'https://pumplcrs-hub.github.io/brewtanist/'
+          NEW = 'https://brewtanist.github.io/'
+          DEST = Path.cwd()
+          if (DEST / 'index.html').exists() or (DEST / '_data').exists():
+              raise SystemExit('Refusing to overwrite an existing website. Import is one-time only.')
+          copied = {}
+          with tempfile.TemporaryDirectory() as tmp:
+              src = Path(tmp) / 'source'
+              subprocess.run(['git', 'init', '--quiet', str(src)], check=True)
+              subprocess.run(['git', '-C', str(src), 'remote', 'add', 'origin', SOURCE], check=True)
+              subprocess.run(['git', '-C', str(src), 'fetch', '--quiet', '--depth=1', 'origin', REV], check=True)
+              subprocess.run(['git', '-C', str(src), 'checkout', '--quiet', '--detach', 'FETCH_HEAD'], check=True)
+              actual = subprocess.check_output(['git', '-C', str(src), 'rev-parse', 'HEAD'], text=True).strip()
+              assert actual == REV, 'Source revision mismatch'
+
+              paths = ['.pages.yml', '_config.yml', 'EDITING.md', '_includes/brewtanist-url.html']
+              paths += [str(p.relative_to(src)) for folder in ('_data/brewtanist', 'brewtanist') for p in (src / folder).rglob('*') if p.is_file()]
+              for rel in sorted(set(paths)):
+                  p = src / rel
+                  if p.is_symlink():
+                      raise ValueError('Symlinks are not accepted: ' + rel)
+                  if p.name == '.DS_Store' or '__MACOSX' in p.parts:
+                      continue
+                  if p.suffix.lower() in ('.ttf', '.otf', '.woff', '.woff2'):
+                      raise ValueError('Do not copy font binaries: ' + rel)
+                  out = DEST / rel
+                  out.parent.mkdir(parents=True, exist_ok=True)
+                  shutil.copyfile(p, out)
+                  copied[rel] = hashlib.sha256(out.read_bytes()).hexdigest()
+
+              # Preserve the exact owner-edited content JSON and image files.
+              datafiles = sorted((DEST / '_data/brewtanist').glob('*.json'))
+              assert len(datafiles) == 7, 'Expected seven CMS content files'
+              local_images = set()
+              def inspect(value):
+                  if isinstance(value, dict):
+                      for key, item in value.items():
+                          if isinstance(item, str) and (key == 'image' or key.endswith('_image')) and item:
+                              if item.startswith('//'):
+                                  raise ValueError('Protocol-relative image path is unsupported')
+                              if item.startswith('/'):
+                                  relpath = unquote(urlsplit(item).path).lstrip('/')
+                                  fp = (DEST / relpath).resolve()
+                                  if not fp.is_relative_to(DEST.resolve()) or not fp.is_file():
+                                      raise ValueError('Missing image: ' + item)
+                                  local_images.add(relpath)
+                              elif not item.startswith('https://'):
+                                  raise ValueError('Unsupported image path: ' + item)
+                          inspect(item)
+                  elif isinstance(value, list):
+                      for item in value:
+                          inspect(item)
+              for p in datafiles:
+                  inspect(json.loads(p.read_text(encoding='utf-8')))
+                  assert p.read_bytes() == (src / p.relative_to(DEST)).read_bytes()
+              assert (DEST / 'brewtanist/site.css').is_file()
+              assert (DEST / 'brewtanist/site.js').is_file()
+
+              config = (DEST / '_config.yml').read_text(encoding='utf-8')
+              config = config.replace('https://pumplcrs-hub.github.io', NEW.rstrip('/'))
+              config += '\n  - MIGRATION.md\n'
+              (DEST / '_config.yml').write_text(config, encoding='utf-8')
+
+              # Publish the existing modern template at the short brand root.
+              template = (src / 'brewtanist/index.html').read_text(encoding='utf-8')
+              assert 'permalink: /brewtanist/' in template and OLD in template
+              template = template.replace('permalink: /brewtanist/', 'permalink: /', 1)
+              template = template.replace(OLD, NEW)
+              template = template.replace('/brewtanist/admin/', '/admin/')
+              assert 'pumplcrs-hub.github.io' not in template
+              (DEST / 'index.html').write_text(template, encoding='utf-8')
+
+              # Move only the editor guide. Keep asset paths stable for CMS.
+              admin = (src / 'brewtanist/admin/index.html').read_text(encoding='utf-8')
+              admin = admin.replace('pumplcrs-hub/pumplcrs-hub.github.io', 'brewtanist/brewtanist.github.io')
+              admin = admin.replace('<code>pumplcrs-hub.github.io</code>', '<code>brewtanist.github.io</code>')
+              admin = admin.replace('href="/brewtanist/"', 'href="/"')
+              admin = admin.replace('Only select repositories</strong>', 'Only select repositories</strong> ภายใต้องค์กร <code>brewtanist</code>')
+              (DEST / 'admin').mkdir(exist_ok=True)
+              (DEST / 'admin/index.html').write_text(admin, encoding='utf-8')
+
+              def redirect(url, title):
+                  return '<!doctype html>\n<html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,follow"><link rel="canonical" href="' + url + '"><meta http-equiv="refresh" content="0; url=' + url + '"><title>' + title + '</title></head><body><p><a href="' + url + '">' + title + '</a></p><script>location.replace(' + json.dumps(url) + '+location.search+location.hash);</script></body></html>\n'
+              (DEST / 'brewtanist/index.html').write_text(redirect(NEW, 'The Brewtanist'), encoding='utf-8')
+              (DEST / 'brewtanist/admin/index.html').write_text(redirect(NEW + 'admin/', 'แก้ไขเว็บไซต์ Brewtanist'), encoding='utf-8')
+
+              guide = (src / 'EDITING.md').read_text(encoding='utf-8')
+              guide = guide.replace(OLD, NEW)
+              guide = guide.replace('renders `brewtanist/index.html`', 'renders root `index.html`')
+              guide = guide.replace('load `/brewtanist/`', 'load `/`')
+              guide = guide.replace('Root index and original assets were left in place.', 'The original website in the personal repository was left unchanged during migration.')
+              guide = guide.replace('`.github/workflows/deploy-exact.yml` is the pre-existing ZIP mirror workflow. It only runs when that file changes and can replace repository contents with an older ZIP. Do not edit or rerun it for routine content work. It was left unchanged in this update.', 'The old ZIP-mirror workflow was deliberately not copied. Use Pages CMS on brewtanist/brewtanist.github.io, branch main. The migration workflow is one-time and refuses to overwrite an existing site.')
+              guide += '\n\n## Brand repository\nProduction repository: brewtanist/brewtanist.github.io. Sign in as pumplcrs-hub, but select the brewtanist organization and this repository in Pages CMS. Its GitHub App needs separate access to the organization. Do not continue editing the old personal repository. Asset paths remain /brewtanist/assets intentionally.\n'
+              (DEST / 'EDITING.md').write_text(guide, encoding='utf-8')
+              for p in datafiles:
+                  assert p.read_bytes() == (src / p.relative_to(DEST)).read_bytes(), 'Content changed unexpectedly'
+              for rel in copied:
+                  if '/assets/' in rel:
+                      assert hashlib.sha256((DEST / rel).read_bytes()).hexdigest() == copied[rel]
+              report = '# Brewtanist brand URL migration\n\nSource: pumplcrs-hub/pumplcrs-hub.github.io\nSource commit: ' + REV + '\nDestination: brewtanist/brewtanist.github.io\nPublic URL: ' + NEW + '\n\nSeven owner-edited CMS JSON files copied byte-for-byte. ' + str(len(local_images)) + ' unique local image references verified. All copied image bytes preserved. Old personal website left unchanged. Legacy ZIP-mirror workflow not copied.\n\nThe root homepage, canonical, Open Graph URL and business schema use the brand URL. Admin entry: /admin/. Media paths remain /brewtanist/assets for compatibility.\n'
+              (DEST / 'MIGRATION.md').write_text(report, encoding='utf-8')
+              print(report)
+          PY
+
+      - name: Commit imported website
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add .pages.yml _config.yml EDITING.md MIGRATION.md _data _includes brewtanist admin index.html
+          git diff --cached --stat
+          git commit -m 'Publish latest owner-edited Brewtanist website at brand root URL'
+          git push origin HEAD:main
+          echo 'Import complete. A subsequent owner-authorized commit triggers the normal GitHub Pages build.' >> "$GITHUB_STEP_SUMMARY"
