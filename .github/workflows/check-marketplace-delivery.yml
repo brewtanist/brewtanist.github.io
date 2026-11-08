@@ -1,0 +1,47 @@
+name: Verify Shopee review links and artwork files
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/check-marketplace-delivery.yml']
+permissions:
+  contents: read
+jobs:
+  delivery:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - name: Verify immutable public review and two PNG artwork files
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          from urllib.request import Request,urlopen
+          import hashlib,json,struct
+          rev='82221a8068529bbfaab456334f422c260ef3f205'
+          base=f'https://rawcdn.githack.com/brewtanist/brewtanist.github.io/{rev}/'
+          checks=[]
+          for path,kind in [('catalogue/review/index.html','html'),('qa/artwork-house-wide.png','png'),('qa/artwork-house-square.png','png')]:
+            row={'path':path,'url':base+path,'result':'FAIL'}
+            try:
+              expected=Path(path).read_bytes()
+              with urlopen(Request(base+path,headers={'User-Agent':'Brewtanist-Review-Verification/1.0'}),timeout=25) as response:
+                body=response.read()
+                assert response.status==200
+                assert hashlib.sha256(body).digest()==hashlib.sha256(expected).digest(),'Response differs from tested artifact'
+                row.update(result='PASS',status=response.status,bytes=len(body),sha256=hashlib.sha256(body).hexdigest())
+                if kind=='png':
+                  assert body[:8]==b'\x89PNG\r\n\x1a\n'
+                  row['dimensions']=struct.unpack('>II',body[16:24])
+            except Exception as e:row['error']=str(e)
+            checks.append(row)
+          report={'checks':checks,'live_render_deployment':False,'note':'HTTP delivery and byte comparison, not a remote interactive browser or authenticated CMS test.'}
+          Path('qa/marketplace-delivery.json').write_text(json.dumps(report,ensure_ascii=False,indent=2))
+          print(json.dumps(report,ensure_ascii=False,indent=2))
+          if any(x['result']!='PASS' for x in checks):raise SystemExit('At least one public review URL could not be verified')
+          PY
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: brewtanist-review-delivery-report
+          path: qa/marketplace-delivery.json
+          retention-days: 30
