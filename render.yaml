@@ -1,0 +1,20 @@
+# Static catalogue only. No paid web service, database or worker.
+services:
+  - type: web
+    name: brewtanist-coffee
+    runtime: static
+    repo: https://github.com/brewtanist/brewtanist.github.io
+    branch: main
+    buildCommand: python3 catalogue/build.py
+    staticPublishPath: ./catalogue/dist
+    autoDeployTrigger: checksPass
+    headers:
+      - path: /*
+        name: X-Content-Type-Options
+        value: nosniff
+      - path: /*
+        name: Referrer-Policy
+        value: strict-origin-when-cross-origin
+      - path: /*
+        name: Content-Security-Policy
+        value: "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'none'"
