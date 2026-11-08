@@ -1,4 +1,4 @@
-"""Browser regression checks for the isolated Brewtanist prototype."""
+"""Browser regression checks for the isolated Brewtanist prototype and editable copy."""
 from pathlib import Path
 from functools import partial
 from http.server import ThreadingHTTPServer, SimpleHTTPRequestHandler
@@ -13,8 +13,8 @@ DIST = ROOT / 'prototype' / 'dist'
 QA = ROOT / 'prototype' / 'qa'
 QA.mkdir(exist_ok=True)
 BASE = 'http://127.0.0.1:8765/'
-checks = []
-errors = []
+COPY = json.loads((ROOT/'prototype'/'copy.th.json').read_text(encoding='utf-8'))
+checks, errors = [], []
 
 class QuietHandler(SimpleHTTPRequestHandler):
     def log_message(self, *args):
@@ -28,15 +28,15 @@ def record(name):
     print('PASS:', name, flush=True)
 
 def assert_images(page):
-    images=page.locator('#app img[src]')
-    assert images.count()>0
+    images = page.locator('#app img[src]')
+    assert images.count() > 0
     images.evaluate_all('(images) => Promise.all(images.map(i => {i.loading="eager";return i.decode().catch(() => {});} ))')
-    broken=images.evaluate_all('(images) => images.filter(i => !i.naturalWidth).map(i => ({alt:i.alt,src:i.src.slice(0,60)}))')
-    assert not broken, 'Broken page images: '+repr(broken)
+    broken = images.evaluate_all('(images) => images.filter(i => !i.naturalWidth).map(i => ({alt:i.alt,src:i.src.slice(0,60)}))')
+    assert not broken, 'Broken page images: ' + repr(broken)
 
 def no_overflow(page):
-    sizes=page.evaluate('({doc:document.documentElement.scrollWidth,window:innerWidth})')
-    assert sizes['doc']<=sizes['window']+1, 'Horizontal document overflow: '+repr(sizes)
+    sizes = page.evaluate('({doc:document.documentElement.scrollWidth,window:innerWidth})')
+    assert sizes['doc'] <= sizes['window']+1, 'Horizontal document overflow: ' + repr(sizes)
 
 prod_files = [ROOT/'index.html', ROOT/'.pages.yml', *sorted((ROOT/'_data'/'brewtanist').glob('*.json'))]
 before = {str(p.relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest() for p in prod_files}
@@ -73,6 +73,8 @@ try:
         assert_images(page)
         page.locator('[data-zoom="plantman"]').click()
         expect(page.locator('#zoom')).to_be_visible()
+        expect(page.locator('#zoom-image')).to_have_attribute('alt', page.locator('#app .detail-stage img').get_attribute('alt'))
+        page.locator('#zoom-image').evaluate('(i) => i.decode()')
         assert page.locator('#zoom-image').evaluate('(i)=>i.naturalWidth>0')
         page.keyboard.press('Escape')
         expect(page.locator('#zoom')).not_to_be_visible()
@@ -193,21 +195,19 @@ try:
         # Copy changes must not manufacture product facts or overwrite owner drafts.
         page.evaluate('window.BrewtanistPreview.reset()')
         page.goto(BASE+'#/catalog')
-        expect(page.locator('h1')).to_have_text('เลือกกาแฟ\nกลับไปชงที่บ้าน')
+        expect(page.locator('h1')).to_have_text(COPY['title'])
         saved=page.evaluate('window.BrewtanistPreview.getData()')
+        assert saved['intro'] == COPY['intro']
+        assert saved['sourceDescription'] == COPY['sourceDescription']
         source=json.loads((ROOT/'_data'/'brewtanist'/'products.json').read_text())
         for current, original in zip(saved['products'], source['items']):
             for key in ['name','profile','notes','alt','theme']:
                 assert current[key] == original[key], 'Unapproved product fact changed: '+key
             for key in ['price','sizes','grinding','origin','productUrl']:
                 assert current[key] == '', 'Unconfirmed value invented: '+key
-        assert saved['copyRevision']==2
-        for path in ['catalog','product/plantman','finder','compare']:
-            page.goto(BASE+'#/'+path)
-            content=page.locator('#app').inner_text()
-            for phrase in ['เหตุผลที่ตรวจสอบได้','จากข้อมูลที่มี','ฟันธง','เปอร์เซ็นต์ความแม่นยำ','ยกระดับ','ตอบโจทย์']:
-                assert phrase not in content, 'Unwanted wording: '+phrase
-        record('Plain Thai copy and unchanged source product facts')
+            assert current['description'] == COPY['descriptions'][current['id']]
+        assert saved['copyRevision'] == COPY['revision']
+        record('Saved CMS copy rendered exactly; source product facts unchanged')
 
         old=page.evaluate('window.BrewtanistPreview.getData()')
         old['title']=old['previousCopy']['title']
@@ -218,7 +218,7 @@ try:
         page.evaluate('(d)=>localStorage.setItem("brewtanist-preview-lab-v1",JSON.stringify(d))',old)
         page.reload(wait_until='networkidle')
         migrated=page.evaluate('window.BrewtanistPreview.getData()')
-        assert migrated['title']=='เลือกกาแฟ\nกลับไปชงที่บ้าน'
+        assert migrated['title'] == COPY['title']
         assert migrated['products'][0]['description']==saved['products'][0]['description']
         assert migrated['products'][1]['description']=='ข้อความที่เจ้าของร้านแก้เอง'
         assert migrated['products'][1]['name']=='ชื่อที่เจ้าของร้านตั้งไว้'
@@ -230,12 +230,8 @@ try:
         browser.close()
     after={str(p.relative_to(ROOT)):hashlib.sha256(p.read_bytes()).hexdigest() for p in prod_files}
     assert before==after
-    report['production_files_unchanged']=True
-    report['result']='PASS'
-    report['checks_count']=len(checks)
-    report['finder_combinations']=36
-    report['viewport_widths']=[320,390,768,1440]
-    report['notes']='Automated Chromium tests only. Not an iOS Safari test, human design review or production checkout test.'
+    report.update(production_files_unchanged=True, result='PASS', checks_count=len(checks), finder_combinations=36, viewport_widths=[320,390,768,1440])
+    report['notes']='Automated Chromium tests only. Not an iOS Safari test, human design review, Pages CMS login/Save test or production checkout test.'
 except Exception as exc:
     report['error']=str(exc)
     report['traceback']=traceback.format_exc()

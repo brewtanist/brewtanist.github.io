@@ -9,6 +9,8 @@ on:
       - 'prototype/test_preview.py'
       - 'prototype/copy.th.json'
       - 'prototype/refine_copy.py'
+      - 'prototype/check_cms.py'
+      - '.pages.yml'
       - '.github/workflows/prototype-check.yml'
 
 permissions:
@@ -24,26 +26,26 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 12
     steps:
-      - name: Checkout prototype branch only
+      - name: Checkout exact preview revision
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
         with:
           fetch-depth: 0
-          ref: preview/brewtanist-lab-20261108
-      - name: Verify production has not changed
+          ref: ${{ github.sha }}
+      - name: Verify production content is unchanged
         run: |
           test "$GITHUB_REF" = 'refs/heads/preview/brewtanist-lab-20261108'
-          git diff --exit-code origin/main -- index.html _data .pages.yml _config.yml brewtanist
-      - name: Refine preview language without changing source facts
+          git diff --exit-code origin/main -- index.html _data _config.yml brewtanist admin _includes robots.txt sitemap.xml
+      - name: Install validation and browser testing tools
         run: |
-          python3 prototype/refine_copy.py
-          python3 -m py_compile prototype/refine_copy.py prototype/build.py prototype/test_preview.py
-      - name: Build single-file prototype from saved brand assets
-        run: python3 prototype/build.py
-      - name: Install browser testing tools
-        run: |
-          python3 -m pip install --disable-pip-version-check 'playwright==1.56.0'
+          python3 -m pip install --disable-pip-version-check 'PyYAML==6.0.2' 'playwright==1.56.0'
           python3 -m playwright install --with-deps chromium
-      - name: Exercise catalogue, finder, owner drafts and mobile layouts
+      - name: Validate copy-only CMS and invalid-input rejection
+        run: python3 prototype/check_cms.py
+      - name: Compile preview builder and tests
+        run: python3 -m py_compile prototype/build.py prototype/test_preview.py prototype/check_cms.py
+      - name: Build preview from saved brand assets and editable copy
+        run: python3 prototype/build.py
+      - name: Exercise catalogue, finder, saved copy and mobile layouts
         run: python3 prototype/test_preview.py
       - name: Upload review bundle and test evidence
         if: always()
@@ -53,21 +55,48 @@ jobs:
           path: |
             prototype/dist/
             prototype/qa/
+            prototype/START-HERE.md
             prototype/VOICE.md
           retention-days: 30
-      - name: Save tested preview on prototype branch only
+      - name: Save checked preview and latest-review entry on preview branch only
+        env:
+          PREVIEW_BRANCH: preview/brewtanist-lab-20261108
         run: |
           set -euo pipefail
-          test "$GITHUB_REF" = 'refs/heads/preview/brewtanist-lab-20261108'
-          git diff --exit-code origin/main -- index.html _data .pages.yml _config.yml brewtanist
+          test "$GITHUB_REF" = "refs/heads/$PREVIEW_BRANCH"
+          git diff --exit-code origin/main -- index.html _data _config.yml brewtanist admin _includes robots.txt sitemap.xml
+          git fetch origin "$PREVIEW_BRANCH"
+          test "$(git rev-parse FETCH_HEAD)" = "$GITHUB_SHA" || { echo 'A newer owner edit exists. This run will not overwrite it.'; exit 1; }
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add prototype/template.html prototype/build.py prototype/test_preview.py prototype/VOICE.md prototype/dist prototype/qa
+          git add prototype/dist prototype/qa
           if ! git diff --cached --quiet; then
-            git commit -m 'Save natural Thai preview, draft-preservation tests and screenshots [skip ci]'
-            git push origin HEAD:refs/heads/preview/brewtanist-lab-20261108
+            git commit -m 'Save tested Brewtanist copy preview and test evidence [skip ci]'
           fi
-          echo '## Brewtanist Preview 02 — natural Thai copy' >> "$GITHUB_STEP_SUMMARY"
-          echo 'The catalogue, product pages, comparison, Coffee Finder and local editor now use direct conversational Thai.' >> "$GITHUB_STEP_SUMMARY"
-          echo 'Source facts and production files are unchanged. Existing owner-written local drafts are preserved.' >> "$GITHUB_STEP_SUMMARY"
-          echo 'No production deployment, checkout, tracker or main-branch write was used.' >> "$GITHUB_STEP_SUMMARY"
+          REVIEW_SHA="$(git rev-parse HEAD)" python3 - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+          sha = os.environ['REVIEW_SHA']
+          url = f'https://rawcdn.githack.com/brewtanist/brewtanist.github.io/{sha}/prototype/dist/index.html'
+          run = f"https://github.com/{os.environ['GITHUB_REPOSITORY']}/actions/runs/{os.environ['GITHUB_RUN_ID']}"
+          report = json.loads(Path('prototype/qa/test-report.json').read_text())
+          assert report['result'] == 'PASS'
+          text = '# Brewtanist — ตัวอย่างที่ผ่านการตรวจล่าสุด\n\n'
+          text += f'[เปิดเว็บตัวอย่าง]({url}) · [ทดลองแก้ในเครื่อง]({url}#/studio)\n\n'
+          text += '[แก้ข้อความร่างผ่าน Pages CMS](https://app.pagescms.org/)\n\n'
+          text += 'เลือก `brewtanist/brewtanist.github.io` และ branch `preview/brewtanist-lab-20261108` แล้วเปิดเมนู **ร่างเว็บใหม่ · แก้ข้อความ** ห้ามเลือก main สำหรับงานร่าง\n\n'
+          text += f"ผ่านการทดสอบ Chromium {report['checks_count']} กลุ่ม ดู [ผลตรวจรอบนี้]({run})\n\n"
+          text += f'ไฟล์ตัวอย่าง: `{sha}`\n\n'
+          text += 'ลิงก์ตัวอย่างเป็นไฟล์เฉพาะรุ่น ไม่เปลี่ยนตามการกด Save ให้กลับมาที่หน้านี้หลังรอบตรวจใหม่ผ่าน หากตรวจไม่ผ่าน ลิงก์นี้จะยังเป็นรุ่นที่ผ่านก่อนหน้า\n\n'
+          text += 'Pages CMS เก็บข้อความลง GitHub ส่วน Content Studio ในตัวอย่างยังเก็บการแก้เฉพาะเบราว์เซอร์และไม่ซิงก์กลับ GitHub หากเคยแก้ในเครื่อง ให้ส่งออกไฟล์เก็บก่อนคืนค่า หรือเปิดหน้าต่างส่วนตัวเพื่อตรวจข้อความจาก GitHub\n\n'
+          text += 'ยังไม่ได้ทดสอบการล็อกอินและ Save ด้วยบัญชีเจ้าของผ่าน Pages CMS ยังไม่เผยแพร่เว็บจริง ไม่รับชำระเงิน และไม่ได้เชื่อมสต็อก\n'
+          Path('prototype/LATEST.md').write_text(text, encoding='utf-8')
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as f:
+              f.write(text)
+          PY
+          git add prototype/LATEST.md
+          if ! git diff --cached --quiet; then
+            git commit -m 'Refresh latest tested preview link; no production publish [skip ci]'
+          fi
+          git push origin "HEAD:refs/heads/$PREVIEW_BRANCH"
