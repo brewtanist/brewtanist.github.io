@@ -2,20 +2,56 @@
   "results": [
     {
       "preview_url": "https://rawcdn.githack.com/brewtanist/brewtanist.github.io/7127269dcf214aafbde04680c70868518f65a4de/prototype/dist/index.html",
+      "html_check": "PASS",
+      "screenshots": [
+        {
+          "url": "https://rawcdn.githack.com/brewtanist/brewtanist.github.io/7127269dcf214aafbde04680c70868518f65a4de/prototype/qa/01-catalog-desktop.png",
+          "check": "PASS",
+          "status": 200
+        },
+        {
+          "url": "https://rawcdn.githack.com/brewtanist/brewtanist.github.io/7127269dcf214aafbde04680c70868518f65a4de/prototype/qa/04-content-studio.png",
+          "check": "PASS",
+          "status": 200
+        },
+        {
+          "url": "https://rawcdn.githack.com/brewtanist/brewtanist.github.io/7127269dcf214aafbde04680c70868518f65a4de/prototype/qa/05-catalog-mobile.png",
+          "check": "PASS",
+          "status": 200
+        }
+      ],
       "status": 200,
       "content_type": "text/html; charset=utf-8",
       "bytes": 867485,
-      "result": "FAIL",
-      "error": "HTTP Error 403: Forbidden"
+      "matches_tested_artifact": true,
+      "sha256": "c9ca790650d45ec2e9cb0abbe0ec0683bd1aa1bf0b77b25ccddfb37a8de8cec8"
     },
     {
       "preview_url": "https://raw.githack.com/brewtanist/brewtanist.github.io/7127269dcf214aafbde04680c70868518f65a4de/prototype/dist/index.html",
+      "html_check": "PASS",
+      "screenshots": [
+        {
+          "url": "https://raw.githack.com/brewtanist/brewtanist.github.io/7127269dcf214aafbde04680c70868518f65a4de/prototype/qa/01-catalog-desktop.png",
+          "check": "PASS",
+          "status": 200
+        },
+        {
+          "url": "https://raw.githack.com/brewtanist/brewtanist.github.io/7127269dcf214aafbde04680c70868518f65a4de/prototype/qa/04-content-studio.png",
+          "check": "PASS",
+          "status": 200
+        },
+        {
+          "url": "https://raw.githack.com/brewtanist/brewtanist.github.io/7127269dcf214aafbde04680c70868518f65a4de/prototype/qa/05-catalog-mobile.png",
+          "check": "PASS",
+          "status": 200
+        }
+      ],
       "status": 200,
       "content_type": "text/html; charset=utf-8",
       "bytes": 867485,
-      "result": "FAIL",
-      "error": "HTTP Error 403: Forbidden"
+      "matches_tested_artifact": true,
+      "sha256": "c9ca790650d45ec2e9cb0abbe0ec0683bd1aa1bf0b77b25ccddfb37a8de8cec8"
     }
   ],
-  "note": "HTTP content checks; provider may show a confirmation screen in a human browser. Preview hosting is third-party, not the production website. No account/password is required."
+  "note": "HTML and optional screenshot delivery are checked independently. The standalone HTML embeds all owned images; it does not load these screenshot files. These are HTTP byte-integrity checks, not a remote-browser test. A human browser may see the preview provider confirmation screen. This third-party review URL is not the production website."
 }
