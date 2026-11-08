@@ -57,15 +57,30 @@ jobs:
           python3 catalogue/make_review.py
           python3 - <<'PY'
           from pathlib import Path
+          import json
           from playwright.sync_api import sync_playwright,expect
           root=Path.cwd()
+          data=json.loads((root/'_data/brewtanist/marketplace.json').read_text())
+          houses={p['id']:p for p in json.loads((root/'_data/brewtanist/products.json').read_text())['items']}
+          visible=[]
+          for item in data['items']:
+            house=houses.get(item.get('houseId'))
+            if not item['visible'] or (house and not house.get('visible')):continue
+            current=dict(item)
+            if house:current.update(name=house['name'],image=house['image'])
+            visible.append(current)
+          photo_count=sum(bool(p.get('image')) for p in visible)
           with sync_playwright() as pw:
             browser=pw.chromium.launch()
             page=browser.new_page(viewport={'width':1440,'height':1000})
             errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
             page.goto((root/'catalogue/review/index.html').as_uri(),wait_until='networkidle')
-            frame=page.frame_locator('#frame');expect(frame.locator('#market-products .market-card')).to_have_count(17)
-            frame.locator('a[href="/item/capsule-ozmo/"]').first.click();expect(page.frame_locator('#frame').locator('h1')).to_have_text('Mr. Ozmo · กาแฟแคปซูล')
+            frame=page.frame_locator('#frame');expect(frame.locator('#market-products .market-card')).to_have_count(len(visible))
+            expect(frame.locator('#market-products .market-card img')).to_have_count(photo_count)
+            sample=next((p for p in visible if not p.get('houseId')),visible[0] if visible else None)
+            if sample:
+              route='/product/'+sample['houseId']+'/' if sample.get('houseId') else '/item/'+sample['id']+'/'
+              frame.locator('a[href="'+route+'"]').first.click();expect(page.frame_locator('#frame').locator('h1')).to_have_text(sample['name'])
             assert not errors,errors
             page.goto((root/'catalogue/review/artwork.html').as_uri(),wait_until='networkidle')
             page.evaluate('document.fonts.ready');page.locator('#wide').screenshot(path=str(root/'qa/artwork-house-wide.png'));page.locator('#square').screenshot(path=str(root/'qa/artwork-house-square.png'))
@@ -94,7 +109,22 @@ jobs:
           git add .pages.yml _data/brewtanist/products.json _data/brewtanist/marketplace.json catalogue/build.py catalogue/marketplace.js catalogue/review qa tools/test_release.py
           if ! git diff --cached --quiet; then git commit -m 'Save tested Shopee catalogue, preserved CMS fields and original-package artwork [skip ci]'; fi
           SHA=$(git rev-parse HEAD)
-          printf '# Brewtanist — Shopee catalogue review\n\n[เปิดเว็บตรวจงาน](https://rawcdn.githack.com/brewtanist/brewtanist.github.io/%s/catalogue/review/index.html)\n\n[Artwork แบนเนอร์](https://rawcdn.githack.com/brewtanist/brewtanist.github.io/%s/qa/artwork-house-wide.png) · [Artwork สี่เหลี่ยม](https://rawcdn.githack.com/brewtanist/brewtanist.github.io/%s/qa/artwork-house-square.png)\n\nImported 17 identified listings (14 additions). Public cached source only; prices, availability and individual photos for 14 additions remain unverified. No automatic Shopee synchronization or payment collection. Original website unchanged; Render deployment not performed.\n' "$SHA" "$SHA" "$SHA" > catalogue/LATEST-SHOPEE.md
+          BREWTANIST_REVIEW_SHA="$SHA" python3 - <<'PY'
+          import json,os
+          from pathlib import Path
+          report=json.loads(Path('qa/marketplace-test.json').read_text())
+          base='https://rawcdn.githack.com/brewtanist/brewtanist.github.io/'+os.environ['BREWTANIST_REVIEW_SHA']
+          summary=(f"Imported {report['source_listings']} identified listings ({report['additional_listings']} additions). "
+                   f"The review displays {report['visible_listings']} visible listings: {report['individual_photos_available']} with configured images "
+                   f"and {report['individual_photos_missing']} with image placeholders. "
+                   'Source details remain in _data/brewtanist/marketplace.json. Prices and availability are not synchronized. '
+                   'This workflow builds review files; it does not publish a production deployment.')
+          text=('# Brewtanist — Shopee catalogue review\n\n'
+                '[เปิดเว็บตรวจงาน]('+base+'/catalogue/review/index.html)\n\n'
+                '[Artwork แบนเนอร์]('+base+'/qa/artwork-house-wide.png) · '
+                '[Artwork สี่เหลี่ยม]('+base+'/qa/artwork-house-square.png)\n\n'+summary+'\n')
+          Path('catalogue/LATEST-SHOPEE.md').write_text(text,encoding='utf-8')
+          PY
           git add catalogue/LATEST-SHOPEE.md
           git commit -m 'Link tested catalogue and artwork review [skip ci]'
           git push origin "HEAD:refs/heads/$BRANCH"

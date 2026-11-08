@@ -1,10 +1,10 @@
 {
   "result": "BUILT",
-  "imported_listings": 17,
-  "new_listings": 14,
+  "imported_listings": 18,
+  "new_listings": 15,
   "categories": {
     "house": 3,
-    "single-origin": 6,
+    "single-origin": 7,
     "capsules": 3,
     "drip": 1,
     "gifts": 2,
@@ -12,9 +12,9 @@
   },
   "live_inventory": false,
   "live_prices": false,
-  "individual_product_photos_pending": 14,
+  "individual_product_photos_pending": 4,
   "source": "https://shopee.co.th/brewtanist",
-  "source_status": "cached_shop_listing_not_live_inventory",
+  "source_status": "public_listing_and_product_images_not_live_inventory",
   "detail_pages_access_verified": false,
   "direct_links": "mapped from shop ID and observed item IDs; not checkout tested"
 }

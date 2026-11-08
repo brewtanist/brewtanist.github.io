@@ -1,0 +1,44 @@
+name: Verify Brewtanist Jekyll storefront
+
+on:
+  push:
+    branches: [feature/shopee-storefront-20261109, main]
+    paths:
+      - '_data/brewtanist/**'
+      - '_includes/**'
+      - 'index.html'
+      - 'shop/**'
+      - 'brewtanist/**'
+      - '_config.yml'
+      - 'sitemap.xml'
+      - 'tools/test_storefront.py'
+      - '.github/workflows/storefront-check.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: storefront-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check-storefront:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 6
+    steps:
+      - name: Check out the exact source revision
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - name: Build the actual Jekyll pages
+        uses: actions/jekyll-build-pages@44a6e6beabd48582f863aeeb6cb2151cc1716697
+        with:
+          source: ./
+          destination: ./_site
+      - name: Verify rendered products, Shopee links, assets and navigation
+        run: python3 tools/test_storefront.py _site --report "$RUNNER_TEMP/brewtanist-storefront-report.json"
+      - name: Preserve the validation report
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: brewtanist-storefront-validation
+          path: ${{ runner.temp }}/brewtanist-storefront-report.json
+          retention-days: 30

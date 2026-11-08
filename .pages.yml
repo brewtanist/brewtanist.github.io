@@ -55,10 +55,10 @@ content:
     label: ข้อความใต้ภาพหน้าแรก
     type: string
   - name: hero_button
-    label: ข้อความปุ่มพิกัดร้าน
+    label: ข้อความปุ่มเลือกกาแฟกลับบ้าน
     type: string
   - name: hero_second_button
-    label: ข้อความปุ่มสำรวจกาแฟ
+    label: ข้อความปุ่มพิกัดร้าน
     type: string
   - name: story_visible
     label: แสดงส่วนเรื่องราวของเรา

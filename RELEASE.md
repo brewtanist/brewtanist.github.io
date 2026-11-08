@@ -24,3 +24,12 @@
 
 ## สิ่งที่ไม่รวม
 ไม่มี Checkout รับเงิน สมาชิก สต็อก Tracking หรือการเปลี่ยน Google Business Profile/Social URL หน้าแก้ไขในเครื่องของต้นแบบไม่อยู่ในชุดลูกค้า
+
+
+## 9 พฤศจิกายน 2026 — สินค้า Shopee บนเว็บเดิม
+
+หน้า `/shop/` ใช้ Jekyll และข้อมูล `_data/brewtanist/marketplace.json` ภายใน GitHub Pages เดิม พร้อมค้นหา กรองหมวด และลิงก์สินค้าแต่ละรายการไป Shopee หน้าแรกมีปุ่มเลือกกาแฟและสินค้าจากหลายหมวดแล้ว จึงไม่ต้องรอ Render เพื่อแสดงรายการสินค้า ส่วน `catalogue_url` ยังเป็นการเชื่อมแคตตาล็อกภายนอกเดิมและคงค่าว่างไว้
+
+รูปจริงที่ตรวจจับคู่ได้เก็บใน `brewtanist/assets/shop/` และมีแหล่งที่มาใน `catalogue/shopee-sources.json` รายการที่ยังไม่มีรูปใช้ภาพ House Blend เดิมเฉพาะสินค้าตัวเดียวกัน หรือแสดงข้อความให้ไปดูรูปใน Shopee ข้อมูลนี้ไม่ใช่ระบบ sync ราคา/สต็อกอัตโนมัติ
+
+ตรวจหน้าแรกและหน้ารวมสินค้าใน browser ทั้ง desktop และ frame viewport 390/320 px; ตรวจ search, filters, empty state และ reset. Workflow `storefront-check.yml` สร้างด้วย Jekyll จริงและตรวจข้อมูลจากไฟล์ปัจจุบันก่อน release

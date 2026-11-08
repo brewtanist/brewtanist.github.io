@@ -1,0 +1,16 @@
+<section class="section home-shop" id="shop" aria-labelledby="home-shop-heading">
+  <div class="wrap">
+    <div class="section-head"><div><span class="eyebrow">Brewtanist at home</span><h2 id="home-shop-heading">มุมกาแฟที่บ้าน<br>ก็เป็น Brewtanist ได้</h2></div><div class="home-shop-intro"><p>เมล็ดกาแฟ แคปซูล หรือดริปแบ็ก เลือกแบบที่ชงได้สะดวก แล้วกดไปสั่งใน Shopee ได้เลย</p><a class="text-link" href="/shop/">ดูสินค้าทั้งหมด <span aria-hidden="true">↗</span></a></div></div>
+    <div class="collection-links" aria-label="เลือกสินค้าตามหมวด">
+      <a href="/shop/?category=single-origin#catalog"><span>Single Origin</span><small>ลองเมล็ดจากแหล่งปลูกต่าง ๆ</small></a>
+      <a href="/shop/?category=capsules#catalog"><span>กาแฟแคปซูล</span><small>สำหรับเครื่องชงที่บ้าน</small></a>
+      <a href="/shop/?category=drip#catalog"><span>Drip Bag</span><small>พกกาแฟไปชงได้ทุกที่</small></a>
+      <a href="/shop/?category=gifts#catalog"><span>Gift Set</span><small>ของฝากสำหรับคนชอบกาแฟ</small></a>
+    </div>
+    <div class="shop-grid home-shop-grid">
+      {% assign featured_ids = 'drip-bag,capsule-lazybug,panama-magma-red-1680,gift-capsules' | split: ',' %}
+      {% for featured_id in featured_ids %}{% assign featured_item = site.data.brewtanist.marketplace.items | where: 'id', featured_id | first %}{% if featured_item and featured_item.visible != false %}{% include shop-card.html item=featured_item %}{% endif %}{% endfor %}
+    </div>
+    <div class="home-shop-foot"><p>ราคา ตัวเลือก และสินค้าที่มีขาย ดูได้จากหน้าสินค้าใน Shopee</p><a class="btn outline" href="/shop/">เลือกกาแฟและของจากร้าน</a></div>
+  </div>
+</section>

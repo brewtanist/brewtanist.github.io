@@ -1,0 +1,4 @@
+_site/
+_site-connected/
+catalogue/dist/
+**/__pycache__/

@@ -56,7 +56,7 @@ try:
     serve(ROOT/'_site',8766);serve(ROOT/'catalogue/dist',8765);serve(ROOT/'_site-connected',8767)
     with sync_playwright() as pw:
         browser=pw.chromium.launch();context=browser.new_context(viewport={'width':1440,'height':1000});page=context.new_page();page.on('pageerror',lambda e:errors.append(str(e)))
-        page.goto('http://127.0.0.1:8766/',wait_until='networkidle');expect(page.locator('.nav-links')).to_contain_text('เมนูที่ร้าน');expect(page.locator('.nav-links')).to_contain_text('กาแฟกลับบ้าน');expect(page.locator('#hero-heading')).to_have_text(home['hero_title']);images(page);overflow(page)
+        page.goto('http://127.0.0.1:8766/',wait_until='networkidle');expect(page.locator('.nav-links')).to_contain_text('เมนูที่ร้าน');expect(page.locator('.nav-links a[href="/shop/"], .nav-links .coffee-menu')).to_be_visible();expect(page.locator('#hero-heading')).to_have_text(home['hero_title']);images(page);overflow(page)
         assert not page.locator('a[href*="example.invalid"]').count();assert page.locator('link[rel="canonical"]').get_attribute('href')=='https://brewtanist.github.io/'
         page.screenshot(path=str(QA/'01-main-desktop.png'),full_page=True);record('Main website displays saved copy, original brand images and canonical without guessed hosting links')
         for width in [320,390,768,1440]:

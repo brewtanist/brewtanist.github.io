@@ -1,0 +1,266 @@
+{
+  "schemaVersion": 1,
+  "shopId": "985117757",
+  "shopUrl": "https://shopee.co.th/brewtanist",
+  "retrievedAt": "2026-11-09T00:53:59+07:00",
+  "timezone": "Asia/Bangkok",
+  "method": "Public Shopee listing retrieval, matching item ID, and visual review of the seller image",
+  "liveInventory": false,
+  "livePrices": false,
+  "notes": [
+    "These are product images and stable descriptive facts from public listing snapshots. This does not constitute a live inventory connection.",
+    "All existing 17 listings remain visible. Snapshot stock labels were not used to hide or remove any product.",
+    "No prices, sales, ratings, shipping promises or promotions have been added to catalogue fields.",
+    "Known missing images are left empty instead of substituting a different product or coffee format.",
+    "Source URLs retain the observed product slug; tracking query parameters were removed."
+  ],
+  "assets": [
+    {
+      "id": "plantman",
+      "shopeeItemId": "22577642568",
+      "sourceUrl": "https://shopee.co.th/(New-Packaging-!-)-เมล็ดกาแฟ-Brazil-Blend-คั่วกลาง-เข้ม-สำหรับชงเอสเพรสโซ่-Brewtanist-Blend-MR.-PLANTMAN-i.985117757.22577642568",
+      "sourceReference": "turn20view0",
+      "retrievedAt": "2026-11-09T00:47:34+07:00",
+      "sourceSnapshotAgeLabel": "today",
+      "imageUrl": "https://down-th.img.susercontent.com/file/th-11134207-7ra0j-mcefcax1kj0k25",
+      "localPath": "brewtanist/assets/shop/22577642568-plantman.jpg",
+      "imageSha256": "ecf82317c32820e40f46032a458c0db347b7cb0084bd608a28b6fcadfe26a99d",
+      "imageProcessing": "Original downloaded JPEG copied without editing or resizing",
+      "verification": "Item ID matched the listing URL; product name and packaging visually checked against the image",
+      "factsAdded": [],
+      "reviewNote": "Listing title says medium-dark; image packaging says dark. Existing House Blend content preserved without changing roast level."
+    },
+    {
+      "id": "ozmo",
+      "shopeeItemId": "23057400242",
+      "sourceUrl": "https://shopee.co.th/(New-Packaging-!-)-เมล็ดกาแฟคั่ว-Espresso-โทนวิสกี้-รัม-เรซิ่น-Brewtanist-Blend-MR.-OZMO-i.985117757.23057400242",
+      "sourceReference": "turn2view1",
+      "retrievedAt": "2026-11-09T00:47:34+07:00",
+      "sourceSnapshotAgeLabel": "2 months ago",
+      "imageUrl": "https://down-th.img.susercontent.com/file/th-11134207-7ra0j-mcefbuvn1hwz96",
+      "localPath": "brewtanist/assets/shop/23057400242-ozmo.jpg",
+      "imageSha256": "3313db72b8263614a9e1c8eda0361820629990aa9842dba64ba8e948c8b481c5",
+      "imageProcessing": "Original downloaded JPEG copied without editing or resizing",
+      "verification": "Item ID matched the listing URL; product name and packaging visually checked against the image",
+      "factsAdded": []
+    },
+    {
+      "id": "panama-magma-red-1680",
+      "shopeeItemId": "48914111971",
+      "sourceUrl": "https://shopee.co.th/-New-in-!-Panama-Magma-Red-1680-(Process-Washed)-เมล็ดกาแฟ-Single-Origin-จากโรงคั่วเดอะบรูทานิสต์-i.985117757.48914111971",
+      "sourceReference": "turn10view2",
+      "retrievedAt": "2026-11-09T00:47:34+07:00",
+      "sourceSnapshotAgeLabel": "today",
+      "imageUrl": "https://down-th.img.susercontent.com/file/th-11134207-81ztf-mqpriutq58geb6",
+      "localPath": "brewtanist/assets/shop/48914111971-panama-magma-red-1680.jpg",
+      "imageSha256": "4b150519f2f1cc2c99486d9aeca29143b4e32e25c16a76a05046ef88e94620c3",
+      "imageProcessing": "Original downloaded JPEG copied without editing or resizing",
+      "verification": "Item ID matched the listing URL; product name and packaging visually checked against the image",
+      "factsAdded": [
+        "ขนาดในภาพ: 100 กรัม",
+        "พันธุ์: Geisha",
+        "โปรไฟล์: Filter",
+        "กลิ่นรส: Rose · Pink Guava · Blueberry Jam"
+      ]
+    },
+    {
+      "id": "ethiopia-doora",
+      "shopeeItemId": "57412137497",
+      "sourceUrl": "https://shopee.co.th/Ethiopia-Doora-(Process-Natural)-เมล็ดกาแฟ-Single-Origin-จากโรงคั่วเดอะบรูทานิสต์-i.985117757.57412137497",
+      "sourceReference": "turn10view3",
+      "retrievedAt": "2026-11-09T00:47:34+07:00",
+      "sourceSnapshotAgeLabel": "today",
+      "imageUrl": "https://down-th.img.susercontent.com/file/th-11134207-81ztd-mpettudmf37v25",
+      "localPath": "brewtanist/assets/shop/57412137497-ethiopia-doora.jpg",
+      "imageSha256": "52957077222c025a64eef3fa96493e418a953d46d569ea2faabbf20a9150f7f0",
+      "imageProcessing": "Original downloaded JPEG copied without editing or resizing",
+      "verification": "Item ID matched the listing URL; product name and packaging visually checked against the image",
+      "factsAdded": [
+        "ขนาดในภาพ: 100 กรัม",
+        "พันธุ์: Heirloom",
+        "กลิ่นรส: Pineapple · Mixed Berries · Sunkist Orange"
+      ]
+    },
+    {
+      "id": "ethiopia-nensenbo-mewa",
+      "shopeeItemId": "48456951501",
+      "sourceUrl": "https://shopee.co.th/Ethiopia-Nensenbo-Mewa-Natural-เมล็ดกาแฟ-Single-Origin-จากโรงคั่วเดอะบรูทานิสต์-i.985117757.48456951501",
+      "sourceReference": "turn10view1",
+      "retrievedAt": "2026-11-09T00:47:34+07:00",
+      "sourceSnapshotAgeLabel": "today",
+      "imageUrl": "https://down-th.img.susercontent.com/file/th-11134207-81ztd-mlkekl0sxtl148",
+      "localPath": "brewtanist/assets/shop/48456951501-ethiopia-nensenbo-mewa.jpg",
+      "imageSha256": "f3661957c1b53d02f69ea089eae38a0b7e5c76f946d97dda778f66d9deef160a",
+      "imageProcessing": "Original downloaded JPEG copied without editing or resizing",
+      "verification": "Item ID matched the listing URL; product name and packaging visually checked against the image",
+      "factsAdded": [
+        "ขนาดในภาพ: 100 กรัม",
+        "โปรไฟล์: Filter",
+        "กลิ่นรส: Tangerine · Strawberry · Hibiscus Tea"
+      ]
+    },
+    {
+      "id": "honduras-finca-moka-whisky",
+      "shopeeItemId": "23157401400",
+      "sourceUrl": "https://shopee.co.th/เมล็ดกาแฟ-Honduras-Finca-Moka-Whisky-Single-Origin-i.985117757.23157401400",
+      "sourceReference": "turn11view0",
+      "retrievedAt": "2026-11-09T00:47:34+07:00",
+      "sourceSnapshotAgeLabel": "today",
+      "imageUrl": "https://down-th.img.susercontent.com/file/th-11134207-7r98y-lrqwf5fopmcu91",
+      "localPath": "brewtanist/assets/shop/23157401400-honduras-finca-moka-whisky.jpg",
+      "imageSha256": "566218a0ada2b7c63ec6267d9e4bcd52f3a89ce0d37160025aa2d3aacea36508",
+      "imageProcessing": "Original downloaded JPEG copied without editing or resizing",
+      "verification": "Item ID matched the listing URL; product name and packaging visually checked against the image",
+      "factsAdded": [
+        "ขนาดในภาพ: 100 กรัม",
+        "Process: Whisky-aged",
+        "โปรไฟล์: Filter",
+        "กลิ่นรส: Vanilla · Honey-like · Whisky · Grape"
+      ]
+    },
+    {
+      "id": "guatemala-agua-tibia-geisha",
+      "shopeeItemId": "56861276592",
+      "sourceUrl": "https://shopee.co.th/Guatemala-Finca-Agua-Tibia-Geisha-(Process-Washed)-เมล็ดกาแฟ-Single-Origin-จากโรงคั่วเดอะบรูทานิสต์-i.985117757.56861276592",
+      "sourceReference": "turn5view2",
+      "retrievedAt": "2026-11-09T00:47:34+07:00",
+      "sourceSnapshotAgeLabel": "today",
+      "imageUrl": "https://down-th.img.susercontent.com/file/th-11134207-81zth-msc89d8lrjew1a",
+      "localPath": "brewtanist/assets/shop/56861276592-guatemala-agua-tibia-geisha.jpg",
+      "imageSha256": "d8825e4f087105fd78d5adae5ad2c5038b1bc1b1f07695b4d6b7608faeb58c6d",
+      "imageProcessing": "Original downloaded JPEG copied without editing or resizing",
+      "verification": "Item ID matched the listing URL; product name and packaging visually checked against the image",
+      "factsAdded": [
+        "ขนาดในภาพ: 100 กรัม",
+        "โปรไฟล์: Filter",
+        "กลิ่นรส: Jasmine · Bergamot · Apricot · Lemon"
+      ]
+    },
+    {
+      "id": "capsule-lazybug",
+      "shopeeItemId": "21492186875",
+      "sourceUrl": "https://shopee.co.th/กาแฟแคปซูล-Brewtanist-Blend-MS.-LAZYBUG-for-NESPRESSO®-COMPATIBLE-i.985117757.21492186875",
+      "sourceReference": "turn5view1",
+      "retrievedAt": "2026-11-09T00:47:34+07:00",
+      "sourceSnapshotAgeLabel": "last month",
+      "imageUrl": "https://down-th.img.susercontent.com/file/th-11134207-7r98q-lxths1703gsvb4",
+      "localPath": "brewtanist/assets/shop/21492186875-capsule-lazybug.jpg",
+      "imageSha256": "669b5b52f65ac3601ada92c64c9543e278b12dd71a1e6686eca160b9395a5318",
+      "imageProcessing": "Original downloaded JPEG copied without editing or resizing",
+      "verification": "Item ID matched the listing URL; product name and packaging visually checked against the image",
+      "factsAdded": [
+        "ระดับคั่วตามภาพ: Light–Medium",
+        "กลิ่นรส: Floral · Fruity · Tea-like"
+      ]
+    },
+    {
+      "id": "drip-bag",
+      "shopeeItemId": "28957447043",
+      "sourceUrl": "https://shopee.co.th/DRIP-BAG-กาแฟดริป-กาแฟ-Specialty-Coffee-บดบรรจุซองพร้อมชง-Filter-Coffee-i.985117757.28957447043",
+      "sourceReference": "turn2view2",
+      "retrievedAt": "2026-11-09T00:47:34+07:00",
+      "sourceSnapshotAgeLabel": "6 days ago",
+      "imageUrl": "https://down-th.img.susercontent.com/file/th-11134207-7r98y-lyq351oq6z5tc9",
+      "localPath": "brewtanist/assets/shop/28957447043-drip-bag.jpg",
+      "imageSha256": "9098efbff7b0afec3cdb3a7335af5c57ff2e265a295cff78bcb9b3157eedf47d",
+      "imageProcessing": "Original downloaded JPEG copied without editing or resizing",
+      "verification": "Item ID matched the listing URL; product name and packaging visually checked against the image",
+      "factsAdded": []
+    },
+    {
+      "id": "gift-house-blends",
+      "shopeeItemId": "47502787333",
+      "sourceUrl": "https://shopee.co.th/Gift-Set-เมล็ดกาแฟ-Holiday-Special-Set-กาแฟ-The-Brewtanist-Blends-ยกเซต-Mr.-Plantman-Ms.-Lazybug-Mr.Ozmo-(รวม-3-ถุง)-i.985117757.47502787333",
+      "sourceReference": "turn20view1",
+      "retrievedAt": "2026-11-09T00:47:34+07:00",
+      "sourceSnapshotAgeLabel": "last month",
+      "imageUrl": "https://down-th.img.susercontent.com/file/th-11134207-81zti-mi036ilo3z0oa3",
+      "localPath": "brewtanist/assets/shop/47502787333-gift-house-blends.jpg",
+      "imageSha256": "27c93bdbd2568bf26d213be743932dbf4e72e51df797709bc1812296be7ec1bb",
+      "imageProcessing": "Original downloaded JPEG copied without editing or resizing",
+      "verification": "Item ID matched the listing URL; product name and packaging visually checked against the image",
+      "factsAdded": [
+        "ตัวเลือกขนาดถุงในรายการ: 100 / 200 กรัม"
+      ]
+    },
+    {
+      "id": "gift-capsules",
+      "shopeeItemId": "48352804708",
+      "sourceUrl": "https://shopee.co.th/Gift-Set-กาแฟแคปซูล-The-Brewtanist-Blends-Holiday-Set-กาแฟแคปซูล-ยกเซต-Mr.-Plantman-Ms.-Lazybug-Mr.Ozmo-รวม-3-กล่อง-i.985117757.48352804708",
+      "sourceReference": "turn5view0",
+      "retrievedAt": "2026-11-09T00:47:34+07:00",
+      "sourceSnapshotAgeLabel": "last month",
+      "imageUrl": "https://down-th.img.susercontent.com/file/th-11134207-81ztg-mi140f9xltz812",
+      "localPath": "brewtanist/assets/shop/48352804708-gift-capsules.jpg",
+      "imageSha256": "104cccd2735a640be11f7eea8b3a50305086812825e677c1206eb02ac6f64f8b",
+      "imageProcessing": "Original downloaded JPEG copied without editing or resizing",
+      "verification": "Item ID matched the listing URL; product name and packaging visually checked against the image",
+      "factsAdded": []
+    },
+    {
+      "id": "clever-dripper-small",
+      "shopeeItemId": "28309910876",
+      "sourceUrl": "https://shopee.co.th/-พร้อมส่ง-Clever-Dripper-จากประเทศไต้หวัน-ไซส์-S-(240ml.)-แถมกระดาษกรองมาให้ในกล่อง-i.985117757.28309910876",
+      "sourceReference": "turn11view1",
+      "retrievedAt": "2026-11-09T00:53:59+07:00",
+      "sourceSnapshotAgeLabel": "today",
+      "imageUrl": "https://down-th.img.susercontent.com/file/th-11134207-7r98q-lzobfxcz3i5lfd",
+      "localPath": "brewtanist/assets/shop/28309910876-clever-dripper-small.jpg",
+      "imageSha256": "999ae482d5d3a9b00d074d667630f05fd03485f86f4998ed214eb3ab098286a7",
+      "imageProcessing": "Original downloaded JPEG copied without editing or resizing",
+      "verification": "Item ID matched the listing URL; product name and packaging visually checked against the image",
+      "factsAdded": [],
+      "reviewNote": "Original gallery image without a printed price selected; no pricing transcribed into catalogue fields."
+    },
+    {
+      "id": "colombia-risaralda-wush-wush",
+      "shopeeItemId": "57318533393",
+      "sourceUrl": "https://shopee.co.th/Colombia-Risaralda-Wush-Wush-(Process-Anaerobic-Washed)-เมล็ดกาแฟ-Single-Origin-จากโรงคั่วเดอะบรูทานิสต์-i.985117757.57318533393",
+      "sourceReference": "turn34view0",
+      "retrievedAt": "2026-11-09T00:53:36+07:00",
+      "sourceSnapshotAgeLabel": "today",
+      "imageUrl": "https://down-th.img.susercontent.com/file/th-11134207-81ztj-mton1r45hedkeb",
+      "localPath": "brewtanist/assets/shop/57318533393-colombia-risaralda-wush-wush.jpg",
+      "imageSha256": "d78904fb0f876f71dfed66d7161c669bf13ace6ee7a0cb9001657d5730b43bc6",
+      "imageProcessing": "Original downloaded JPEG copied without editing or resizing",
+      "verification": "Item ID matched the listing URL; product name, packaging and label facts visually checked against the image",
+      "factsAdded": [
+        "ประเทศ: Colombia",
+        "แหล่งปลูก: Risaralda",
+        "ขนาดในภาพ: 100 กรัม",
+        "พันธุ์: Wush Wush",
+        "Process: Anaerobic Washed",
+        "โปรไฟล์: Filter",
+        "กลิ่นรส: Tangerine · Mango · Hazelnut"
+      ],
+      "reviewNote": "Description reflects the product label. Current size options, price and availability remain on Shopee."
+    }
+  ],
+  "pendingImages": [
+    {
+      "id": "lazybug",
+      "shopeeItemId": "18883253578",
+      "status": "No verified image located; image field intentionally empty"
+    },
+    {
+      "id": "thailand-ban-huay-khanum",
+      "shopeeItemId": "55764092003",
+      "status": "No verified image located; image field intentionally empty"
+    },
+    {
+      "id": "capsule-plantman",
+      "shopeeItemId": "18083267431",
+      "status": "No verified image located; image field intentionally empty"
+    },
+    {
+      "id": "capsule-ozmo",
+      "shopeeItemId": "24575852120",
+      "status": "No verified image located; image field intentionally empty"
+    },
+    {
+      "id": "everyday-bucket-bag",
+      "shopeeItemId": "26035855146",
+      "status": "No verified image located; image field intentionally empty"
+    }
+  ]
+}
