@@ -46,12 +46,20 @@
       "result": "PASS"
     },
     {
+      "check": "Plain Thai copy and unchanged source product facts",
+      "result": "PASS"
+    },
+    {
+      "check": "Saved owner drafts preserved while previous default copy is refreshed",
+      "result": "PASS"
+    },
+    {
       "check": "No uncaught browser JavaScript errors",
       "result": "PASS"
     }
   ],
   "production_files_unchanged": true,
-  "checks_count": 12,
+  "checks_count": 14,
   "finder_combinations": 36,
   "viewport_widths": [
     320,

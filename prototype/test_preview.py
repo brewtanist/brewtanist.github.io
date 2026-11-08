@@ -69,7 +69,7 @@ try:
 
         page.locator('#product-list [data-product="plantman"] .stage').click()
         expect(page.locator('h1')).to_have_text('Mr. Plantman')
-        expect(page.locator('.facts')).to_contain_text('รอยืนยัน')
+        expect(page.locator('.facts')).to_contain_text('สอบถามร้าน')
         assert_images(page)
         page.locator('[data-zoom="plantman"]').click()
         expect(page.locator('#zoom')).to_be_visible()
@@ -114,7 +114,7 @@ try:
         for value in ['capsules','chocolate','milk']:
             page.locator('[data-answer="'+value+'"]').click()
             page.locator('[data-action="quiz-next"]').click()
-        expect(page.locator('#app')).to_contain_text('ยังไม่ควรแนะนำ Blend')
+        expect(page.locator('#app')).to_contain_text('ดูแคปซูลที่ Shopee')
         expect(page.locator('.product-card')).to_have_count(0)
         record('All 36 answer combinations, ambiguity and capsule/Drip Bag fallback')
 
@@ -128,7 +128,7 @@ try:
         page.screenshot(path=str(QA/'04-content-studio.png'), full_page=True)
         record('Content Studio: live iframe preview, local draft save and reload')
 
-        page.get_by_text('ราคา ขนาด และข้อมูลที่ยังขาด', exact=True).click()
+        page.get_by_text('ราคา ขนาด และลิงก์สินค้า', exact=True).click()
         page.locator('input[data-field="productUrl"]').fill('javascript:alert(1)')
         assert page.evaluate('window.BrewtanistPreview.validate().errors.length') > 0
         page.locator('input[data-field="productUrl"]').fill('')
@@ -167,7 +167,7 @@ try:
         page.locator('.links [data-nav="catalog"]').click()
         expect(page.locator('#product-list .product-card')).to_have_count(2)
         page.goto(BASE+'#/product/plantman')
-        expect(page.locator('h1')).to_have_text('ยังไม่มีหน้านี้')
+        expect(page.locator('h1')).to_have_text('ไม่พบสินค้านี้')
         page.evaluate('window.BrewtanistPreview.reset()')
         page.goto(BASE+'#/catalog')
         for w in [320,390,768,1440]:
@@ -189,6 +189,42 @@ try:
         page.locator('[data-device="mobile"]').click()
         expect(page.locator('#preview')).to_have_class('preview-frame mobile')
         record('Mobile product, finder and editing studio layouts')
+
+        # Copy changes must not manufacture product facts or overwrite owner drafts.
+        page.evaluate('window.BrewtanistPreview.reset()')
+        page.goto(BASE+'#/catalog')
+        expect(page.locator('h1')).to_have_text('เลือกกาแฟ\nกลับไปชงที่บ้าน')
+        saved=page.evaluate('window.BrewtanistPreview.getData()')
+        source=json.loads((ROOT/'_data'/'brewtanist'/'products.json').read_text())
+        for current, original in zip(saved['products'], source['items']):
+            for key in ['name','profile','notes','alt','theme']:
+                assert current[key] == original[key], 'Unapproved product fact changed: '+key
+            for key in ['price','sizes','grinding','origin','productUrl']:
+                assert current[key] == '', 'Unconfirmed value invented: '+key
+        assert saved['copyRevision']==2
+        for path in ['catalog','product/plantman','finder','compare']:
+            page.goto(BASE+'#/'+path)
+            content=page.locator('#app').inner_text()
+            for phrase in ['เหตุผลที่ตรวจสอบได้','จากข้อมูลที่มี','ฟันธง','เปอร์เซ็นต์ความแม่นยำ','ยกระดับ','ตอบโจทย์']:
+                assert phrase not in content, 'Unwanted wording: '+phrase
+        record('Plain Thai copy and unchanged source product facts')
+
+        old=page.evaluate('window.BrewtanistPreview.getData()')
+        old['title']=old['previousCopy']['title']
+        old['intro']=old['previousCopy']['intro']
+        old['products'][0]['description']=old['previousCopy']['descriptions']['plantman']
+        old['products'][1]['description']='ข้อความที่เจ้าของร้านแก้เอง'
+        old['products'][1]['name']='ชื่อที่เจ้าของร้านตั้งไว้'
+        page.evaluate('(d)=>localStorage.setItem("brewtanist-preview-lab-v1",JSON.stringify(d))',old)
+        page.reload(wait_until='networkidle')
+        migrated=page.evaluate('window.BrewtanistPreview.getData()')
+        assert migrated['title']=='เลือกกาแฟ\nกลับไปชงที่บ้าน'
+        assert migrated['products'][0]['description']==saved['products'][0]['description']
+        assert migrated['products'][1]['description']=='ข้อความที่เจ้าของร้านแก้เอง'
+        assert migrated['products'][1]['name']=='ชื่อที่เจ้าของร้านตั้งไว้'
+        page.evaluate('window.BrewtanistPreview.reset()')
+        record('Saved owner drafts preserved while previous default copy is refreshed')
+
         assert not errors, 'Browser errors: '+repr(errors)
         record('No uncaught browser JavaScript errors')
         browser.close()

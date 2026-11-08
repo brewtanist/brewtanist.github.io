@@ -66,6 +66,18 @@ def main() -> None:
         'heroImage': asset(home['hero_image']), 'heroAlt': home['hero_alt'],
         'products': items
     }
+    # Approved copy-only overlay; source notes, roast and finder tags stay unchanged.
+    copy = json.loads((ROOT / 'prototype' / 'copy.th.json').read_text(encoding='utf-8'))
+    if set(copy['descriptions']) != {p['id'] for p in items}:
+        raise ValueError('Copy must match exactly the saved product ids')
+    data['previousCopy'] = {'title': data['title'], 'intro': data['intro'], 'descriptions': {p['id']: p['description'] for p in items}}
+    for key in ['title', 'intro', 'sourceDescription']:
+        if not isinstance(copy[key], str) or not copy[key].strip():
+            raise ValueError('Empty editorial copy: ' + key)
+        data[key] = copy[key]
+    for item in items:
+        item['description'] = copy['descriptions'][item['id']]
+    data['copyRevision'] = copy['revision']
     raw_json = json.dumps(data, ensure_ascii=False, separators=(',', ':')).replace('<', '\\u003c')
     template = (ROOT / 'prototype' / 'template.html').read_text(encoding='utf-8')
     if template.count('__CATALOG_JSON__') != 1:
