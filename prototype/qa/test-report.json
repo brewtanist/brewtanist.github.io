@@ -46,7 +46,7 @@
       "result": "PASS"
     },
     {
-      "check": "Plain Thai copy and unchanged source product facts",
+      "check": "Saved CMS copy rendered exactly; source product facts unchanged",
       "result": "PASS"
     },
     {
@@ -67,5 +67,5 @@
     768,
     1440
   ],
-  "notes": "Automated Chromium tests only. Not an iOS Safari test, human design review or production checkout test."
+  "notes": "Automated Chromium tests only. Not an iOS Safari test, human design review, Pages CMS login/Save test or production checkout test."
 }

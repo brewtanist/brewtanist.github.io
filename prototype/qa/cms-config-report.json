@@ -1,0 +1,23 @@
+{
+  "result": "PASS",
+  "branch": "preview/brewtanist-lab-20261108",
+  "editable_file": "prototype/copy.th.json",
+  "editable_texts": [
+    "title",
+    "intro",
+    "sourceDescription",
+    "descriptions.plantman",
+    "descriptions.ozmo",
+    "descriptions.lazybug"
+  ],
+  "negative_tests": [
+    "invalid copy rejected",
+    "invalid copy rejected",
+    "invalid copy rejected",
+    "production content path rejected"
+  ],
+  "production_content_matches_main": true,
+  "preview_cms_configuration_differs_from_main_by_design": true,
+  "pages_cms_owner_login_tested": false,
+  "note": "Configuration and build integration checks only. Browser login and owner Save through Pages CMS still need an owner-session test. No merge/publish/branch-protection setting has been applied."
+}
