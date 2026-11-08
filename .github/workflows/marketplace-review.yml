@@ -1,0 +1,100 @@
+name: Shopee catalogue and artwork review
+on:
+  push:
+    branches: ['feature/shopee-collections-20261108', 'main']
+    paths: ['_data/brewtanist/marketplace.json', 'catalogue/**', 'tools/setup_marketplace.py', 'tools/test_marketplace.py', '.github/workflows/marketplace-review.yml', '.pages.yml']
+permissions:
+  contents: write
+concurrency:
+  group: shopee-catalogue-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  review:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          fetch-depth: 0
+          ref: ${{ github.sha }}
+      - name: Install checks
+        run: |
+          python3 -m pip install 'PyYAML==6.0.2' 'playwright==1.56.0'
+          python3 -m playwright install --with-deps chromium
+      - name: Integrate on feature branch only
+        if: github.ref == 'refs/heads/feature/shopee-collections-20261108'
+        run: python3 tools/setup_marketplace.py
+      - name: Compile and build with a non-live test origin
+        run: |
+          python3 -m py_compile catalogue/marketplace.py catalogue/make_review.py tools/setup_marketplace.py tools/test_marketplace.py
+          python3 catalogue/build.py --base-url https://catalogue-review.example.invalid
+      - uses: actions/jekyll-build-pages@44a6e6beabd48582f863aeeb6cb2151cc1716697
+        with:
+          source: ./
+          destination: ./_site
+      - name: Test connection fixture
+        run: |
+          cp _data/brewtanist/settings.json /tmp/brewtanist-before-marketplace.json
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('_data/brewtanist/settings.json');d=json.loads(p.read_text());d['catalogue_url']='https://catalogue.example.invalid';p.write_text(json.dumps(d,ensure_ascii=False))
+          PY
+      - uses: actions/jekyll-build-pages@44a6e6beabd48582f863aeeb6cb2151cc1716697
+        with:
+          source: ./
+          destination: ./_site-connected
+      - name: Restore real connection settings
+        if: always()
+        run: |
+          if [ -f /tmp/brewtanist-before-marketplace.json ]; then cp /tmp/brewtanist-before-marketplace.json _data/brewtanist/settings.json; fi
+      - name: Existing site and finder regression
+        run: python3 tools/test_release.py
+      - name: Check sourced listings, categories and phone layouts
+        run: python3 tools/test_marketplace.py
+      - name: Build standalone review and artwork
+        run: |
+          python3 catalogue/make_review.py
+          python3 - <<'PY'
+          from pathlib import Path
+          from playwright.sync_api import sync_playwright,expect
+          root=Path.cwd()
+          with sync_playwright() as pw:
+            browser=pw.chromium.launch()
+            page=browser.new_page(viewport={'width':1440,'height':1000})
+            errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
+            page.goto((root/'catalogue/review/index.html').as_uri(),wait_until='networkidle')
+            frame=page.frame_locator('#frame');expect(frame.locator('#market-products .market-card')).to_have_count(17)
+            frame.locator('a[href="/item/capsule-ozmo/"]').first.click();expect(page.frame_locator('#frame').locator('h1')).to_have_text('Mr. Ozmo · กาแฟแคปซูล')
+            assert not errors,errors
+            page.goto((root/'catalogue/review/artwork.html').as_uri(),wait_until='networkidle')
+            page.evaluate('document.fonts.ready');page.locator('#wide').screenshot(path=str(root/'qa/artwork-house-wide.png'));page.locator('#square').screenshot(path=str(root/'qa/artwork-house-square.png'))
+            browser.close()
+          print('Standalone review navigation and both artwork renders passed')
+          PY
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: brewtanist-shopee-catalogue-review
+          path: |
+            catalogue/dist/
+            catalogue/review/
+            qa/
+          retention-days: 30
+      - name: Save passed source and evidence to feature branch only
+        if: github.ref == 'refs/heads/feature/shopee-collections-20261108'
+        run: |
+          set -euo pipefail
+          BRANCH='feature/shopee-collections-20261108'
+          git fetch origin "$BRANCH"
+          test "$(git rev-parse FETCH_HEAD)" = "$GITHUB_SHA" || { echo 'Newer owner changes exist; refusing to overwrite'; exit 1; }
+          git diff --exit-code origin/main -- index.html _data/brewtanist/settings.json _data/brewtanist/home.json brewtanist _config.yml admin
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add .pages.yml _data/brewtanist/products.json _data/brewtanist/marketplace.json catalogue/build.py catalogue/marketplace.js catalogue/review qa tools/test_release.py
+          if ! git diff --cached --quiet; then git commit -m 'Save tested Shopee catalogue, preserved CMS fields and original-package artwork [skip ci]'; fi
+          SHA=$(git rev-parse HEAD)
+          printf '# Brewtanist — Shopee catalogue review\n\n[เปิดเว็บตรวจงาน](https://rawcdn.githack.com/brewtanist/brewtanist.github.io/%s/catalogue/review/index.html)\n\n[Artwork แบนเนอร์](https://rawcdn.githack.com/brewtanist/brewtanist.github.io/%s/qa/artwork-house-wide.png) · [Artwork สี่เหลี่ยม](https://rawcdn.githack.com/brewtanist/brewtanist.github.io/%s/qa/artwork-house-square.png)\n\nImported 17 identified listings (14 additions). Public cached source only; prices, availability and individual photos for 14 additions remain unverified. No automatic Shopee synchronization or payment collection. Original website unchanged; Render deployment not performed.\n' "$SHA" "$SHA" "$SHA" > catalogue/LATEST-SHOPEE.md
+          git add catalogue/LATEST-SHOPEE.md
+          git commit -m 'Link tested catalogue and artwork review [skip ci]'
+          git push origin "HEAD:refs/heads/$BRANCH"
