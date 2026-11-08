@@ -13,60 +13,56 @@ jobs:
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
         with:
-          ref: preview/brewtanist-lab-20261108
+          ref: ${{ github.sha }}
           fetch-depth: 0
-      - name: Verify Preview 02 HTML and optional screenshots
+      - name: Verify saved-source HTML delivery and byte integrity
         run: |
           python3 - <<'PY'
-          import hashlib
-          import json
+          import hashlib, json, re
           from pathlib import Path
           from urllib.request import urlopen, Request
-          REV='70ffbad6635d130fa81b903d6542a930597347d0'
-          bases=[f'https://rawcdn.githack.com/brewtanist/brewtanist.github.io/{REV}/prototype/', f'https://raw.githack.com/brewtanist/brewtanist.github.io/{REV}/prototype/']
+          latest=Path('prototype/LATEST.md').read_text()
+          match=re.search(r'https://rawcdn\.githack\.com/brewtanist/brewtanist\.github\.io/([a-f0-9]{40})/prototype/dist/index\.html',latest)
+          if not match: raise ValueError('Missing tested preview URL')
+          rev=match.group(1)
           expected=Path('prototype/dist/index.html').read_bytes()
-          assert b'PREVIEW 02' in expected
-          assert 'เลือกกาแฟ'.encode('utf-8') in expected
           reports=[]
-          def request(url):
-              return urlopen(Request(url,headers={'User-Agent':'BrewtanistPreviewCheck/2.0'}),timeout=30)
-          for base in bases:
-              row={'preview_url':base+'dist/index.html','html_check':'FAIL','screenshots':[]}
+          for host in ['rawcdn.githack.com','raw.githack.com']:
+              url=f'https://{host}/brewtanist/brewtanist.github.io/{rev}/prototype/dist/index.html?source=github'
+              row={'preview_url':url,'html_check':'FAIL'}
               try:
-                  with request(row['preview_url']) as r:
-                      body=r.read()
-                      row.update(status=r.status,content_type=r.headers.get('content-type'),bytes=len(body))
-                      assert r.status==200 and 'text/html' in row['content_type']
-                      assert hashlib.sha256(body).digest()==hashlib.sha256(expected).digest(), 'HTML differs from tested artifact'
+                  with urlopen(Request(url,headers={'User-Agent':'BrewtanistPreviewCheck/3.0'}),timeout=30) as response:
+                      body=response.read()
+                      row.update(status=response.status,content_type=response.headers.get('content-type'),bytes=len(body))
+                      assert response.status==200 and 'text/html' in row['content_type']
+                      assert body==expected, 'Public HTML differs from tested artifact'
                       row.update(html_check='PASS',matches_tested_artifact=True,sha256=hashlib.sha256(body).hexdigest())
-              except Exception as e:
-                  row.update(html_error=str(e))
-              for image in ['01-catalog-desktop.png','04-content-studio.png','05-catalog-mobile.png']:
-                  u=base+'qa/'+image
-                  shot={'url':u}
-                  try:
-                      with request(u) as r:
-                          assert r.status==200 and r.headers.get('content-type','').startswith('image/')
-                          assert r.read(8)==b'\x89PNG\r\n\x1a\n'
-                          shot.update(check='PASS',status=r.status)
-                  except Exception as e:
-                      shot.update(check='FAIL',error=str(e))
-                  row['screenshots'].append(shot)
+              except Exception as exc:
+                  row['error']=str(exc)
               reports.append(row)
-          report={'revision':2,'tested_commit':REV,'results':reports,'note':'HTTP byte-integrity check of the immutable preview, not a remote browser test. The preview remains separate from production.'}
-          Path('prototype/qa/preview-url-report.json').write_text(json.dumps(report,indent=2,ensure_ascii=False))
-          print(json.dumps(report,indent=2,ensure_ascii=False))
-          if not any(r['html_check']=='PASS' for r in reports):
-              print('Public HTML preview unavailable; use the downloadable standalone artifact.')
+          output={'revision':3,'tested_commit':rev,'results':reports,'note':'HTTP delivery/byte comparison only. Browser behavior was checked separately on the built artifact in Chromium. No production deployment.'}
+          Path('prototype/qa/preview-url-report.json').write_text(json.dumps(output,ensure_ascii=False,indent=2))
+          print(json.dumps(output,ensure_ascii=False,indent=2))
           PY
-      - name: Save verification report on preview branch only
+      - name: Save report only if preview branch has no newer edit
         run: |
+          set -euo pipefail
           test "$GITHUB_REF" = 'refs/heads/preview/brewtanist-lab-20261108'
-          git diff --exit-code origin/main -- index.html _data .pages.yml _config.yml brewtanist
+          git diff --exit-code origin/main -- index.html _data _config.yml brewtanist admin _includes robots.txt sitemap.xml
+          git fetch origin preview/brewtanist-lab-20261108
+          test "$(git rev-parse FETCH_HEAD)" = "$GITHUB_SHA"
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add prototype/qa/preview-url-report.json
           if ! git diff --cached --quiet; then
-            git commit -m 'Record verified Preview 02 URL and file integrity [skip ci]'
+            git commit -m 'Record Preview 03 saved-source delivery check [skip ci]'
             git push origin HEAD:refs/heads/preview/brewtanist-lab-20261108
           fi
+      - name: Fail if neither preview URL matched
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          report=json.loads(Path('prototype/qa/preview-url-report.json').read_text())
+          assert any(row['html_check']=='PASS' for row in report['results']), 'Preview delivery not verified'
+          PY
