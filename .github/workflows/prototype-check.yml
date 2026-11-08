@@ -7,6 +7,8 @@ on:
       - 'prototype/template.html'
       - 'prototype/build.py'
       - 'prototype/test_preview.py'
+      - 'prototype/copy.th.json'
+      - 'prototype/refine_copy.py'
       - '.github/workflows/prototype-check.yml'
 
 permissions:
@@ -31,27 +33,17 @@ jobs:
         run: |
           test "$GITHUB_REF" = 'refs/heads/preview/brewtanist-lab-20261108'
           git diff --exit-code origin/main -- index.html _data .pages.yml _config.yml brewtanist
-      - name: Normalize catalogue and keyboard anchor handling
+      - name: Refine preview language without changing source facts
         run: |
-          python3 - <<'PY'
-          from pathlib import Path
-          p = Path('prototype/template.html')
-          s = p.read_text()
-          s = s.replace('href="#blend-list"', 'href="#/catalog" data-scroll="blend-list"')
-          marker = "const f=e.target.closest('[data-filter]');"
-          if 'const jump=e.target.closest' not in s:
-              s = s.replace(marker, "const jump=e.target.closest('[data-scroll]');if(jump){e.preventDefault();document.getElementById(jump.dataset.scroll)?.scrollIntoView({behavior:'smooth'});return;}\n "+marker)
-          if "document.querySelector('.skip').addEventListener" not in s:
-              s = s.replace("window.addEventListener('hashchange',()=>render());", "document.querySelector('.skip').addEventListener('click',e=>{e.preventDefault();document.getElementById('app').focus();});\nwindow.addEventListener('hashchange',()=>render());")
-          p.write_text(s)
-          PY
+          python3 prototype/refine_copy.py
+          python3 -m py_compile prototype/refine_copy.py prototype/build.py prototype/test_preview.py
       - name: Build single-file prototype from saved brand assets
         run: python3 prototype/build.py
       - name: Install browser testing tools
         run: |
           python3 -m pip install --disable-pip-version-check 'playwright==1.56.0'
           python3 -m playwright install --with-deps chromium
-      - name: Exercise catalogue, finder, editor and mobile layouts
+      - name: Exercise catalogue, finder, owner drafts and mobile layouts
         run: python3 prototype/test_preview.py
       - name: Upload review bundle and test evidence
         if: always()
@@ -61,6 +53,7 @@ jobs:
           path: |
             prototype/dist/
             prototype/qa/
+            prototype/VOICE.md
           retention-days: 30
       - name: Save tested preview on prototype branch only
         run: |
@@ -69,11 +62,12 @@ jobs:
           git diff --exit-code origin/main -- index.html _data .pages.yml _config.yml brewtanist
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add prototype/template.html prototype/dist prototype/qa
+          git add prototype/template.html prototype/build.py prototype/test_preview.py prototype/VOICE.md prototype/dist prototype/qa
           if ! git diff --cached --quiet; then
-            git commit -m 'Save tested Brewtanist preview and browser evidence [skip ci]'
+            git commit -m 'Save natural Thai preview, draft-preservation tests and screenshots [skip ci]'
             git push origin HEAD:refs/heads/preview/brewtanist-lab-20261108
           fi
-          echo '## Prototype reviewed — production was not deployed' >> "$GITHUB_STEP_SUMMARY"
-          echo 'The preview HTML contains owned images, a catalogue, product routes, comparison, rule-based Coffee Finder and a local-only editing studio.' >> "$GITHUB_STEP_SUMMARY"
-          echo 'No Pages deployment action or main-branch write is used.' >> "$GITHUB_STEP_SUMMARY"
+          echo '## Brewtanist Preview 02 — natural Thai copy' >> "$GITHUB_STEP_SUMMARY"
+          echo 'The catalogue, product pages, comparison, Coffee Finder and local editor now use direct conversational Thai.' >> "$GITHUB_STEP_SUMMARY"
+          echo 'Source facts and production files are unchanged. Existing owner-written local drafts are preserved.' >> "$GITHUB_STEP_SUMMARY"
+          echo 'No production deployment, checkout, tracker or main-branch write was used.' >> "$GITHUB_STEP_SUMMARY"
