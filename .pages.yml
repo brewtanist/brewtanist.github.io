@@ -1,58 +1,79 @@
-# Preview-branch configuration only. Do not copy this file onto main.
-# All editable content is under prototype/. No production publish action is exposed.
+# PREVIEW BRANCH ONLY. Do not merge this configuration to production.
+media:
+  input: prototype/media
+  output: /prototype/media
+  extensions: [jpg, jpeg, png, webp]
+  rename: random
 settings:
   content:
     merge: true
-  commit:
-    templates:
-      update: "Save Brewtanist preview copy: {path}"
 content:
-  - name: preview_copy
-    label: "ร่างเว็บใหม่ · แก้ข้อความ"
+  - name: preview-copy
+    label: "01 · ข้อความหน้าแรกและคำอธิบายกาแฟ"
     type: file
     path: prototype/copy.th.json
     format: json
     fields:
-      - name: title
-        label: "หัวเรื่องหน้าแรก"
-        type: text
-        required: true
-        description: "ขึ้นบรรทัดใหม่ได้ ข้อความนี้เปลี่ยนเฉพาะเว็บตัวอย่าง"
-        options: { maxlength: 160 }
-      - name: intro
-        label: "คำแนะนำใต้หัวเรื่อง"
-        type: text
-        required: true
-        options: { maxlength: 2000 }
-      - name: sourceDescription
-        label: "ข้อความส่วนเลือกกาแฟกลับบ้าน"
-        type: text
-        required: true
-        options: { maxlength: 2000 }
+      - {name: title, label: "หัวเรื่องหน้าแรก", type: text, required: true}
+      - {name: intro, label: "ข้อความใต้หัวเรื่อง", type: text, required: true}
+      - {name: sourceDescription, label: "ข้อความชวนซื้อกาแฟกลับบ้าน", type: text, required: true}
       - name: descriptions
-        label: "คำอธิบายกาแฟ"
+        label: "คำอธิบายกาแฟแต่ละตัว"
         type: object
         fields:
-          - name: plantman
-            label: "Mr. Plantman"
-            type: text
-            required: true
-            options: { maxlength: 2000 }
-          - name: ozmo
-            label: "Mr. Ozmo"
-            type: text
-            required: true
-            options: { maxlength: 2000 }
-          - name: lazybug
-            label: "Ms. Lazybug"
-            type: text
-            required: true
-            options: { maxlength: 2000 }
-      - name: revision
-        label: "รุ่นข้อความตั้งต้น"
-        type: number
-        readonly: true
-      - name: editorial_notes
-        label: "ขอบเขตข้อมูลที่ใช้"
-        type: text
-        readonly: true
+          - {name: plantman, label: "Mr. Plantman", type: text, required: true}
+          - {name: ozmo, label: "Mr. Ozmo", type: text, required: true}
+          - {name: lazybug, label: "Ms. Lazybug", type: text, required: true}
+      - {name: revision, label: "รุ่นข้อความ", type: number, readonly: true}
+      - {name: editorial_notes, label: "หมายเหตุข้อมูลต้นทาง", type: text, readonly: true}
+  - name: preview-products
+    label: "02 · รูปและข้อมูลสินค้า"
+    type: file
+    path: prototype/products.json
+    format: json
+    fields:
+      - {name: schemaVersion, label: "รุ่นข้อมูล", type: number, readonly: true}
+      - name: items
+        label: "กาแฟ 3 ตัว · เปลี่ยนลำดับหรือซ่อนได้"
+        type: object
+        list: true
+        description: "แก้เฉพาะสามรายการเดิม ยังไม่เพิ่มหรือลบรหัสสินค้า ราคาและรายละเอียดที่ไม่ทราบให้เว้นว่าง คำอธิบายสินค้าอยู่ในเมนู 01"
+        fields:
+          - {name: id, label: "รหัสสินค้า (ไม่เปลี่ยน)", type: string, readonly: true}
+          - {name: visible, label: "แสดงสินค้านี้ในร่าง", type: boolean}
+          - {name: name, label: "ชื่อสินค้า", type: string, required: true}
+          - {name: profile, label: "ชนิดกาแฟและระดับคั่ว", type: string, required: true}
+          - {name: notes, label: "Tasting notes", type: string, required: true}
+          - {name: image, label: "รูปสินค้า · เลือกจากคลังหรืออัปโหลด", type: image, required: true}
+          - {name: alt, label: "คำอธิบายรูป", type: string, required: true}
+          - name: theme
+            label: "สีพื้นหลัง"
+            type: select
+            options:
+              values:
+                - {name: plantman, label: "เหลือง Plantman"}
+                - {name: ozmo, label: "ฟ้า Ozmo"}
+                - {name: lazybug, label: "ชมพู Lazybug"}
+          - {name: price, label: "ราคา (บาท) · ไม่ทราบให้เว้นว่าง", type: string, description: "ใส่เฉพาะตัวเลข เช่น 250 หรือ 250.50 เป็นราคาในร่าง ไม่เปิดรับเงิน"}
+          - {name: sizes, label: "ขนาดบรรจุที่ขาย", type: string}
+          - {name: grinding, label: "ตัวเลือกการบดที่ร้านมี", type: string}
+          - {name: origin, label: "แหล่งปลูกหรือส่วนผสมที่ตรวจแล้ว", type: string}
+          - {name: productUrl, label: "ลิงก์สินค้ารายตัวบน Shopee", type: string, description: "https://shopee.co.th/... เท่านั้น เว้นว่างเพื่อใช้ลิงก์หน้าร้านเดิม"}
+          - name: tasteTags
+            label: "กลิ่นรสสำหรับช่วยเลือกกาแฟ"
+            type: select
+            options:
+              multiple: true
+              values:
+                - {name: chocolate, label: "ช็อกโกแลต / ถั่ว"}
+                - {name: sweet, label: "วานิลลา / รัมเรซิน"}
+                - {name: fruity, label: "ดอกไม้ / ผลไม้ / ชา"}
+          - name: drinkTags
+            label: "วิธีดื่มที่ร้านตรวจแล้ว"
+            type: select
+            options:
+              multiple: true
+              values:
+                - {name: black, label: "กาแฟดำ"}
+                - {name: milk, label: "กาแฟนม"}
+          - {name: verified, label: "ฉันตรวจข้อมูลและกฎแนะนำของสินค้านี้แล้ว (เฉพาะร่าง)", type: boolean}

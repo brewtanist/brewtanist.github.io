@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "items": [
+    {
+      "id": "plantman", "name": "Mr. Plantman", "visible": true,
+      "profile": "Espresso blend · Medium–Dark",
+      "notes": "Dark chocolate · Caramel · Nutty",
+      "image": "/prototype/media/plantman-3d.webp",
+      "alt": "ภาพ 3D ถุงเมล็ดกาแฟ Mr. Plantman ของ Brewtanist",
+      "theme": "plantman", "price": "", "sizes": "", "grinding": "", "origin": "", "productUrl": "",
+      "tasteTags": ["chocolate"], "drinkTags": ["black", "milk"], "verified": false
+    },
+    {
+      "id": "ozmo", "name": "Mr. Ozmo", "visible": true,
+      "profile": "Espresso blend · Medium–Dark",
+      "notes": "Vanilla · Rum-Raisin · Milk Chocolate",
+      "image": "/prototype/media/ozmo-3d.webp",
+      "alt": "ภาพ 3D ถุงเมล็ดกาแฟ Mr. Ozmo ของ Brewtanist",
+      "theme": "ozmo", "price": "", "sizes": "", "grinding": "", "origin": "", "productUrl": "",
+      "tasteTags": ["chocolate", "sweet"], "drinkTags": [], "verified": false
+    },
+    {
+      "id": "lazybug", "name": "Ms. Lazybug", "visible": true,
+      "profile": "Espresso blend · Light–Medium",
+      "notes": "Floral · Fruity · Tea-like",
+      "image": "/prototype/media/lazybug-3d.webp",
+      "alt": "ภาพ 3D ถุงเมล็ดกาแฟ Ms. Lazybug ของ Brewtanist",
+      "theme": "lazybug", "price": "", "sizes": "", "grinding": "", "origin": "", "productUrl": "",
+      "tasteTags": ["fruity"], "drinkTags": ["black"], "verified": false
+    }
+  ]
+}

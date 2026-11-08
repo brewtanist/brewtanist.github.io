@@ -1,91 +1,73 @@
-"""Build a self-contained review prototype. Never writes production content."""
+"""Build one-file preview from saved draft copy/products. No production writes."""
 from pathlib import Path
-from urllib.parse import urlsplit
-import base64
 import hashlib
 import json
-import mimetypes
-import re
+import subprocess
+from catalog_data import load_products, embedded_image, warnings_for
 
 ROOT = Path(__file__).resolve().parents[1]
-OUT = ROOT / 'prototype' / 'dist'
+OUT = ROOT / 'prototype/dist'
 SOURCE_COMMIT = 'd5fb938873581dbc21ad1fafcdc9d89a5695313d'
 
-def asset(path: str) -> str:
-    # Only read owned local raster assets already present in this repository.
-    target = (ROOT / path.lstrip('/')).resolve()
-    allowed = (ROOT / 'brewtanist' / 'assets').resolve()
-    if not target.is_relative_to(allowed) or target.suffix.lower() not in {'.jpg', '.jpeg', '.png', '.webp'}:
-        raise ValueError('Unsupported image: ' + path)
-    data = target.read_bytes()
-    if len(data) > 8_000_000:
-        raise ValueError('Image exceeds the prototype budget: ' + path)
-    mime = mimetypes.guess_type(str(target))[0]
-    return 'data:' + mime + ';base64,' + base64.b64encode(data).decode('ascii')
-
-def main() -> None:
-    src = ROOT / '_data' / 'brewtanist'
-    products = json.loads((src / 'products.json').read_text(encoding='utf-8'))
-    settings = json.loads((src / 'settings.json').read_text(encoding='utf-8'))
-    home = json.loads((src / 'home.json').read_text(encoding='utf-8'))
-    ids = {'Mr. Plantman': 'plantman', 'Mr. Ozmo': 'ozmo', 'Ms. Lazybug': 'lazybug'}
+def main():
+    source = ROOT / '_data/brewtanist'
+    original = json.loads((source / 'products.json').read_text(encoding='utf-8'))
+    settings = json.loads((source / 'settings.json').read_text(encoding='utf-8'))
+    home = json.loads((source / 'home.json').read_text(encoding='utf-8'))
+    copy = json.loads((ROOT / 'prototype/copy.th.json').read_text(encoding='utf-8'))
+    from check_cms import validate_copy
+    validate_copy(copy)
+    rows = load_products(ROOT)
     items = []
-    for p in products['items']:
-        if not p.get('visible', True):
-            continue
-        if p['name'] not in ids:
-            raise ValueError('New product needs explicit review: ' + p['name'])
-        notes = p['notes'].lower()
-        taste = []
-        if any(t in notes for t in ('chocolate', 'nutty')):
-            taste.append('chocolate')
-        if any(t in notes for t in ('vanilla', 'rum-raisin')):
-            taste.append('sweet')
-        if any(t in notes for t in ('floral', 'fruity', 'tea-like')):
-            taste.append('fruity')
-        drinks = [k for k, word in [('black', 'กาแฟดำ'), ('milk', 'กาแฟนม')] if word in p['description']]
-        items.append({
-            'id': ids[p['name']], 'name': p['name'], 'profile': p['profile'],
-            'notes': p['notes'], 'description': p['description'],
-            'image': asset(p['image']), 'originalImage': p['image'], 'alt': p['alt'],
-            'theme': p['theme'], 'format': 'beans', 'visible': True,
-            'price': '', 'sizes': '', 'grinding': '', 'origin': '', 'productUrl': '',
-            'tasteTags': taste, 'drinkTags': drinks,
-            'verified': False,
-            'source': '_data/brewtanist/products.json'
-        })
-    if len(items) != 3:
-        raise ValueError('Expected the three reviewed house blends')
+    for row in rows:
+        item = dict(row)
+        item.update(description=copy['descriptions'][row['id']], image=embedded_image(row['image'], ROOT), originalImage=row['image'], format='beans', source='prototype/products.json')
+        items.append(item)
+    ids = {'Mr. Plantman': 'plantman', 'Mr. Ozmo': 'ozmo', 'Ms. Lazybug': 'lazybug'}
+    previous = {
+        'title': 'กาแฟที่ชอบ\nในแบบของคุณ',
+        'intro': 'เริ่มจากรสชาติที่คุ้นเคย หรือค่อย ๆ ลองอะไรใหม่ เลือกสำรวจ House Blend ทั้งสามคาแรกเตอร์ของ Brewtanist ได้ที่นี่',
+        'descriptions': {ids[p['name']]: p['description'] for p in original['items'] if p['name'] in ids}
+    }
+    image_digests = {row['id']: hashlib.sha256(items[i]['image'].encode()).hexdigest() for i, row in enumerate(rows)}
+    revision = hashlib.sha256(json.dumps({'copy': copy, 'rows': rows, 'images': image_digests}, ensure_ascii=False, sort_keys=True).encode()).hexdigest()
     data = {
         'schemaVersion': 1, 'sourceCommit': SOURCE_COMMIT,
         'brand': settings['brand'], 'descriptor': settings['descriptor'],
-        'title': 'กาแฟที่ชอบ\nในแบบของคุณ',
-        'intro': 'เริ่มจากรสชาติที่คุ้นเคย หรือค่อย ๆ ลองอะไรใหม่ เลือกสำรวจ House Blend ทั้งสามคาแรกเตอร์ของ Brewtanist ได้ที่นี่',
-        'sourceDescription': products['description'],
+        'title': copy['title'], 'intro': copy['intro'], 'sourceDescription': copy['sourceDescription'],
         'shopUrl': settings['shopee'], 'phone': settings['phone'],
-        'heroImage': asset(home['hero_image']), 'heroAlt': home['hero_alt'],
-        'products': items
+        'heroImage': embedded_image(home['hero_image'], ROOT, owned=True), 'heroAlt': home['hero_alt'],
+        'products': items, 'previousCopy': previous, 'copyRevision': copy['revision'], 'catalogRevision': revision
     }
-    # Approved copy-only overlay; source notes, roast and finder tags stay unchanged.
-    copy = json.loads((ROOT / 'prototype' / 'copy.th.json').read_text(encoding='utf-8'))
-    if set(copy['descriptions']) != {p['id'] for p in items}:
-        raise ValueError('Copy must match exactly the saved product ids')
-    data['previousCopy'] = {'title': data['title'], 'intro': data['intro'], 'descriptions': {p['id']: p['description'] for p in items}}
-    for key in ['title', 'intro', 'sourceDescription']:
-        if not isinstance(copy[key], str) or not copy[key].strip():
-            raise ValueError('Empty editorial copy: ' + key)
-        data[key] = copy[key]
-    for item in items:
-        item['description'] = copy['descriptions'][item['id']]
-    data['copyRevision'] = copy['revision']
-    raw_json = json.dumps(data, ensure_ascii=False, separators=(',', ':')).replace('<', '\\u003c')
-    template = (ROOT / 'prototype' / 'template.html').read_text(encoding='utf-8')
+    raw = json.dumps(data, ensure_ascii=False, separators=(',', ':')).replace('<', '\\u003c')
+    template = (ROOT / 'prototype/template.html').read_text(encoding='utf-8')
     if template.count('__CATALOG_JSON__') != 1:
-        raise ValueError('Template must contain one data placeholder')
+        raise ValueError('Expected exactly one seed placeholder')
+    # A saved-source view must not be masked by older browser-only experiments.
+    marker = "if (!document.body.dataset.snapshot) {"
+    replacement = "if (!document.body.dataset.snapshot && new URLSearchParams(location.search).get('source') !== 'github') {"
+    if marker in template:
+        template = template.replace(marker, replacement)
+    elif replacement not in template:
+        raise ValueError('Cannot locate local-draft restore guard')
+    template = template.replace('BREWTANIST / PREVIEW 02', 'BREWTANIST / PREVIEW 03')
+    # Purely local editor retains its label; online edits use authenticated Pages CMS.
+    needle = '<h1>แก้ข้อความและรูป</h1>'
+    # Add the same small entry on all views, outside the router-managed DOM.
+    entry = '<div class="wrap" style="padding:12px 0;font-size:12px"><a class="text-link" href="https://app.pagescms.org/" target="_blank" rel="noopener noreferrer">แก้ร่างที่เก็บใน GitHub ↗</a> <span class="muted">· เลือก branch preview/brewtanist-lab-20261108 · หน้าแก้ในเว็บตัวอย่างเก็บเฉพาะเครื่องนี้</span></div>'
+    template = template.replace('<main class="wrap" id="app"', entry + '<main class="wrap" id="app"', 1)
+    html = template.replace('__CATALOG_JSON__', raw)
     OUT.mkdir(parents=True, exist_ok=True)
-    (OUT / 'index.html').write_text(template.replace('__CATALOG_JSON__', raw_json), encoding='utf-8')
+    (OUT / 'index.html').write_text(html, encoding='utf-8')
     (OUT / 'robots.txt').write_text('User-agent: *\nDisallow: /\n', encoding='utf-8')
-    report = {'source_commit': SOURCE_COMMIT, 'content_source_sha256': hashlib.sha256((src / 'products.json').read_bytes()).hexdigest(), 'products': [p['name'] for p in items], 'embedded_images': len(items) + 1, 'checkout': False, 'tracking': False, 'production_files_changed': False, 'unconfirmed_fields': ['price', 'sizes', 'grinding', 'origin', 'productUrl', 'finder rules'], 'note': 'Flavor/drink tags derive from saved notes/description only; owner verification is still required.'}
+    report = {
+        'input_commit': subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip(),
+        'catalog_revision': revision, 'content_source': ['prototype/copy.th.json', 'prototype/products.json', 'prototype/media/'],
+        'products': warnings_for(rows), 'embedded_images': len(items) + 1,
+        'checkout': False, 'tracking': False, 'production_files_changed': False,
+        'html_sha256': hashlib.sha256(html.encode()).hexdigest(),
+        'note': 'Draft data only. Optional unknown values stay empty. Owner login in Pages CMS is not tested by this build.'
+    }
     (OUT / 'build-report.json').write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding='utf-8')
     print(json.dumps(report, ensure_ascii=False, indent=2))
 
