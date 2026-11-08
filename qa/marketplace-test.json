@@ -1,0 +1,29 @@
+{
+  "result": "PASS",
+  "checks": [
+    "17 sourced listing IDs, 14 additions, no copied snapshot price/stock; invalid data rejected",
+    "Seven existing CMS forms retained and an eighth Shopee form added",
+    "All-products page renders 17 listings with working local assets",
+    "Search, category filter and empty state",
+    "Six category routes show 3/6/3/1/2/2 matching products",
+    "Category switching navigates rather than hiding other categories",
+    "Every listing opens its detail page and ID-mapped Shopee link; no price assertions",
+    "Finder links to capsule category without copying bean taste rules",
+    "Catalogue, category and long product names fit four viewport widths",
+    "Listing information and links readable without JavaScript",
+    "No uncaught browser JavaScript errors"
+  ],
+  "live_shopee_access": false,
+  "live_render_deployment": false,
+  "authenticated_cms_save_tested": false,
+  "checks_count": 11,
+  "source_listings": 17,
+  "additional_listings": 14,
+  "viewport_widths": [
+    320,
+    390,
+    768,
+    1440
+  ],
+  "individual_photos_missing": 14
+}

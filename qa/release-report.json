@@ -2,10 +2,6 @@
   "result": "PASS",
   "checks": [
     {
-      "check": "Initial release preserves source product/business facts and leaves unconfirmed commercial fields empty",
-      "result": "PASS"
-    },
-    {
       "check": "Existing seven CMS forms preserved; shared product data; catalogue excluded from GitHub Pages",
       "result": "PASS"
     },
@@ -64,7 +60,7 @@
   ],
   "authenticated_pages_cms_save_tested": false,
   "catalogue_host_deployment_tested": false,
-  "checks_count": 15,
+  "checks_count": 14,
   "finder_combinations": 36,
   "viewport_widths": [
     320,

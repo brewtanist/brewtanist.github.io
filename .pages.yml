@@ -479,6 +479,75 @@ content:
     label: ที่อยู่เว็บกาแฟกลับบ้าน (ผู้ดูแลเปิดหลังตรวจ Hosting)
     type: string
     readonly: true
+- name: marketplace
+  label: 08 · สินค้าจาก Shopee
+  type: file
+  path: _data/brewtanist/marketplace.json
+  format: json
+  fields:
+  - name: title
+    label: หัวเรื่องสินค้าทั้งหมด
+    type: text
+    required: true
+  - name: intro
+    label: คำแนะนำใต้หัวเรื่อง
+    type: text
+  - name: notice
+    label: หมายเหตุก่อนสั่งซื้อ
+    type: text
+  - name: sourceNote
+    label: ที่มาและข้อจำกัดของข้อมูล
+    type: text
+    readonly: true
+  - name: items
+    label: สินค้าจาก Shopee (รายการเดิมให้ซ่อนแทนลบ)
+    type: object
+    list: true
+    fields:
+    - name: id
+      label: รหัสหน้าเว็บ
+      type: string
+      readonly: true
+    - name: houseId
+      label: อ้างอิง House Blend เดิม
+      type: string
+      readonly: true
+    - name: name
+      label: ชื่อสินค้า
+      type: string
+      required: true
+    - name: category
+      label: หมวดสินค้า
+      type: select
+      options:
+        values:
+        - house
+        - single-origin
+        - capsules
+        - drip
+        - gifts
+        - goods
+    - name: shopeeItemId
+      label: รหัสสินค้า Shopee (ร้าน 985117757)
+      type: string
+      readonly: true
+    - name: visible
+      label: แสดงในเว็บไซต์
+      type: boolean
+    - name: description
+      label: คำอธิบายสินค้า
+      type: text
+      required: true
+    - name: details
+      label: รายละเอียดที่ตรวจจากสินค้าแล้ว
+      type: string
+      list: true
+    - name: image
+      label: ภาพจริงของสินค้านี้ (เว้นว่างได้ ไม่ใช้ภาพของตัวอื่นแทน)
+      type: image
+    - name: alt
+      label: คำอธิบายภาพ
+      type: string
 settings:
   content:
     merge: true

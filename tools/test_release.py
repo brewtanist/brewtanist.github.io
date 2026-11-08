@@ -44,7 +44,7 @@ try:
         assert settings['catalogue_url']=='';record('Initial release preserves source product/business facts and leaves unconfirmed commercial fields empty')
     if settings.get('catalogue_url'):
         u=urlsplit(settings['catalogue_url']);assert u.scheme=='https' and u.hostname and not u.hostname.endswith('.invalid') and 'githack' not in u.hostname
-    cms=yaml.safe_load((ROOT/'.pages.yml').read_text());assert len(cms['content'])==7;assert cms['media']['input']=='brewtanist/assets'
+    cms=yaml.safe_load((ROOT/'.pages.yml').read_text());assert len(cms['content'])==8;assert any(x['name']=='marketplace' for x in cms['content']);assert cms['media']['input']=='brewtanist/assets'
     fields=next(f for f in next(c for c in cms['content'] if c['name']=='products')['fields'] if f['name']=='items')['fields'];assert {'id','image','notes','price','productUrl','tasteTags','drinkTags','verified'}<={f['name'] for f in fields}
     assert cms['settings']['content']['merge'] is True;assert 'catalogue' in yaml.safe_load((ROOT/'_config.yml').read_text())['exclude']
     record('Existing seven CMS forms preserved; shared product data; catalogue excluded from GitHub Pages')
