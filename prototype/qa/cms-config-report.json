@@ -1,23 +1,76 @@
 {
   "result": "PASS",
   "branch": "preview/brewtanist-lab-20261108",
-  "editable_file": "prototype/copy.th.json",
-  "editable_texts": [
-    "title",
-    "intro",
-    "sourceDescription",
-    "descriptions.plantman",
-    "descriptions.ozmo",
-    "descriptions.lazybug"
+  "editable_files": [
+    "prototype/copy.th.json",
+    "prototype/products.json"
   ],
+  "media_folder": "prototype/media",
   "negative_tests": [
-    "invalid copy rejected",
-    "invalid copy rejected",
-    "invalid copy rejected",
-    "production content path rejected"
+    "invalid copy title",
+    "invalid copy intro",
+    "invalid copy revision",
+    "invalid product price: -5",
+    "invalid product price: 0",
+    "invalid product price: 250 บาท",
+    "invalid product productUrl: javascript:alert(1)",
+    "invalid product productUrl: https://shopee.co.th.evil.example/p",
+    "invalid product productUrl: https://user@shopee.co.th/p",
+    "invalid product image: /prototype/media/../../.pages.yml",
+    "invalid product image: https://example.com/a.png",
+    "invalid product image: /prototype/media/missing.png",
+    "invalid product theme: red",
+    "invalid product tasteTags: ['unknown']",
+    "invalid product visible: true",
+    "duplicate product id",
+    "missing product",
+    "production edit path",
+    "production media folder"
+  ],
+  "negative_tests_count": 19,
+  "optional_null_fields_supported": true,
+  "products": [
+    {
+      "id": "plantman",
+      "name": "Mr. Plantman",
+      "visible": true,
+      "unconfirmed": [
+        "price",
+        "sizes",
+        "grinding",
+        "origin",
+        "productUrl"
+      ],
+      "owner_reviewed": false
+    },
+    {
+      "id": "ozmo",
+      "name": "Mr. Ozmo",
+      "visible": true,
+      "unconfirmed": [
+        "price",
+        "sizes",
+        "grinding",
+        "origin",
+        "productUrl"
+      ],
+      "owner_reviewed": false
+    },
+    {
+      "id": "lazybug",
+      "name": "Ms. Lazybug",
+      "visible": true,
+      "unconfirmed": [
+        "price",
+        "sizes",
+        "grinding",
+        "origin",
+        "productUrl"
+      ],
+      "owner_reviewed": false
+    }
   ],
   "production_content_matches_main": true,
-  "preview_cms_configuration_differs_from_main_by_design": true,
   "pages_cms_owner_login_tested": false,
-  "note": "Configuration and build integration checks only. Browser login and owner Save through Pages CMS still need an owner-session test. No merge/publish/branch-protection setting has been applied."
+  "note": "Configuration/build checks only, not an authenticated Pages CMS browser test. No branch-protection or production deployment change."
 }

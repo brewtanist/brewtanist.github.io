@@ -2,15 +2,19 @@
   "result": "PASS",
   "checks": [
     {
-      "check": "Catalogue: three source products, embedded images, noindex, desktop layout",
+      "check": "Built preview matches saved GitHub copy, product data, order and visibility",
       "result": "PASS"
     },
     {
-      "check": "Search, flavor filters and in-page catalogue anchor",
+      "check": "Saved-source catalogue, owned images, noindex and desktop layout",
       "result": "PASS"
     },
     {
-      "check": "Product route, unknown information and accessible image zoom",
+      "check": "Search, empty state, flavor filtering and catalogue navigation",
+      "result": "PASS"
+    },
+    {
+      "check": "All product pages and keyboard-accessible image zoom",
       "result": "PASS"
     },
     {
@@ -18,48 +22,52 @@
       "result": "PASS"
     },
     {
-      "check": "Coffee Finder: complete three-step route and explainable recommendation",
+      "check": "Coffee Finder: 36 answer combinations follow saved rules; no bean fallback for capsules",
       "result": "PASS"
     },
     {
-      "check": "All 36 answer combinations, ambiguity and capsule/Drip Bag fallback",
+      "check": "Local editor, live preview, draft save and reload",
       "result": "PASS"
     },
     {
-      "check": "Content Studio: live iframe preview, local draft save and reload",
+      "check": "Unsafe URLs rejected, copy escaped, raster image replacement works",
       "result": "PASS"
     },
     {
-      "check": "Unsafe URL rejection, escaped copy and real raster image replacement",
+      "check": "JSON round-trip and exported HTML opens offline with images",
       "result": "PASS"
     },
     {
-      "check": "JSON export/import and fully offline single-file HTML export including images",
+      "check": "GitHub saved-source view bypasses stale local drafts without deleting them",
       "result": "PASS"
     },
     {
-      "check": "Hidden products, direct-link fallback and 320/390/768/1440px catalogue layout",
+      "check": "All-hidden catalogue and hidden-product direct links handled safely",
       "result": "PASS"
     },
     {
-      "check": "Mobile product, finder and editing studio layouts",
+      "check": "Saved product and uploaded raster flow through builder and browser; all test inputs restored",
       "result": "PASS"
     },
     {
-      "check": "Saved CMS copy rendered exactly; source product facts unchanged",
+      "check": "Saved catalogue fits 320, 390, 768 and 1440px viewports",
       "result": "PASS"
     },
     {
-      "check": "Saved owner drafts preserved while previous default copy is refreshed",
+      "check": "Mobile finder, product and editing studio layouts",
       "result": "PASS"
     },
     {
       "check": "No uncaught browser JavaScript errors",
       "result": "PASS"
+    },
+    {
+      "check": "Production files and actual saved draft inputs unchanged by tests",
+      "result": "PASS"
     }
   ],
-  "production_files_unchanged": true,
-  "checks_count": 14,
+  "pages_cms_owner_login_tested": false,
+  "checks_count": 16,
   "finder_combinations": 36,
   "viewport_widths": [
     320,
@@ -67,5 +75,8 @@
     768,
     1440
   ],
-  "notes": "Automated Chromium tests only. Not an iOS Safari test, human design review, Pages CMS login/Save test or production checkout test."
+  "production_files_unchanged": true,
+  "actual_cms_save_tested": false,
+  "file_save_and_upload_simulation_tested": true,
+  "note": "Automated Chromium and file-pipeline checks. No owner-session Pages CMS Save, iPhone Safari or checkout test."
 }
