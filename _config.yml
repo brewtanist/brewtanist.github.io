@@ -1,11 +1,15 @@
 title: The Brewtanist Cafe & Coffee Roaster
 url: https://brewtanist.github.io
-baseurl: ""
+baseurl: ''
 encoding: utf-8
 exclude:
-  - README.txt
-  - EDITING.md
-  - Gemfile
-  - Gemfile.lock
-
-  - MIGRATION.md
+- README.txt
+- EDITING.md
+- Gemfile
+- Gemfile.lock
+- MIGRATION.md
+- catalogue
+- tools
+- qa
+- render.yaml
+- RELEASE.md

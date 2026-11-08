@@ -9,7 +9,15 @@
   "opening_days": "เปิดทุกวัน",
   "opens": "08:00",
   "closes": "17:00",
-  "days": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+  "days": [
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+    "Sunday"
+  ],
   "payment": "เงินสด · PromptPay · QR",
   "maps": "https://maps.google.com/maps?cid=7406394049590662743",
   "facebook": "https://www.facebook.com/Brewtanist",
@@ -17,6 +25,7 @@
   "tiktok": "https://www.tiktok.com/@brewtanist",
   "shopee": "https://shopee.co.th/brewtanist",
   "seo_title": "The Brewtanist | Specialty Coffee & Roaster ปราจีนบุรี 304",
-  "seo_description": "The Brewtanist คาเฟ่และโรงคั่วกาแฟ Specialty Coffee ในศรีมหาโพธิ ปราจีนบุรี ภายในปั๊ม Shell คลองรั้ง เส้นทาง 304 พร้อม Pour Over, Matcha และเบเกอรี่",
-  "social_image": "/brewtanist/assets/brewtanist-exterior.jpg"
+  "seo_description": "Brewtanist คาเฟ่และโรงคั่วกาแฟในศรีมหาโพธิ ปราจีนบุรี อยู่ในปั๊ม Shell คลองรั้ง ถนน 304 มี Espresso กาแฟดริป มัทฉะ เบเกอรี่ และเมล็ดกาแฟกลับบ้าน",
+  "social_image": "/brewtanist/assets/brewtanist-exterior.jpg",
+  "catalogue_url": ""
 }
