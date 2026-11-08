@@ -1,0 +1,63 @@
+{
+  "result": "PASS",
+  "checks": [
+    {
+      "check": "Catalogue: three source products, embedded images, noindex, desktop layout",
+      "result": "PASS"
+    },
+    {
+      "check": "Search, flavor filters and in-page catalogue anchor",
+      "result": "PASS"
+    },
+    {
+      "check": "Product route, unknown information and accessible image zoom",
+      "result": "PASS"
+    },
+    {
+      "check": "Select, compare and remove products",
+      "result": "PASS"
+    },
+    {
+      "check": "Coffee Finder: complete three-step route and explainable recommendation",
+      "result": "PASS"
+    },
+    {
+      "check": "All 36 answer combinations, ambiguity and capsule/Drip Bag fallback",
+      "result": "PASS"
+    },
+    {
+      "check": "Content Studio: live iframe preview, local draft save and reload",
+      "result": "PASS"
+    },
+    {
+      "check": "Unsafe URL rejection, escaped copy and real raster image replacement",
+      "result": "PASS"
+    },
+    {
+      "check": "JSON export/import and fully offline single-file HTML export including images",
+      "result": "PASS"
+    },
+    {
+      "check": "Hidden products, direct-link fallback and 320/390/768/1440px catalogue layout",
+      "result": "PASS"
+    },
+    {
+      "check": "Mobile product, finder and editing studio layouts",
+      "result": "PASS"
+    },
+    {
+      "check": "No uncaught browser JavaScript errors",
+      "result": "PASS"
+    }
+  ],
+  "production_files_unchanged": true,
+  "checks_count": 12,
+  "finder_combinations": 36,
+  "viewport_widths": [
+    320,
+    390,
+    768,
+    1440
+  ],
+  "notes": "Automated Chromium tests only. Not an iOS Safari test, human design review or production checkout test."
+}
