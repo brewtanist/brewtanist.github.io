@@ -15,40 +15,47 @@ jobs:
         with:
           ref: preview/brewtanist-lab-20261108
           fetch-depth: 0
-      - name: Verify standalone preview and screenshot URLs
+      - name: Verify standalone HTML separately from optional screenshots
         run: |
           python3 - <<'PY'
+          import hashlib
           import json
           from pathlib import Path
           from urllib.request import urlopen, Request
           REV='7127269dcf214aafbde04680c70868518f65a4de'
           bases=[f'https://rawcdn.githack.com/brewtanist/brewtanist.github.io/{REV}/prototype/', f'https://raw.githack.com/brewtanist/brewtanist.github.io/{REV}/prototype/']
+          expected=Path('prototype/dist/index.html').read_bytes()
           reports=[]
+          def request(url):
+              return urlopen(Request(url,headers={'User-Agent':'BrewtanistPreviewCheck/1.0'}),timeout=30)
           for base in bases:
-              row={'preview_url':base+'dist/index.html'}
+              row={'preview_url':base+'dist/index.html','html_check':'FAIL','screenshots':[]}
               try:
-                  with urlopen(Request(row['preview_url'],headers={'User-Agent':'BrewtanistPreviewCheck/1.0'}),timeout=35) as r:
-                      body=r.read().decode('utf-8')
-                      row.update(status=r.status,content_type=r.headers.get('content-type'),bytes=len(body.encode('utf-8')))
+                  with request(row['preview_url']) as r:
+                      body=r.read()
+                      row.update(status=r.status,content_type=r.headers.get('content-type'),bytes=len(body))
                       assert r.status==200 and 'text/html' in row['content_type']
-                      assert 'BrewtanistPreview' in body and 'noindex,nofollow,noarchive' in body and '__CATALOG_JSON__' not in body
-                      assert 'data:image/webp;base64,' in body
-                  shots=[]
-                  for image in ['01-catalog-desktop.png','04-content-studio.png','05-catalog-mobile.png']:
-                      u=base+'qa/'+image
-                      with urlopen(u,timeout=25) as r:
+                      assert hashlib.sha256(body).digest()==hashlib.sha256(expected).digest(), 'HTML differs from tested standalone artifact'
+                      row.update(html_check='PASS',matches_tested_artifact=True,sha256=hashlib.sha256(body).hexdigest())
+              except Exception as e:
+                  row.update(html_error=str(e))
+              for image in ['01-catalog-desktop.png','04-content-studio.png','05-catalog-mobile.png']:
+                  u=base+'qa/'+image
+                  shot={'url':u}
+                  try:
+                      with request(u) as r:
                           assert r.status==200 and r.headers.get('content-type','').startswith('image/')
                           assert r.read(8)==b'\x89PNG\r\n\x1a\n'
-                          shots.append(u)
-                  row.update(result='PASS',screenshots=shots)
-              except Exception as e:
-                  row.update(result='FAIL',error=str(e))
+                          shot.update(check='PASS',status=r.status)
+                  except Exception as e:
+                      shot.update(check='FAIL',error=str(e))
+                  row['screenshots'].append(shot)
               reports.append(row)
-          report={'results':reports,'note':'HTTP content checks; provider may show a confirmation screen in a human browser. Preview hosting is third-party, not the production website. No account/password is required.'}
+          report={'results':reports,'note':'HTML and optional screenshot delivery are checked independently. The standalone HTML embeds all owned images; it does not load these screenshot files. These are HTTP byte-integrity checks, not a remote-browser test. A human browser may see the preview provider confirmation screen. This third-party review URL is not the production website.'}
           Path('prototype/qa/preview-url-report.json').write_text(json.dumps(report,indent=2,ensure_ascii=False))
           print(json.dumps(report,indent=2,ensure_ascii=False))
-          if not any(r['result']=='PASS' for r in reports):
-              print('Public preview unavailable; the downloadable standalone artifact remains usable.')
+          if not any(r['html_check']=='PASS' for r in reports):
+              print('Public HTML preview unavailable; use the downloadable standalone artifact.')
           PY
       - name: Save verification report on preview branch only
         run: |
@@ -57,5 +64,7 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add prototype/qa/preview-url-report.json
-          git commit -m 'Record prototype URL verification; production untouched [skip ci]'
-          git push origin HEAD:refs/heads/preview/brewtanist-lab-20261108
+          if ! git diff --cached --quiet; then
+            git commit -m 'Record standalone preview integrity and optional screenshot checks [skip ci]'
+            git push origin HEAD:refs/heads/preview/brewtanist-lab-20261108
+          fi
