@@ -30,7 +30,9 @@ if not any(x['name']=='marketplace' for x in cms['content']):
       {'name':'alt','label':'คำอธิบายภาพ','type':'string'}]}]
     cms['content'].append({'name':'marketplace','label':'08 · สินค้าจาก Shopee','type':'file','path':'_data/brewtanist/marketplace.json','format':'json','fields':fields})
     p.write_text(yaml.safe_dump(cms,allow_unicode=True,sort_keys=False))
-p=ROOT/'tools/test_release.py';s=p.read_text();s=s.replace("assert len(cms['content'])==7;", "assert len(cms['content'])==8;assert any(x['name']=='marketplace' for x in cms['content']);")
-p.write_text(s)
+p=ROOT/'tools/test_release.py';s=p.read_text();s=s.replace("assert len(cms['content'])==7;", "assert len(cms['content'])==8;assert any(x['name']=='marketplace' for x in cms['content']);");p.write_text(s)
 p=ROOT/'catalogue/marketplace.js';s=p.read_text();s=s.replace("if(select.value==='all'&&cards.length<data.items.length){location.href='/shop/';return;}","if(cards.length<data.items.length){location.href=select.value==='all'?'/shop/':'/shop/'+select.value+'/';return;}");p.write_text(s)
+p=ROOT/'catalogue/make_review.py';s=p.read_text()
+replacement="(html[:html.index('<script>\\nconst B=')] + '<script>' + (ROOT / 'catalogue/review_shell.js').read_text() + '</script></body></html>').replace('__BUNDLE__',payload)"
+s=s.replace("html.replace('__BUNDLE__',payload)",replacement);p.write_text(s)
 print('Marketplace integrated; original business details and owner copy preserved; no price or stock imported.')
