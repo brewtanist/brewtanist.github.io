@@ -1,12 +1,80 @@
 {
   "visible": true,
-  "title": "Take a little\nBrewtanist home.",
-  "description": "House Blend สามคาแรกเตอร์ในแพ็กเกจของ Brewtanist เลือกกาแฟที่ชอบ แล้วชงต่อในมุมโปรดที่บ้าน",
-  "note": "ยังมี Single Origin หมุนเวียน, Drip Bag และ Coffee Capsule สอบถามรายการและรายละเอียดล่าสุดกับทางร้าน",
+  "title": "เลือกกาแฟ\nกลับไปชงที่บ้าน",
+  "description": "ชอบโทนช็อกโกแลต หอมวานิลลา หรือกลิ่นผลไม้? ลองดู House Blend ของเรา แล้วเลือกจากรสที่ชอบ",
+  "note": "มี Single Origin, กาแฟดริปแบบซอง และแคปซูลด้วย ดูรายการล่าสุดที่ Shopee หรือสอบถามร้านได้",
   "button": "ดูสินค้าใน Shopee",
   "items": [
-    {"visible": true, "name": "Mr. Plantman", "profile": "Espresso blend · Medium–Dark", "notes": "Dark chocolate · Caramel · Nutty", "description": "Full body — คาแรกเตอร์สำหรับกาแฟดำและกาแฟนม", "image": "/brewtanist/assets/plantman-3d.webp", "alt": "ภาพ 3D ถุงเมล็ดกาแฟ Mr. Plantman ของ Brewtanist", "theme": "plantman"},
-    {"visible": true, "name": "Mr. Ozmo", "profile": "Espresso blend · Medium–Dark", "notes": "Vanilla · Rum-Raisin · Milk Chocolate", "description": "คาแรกเตอร์เข้มข้น พร้อมกลิ่นหอมหวานและซับซ้อน", "image": "/brewtanist/assets/ozmo-3d.webp", "alt": "ภาพ 3D ถุงเมล็ดกาแฟ Mr. Ozmo ของ Brewtanist", "theme": "ozmo"},
-    {"visible": true, "name": "Ms. Lazybug", "profile": "Espresso blend · Light–Medium", "notes": "Floral · Fruity · Tea-like", "description": "โปรไฟล์สว่างและหอม สำหรับคนที่ชอบกาแฟดำโทนสดชื่น", "image": "/brewtanist/assets/lazybug-3d.webp", "alt": "ภาพ 3D ถุงเมล็ดกาแฟ Ms. Lazybug ของ Brewtanist", "theme": "lazybug"}
-  ]
+    {
+      "visible": true,
+      "name": "Mr. Plantman",
+      "profile": "Espresso blend · Medium–Dark",
+      "notes": "Dark chocolate · Caramel · Nutty",
+      "description": "เข้มข้น โทนดาร์กช็อกโกแลต คาราเมล และถั่ว ชงเป็นกาแฟดำหรือใส่นมก็ได้",
+      "image": "/brewtanist/assets/plantman-3d.webp",
+      "alt": "ภาพ 3D ถุงเมล็ดกาแฟ Mr. Plantman ของ Brewtanist",
+      "theme": "plantman",
+      "id": "plantman",
+      "price": "",
+      "sizes": "",
+      "grinding": "",
+      "origin": "",
+      "productUrl": "",
+      "tasteTags": [
+        "chocolate"
+      ],
+      "drinkTags": [
+        "black",
+        "milk"
+      ],
+      "verified": false
+    },
+    {
+      "visible": true,
+      "name": "Mr. Ozmo",
+      "profile": "Espresso blend · Medium–Dark",
+      "notes": "Vanilla · Rum-Raisin · Milk Chocolate",
+      "description": "กลิ่นรสโทนวานิลลา รัมเรซิน และมิลก์ช็อกโกแลต หอมหวานและเข้มข้น",
+      "image": "/brewtanist/assets/ozmo-3d.webp",
+      "alt": "ภาพ 3D ถุงเมล็ดกาแฟ Mr. Ozmo ของ Brewtanist",
+      "theme": "ozmo",
+      "id": "ozmo",
+      "price": "",
+      "sizes": "",
+      "grinding": "",
+      "origin": "",
+      "productUrl": "",
+      "tasteTags": [
+        "chocolate",
+        "sweet"
+      ],
+      "drinkTags": [],
+      "verified": false
+    },
+    {
+      "visible": true,
+      "name": "Ms. Lazybug",
+      "profile": "Espresso blend · Light–Medium",
+      "notes": "Floral · Fruity · Tea-like",
+      "description": "กลิ่นรสโทนดอกไม้ ผลไม้ และชา เหมาะกับคนที่ชอบกาแฟดำโทนสดชื่น",
+      "image": "/brewtanist/assets/lazybug-3d.webp",
+      "alt": "ภาพ 3D ถุงเมล็ดกาแฟ Ms. Lazybug ของ Brewtanist",
+      "theme": "lazybug",
+      "id": "lazybug",
+      "price": "",
+      "sizes": "",
+      "grinding": "",
+      "origin": "",
+      "productUrl": "",
+      "tasteTags": [
+        "fruity"
+      ],
+      "drinkTags": [
+        "black"
+      ],
+      "verified": false
+    }
+  ],
+  "finder_title": "ยังเลือกไม่ถูก?",
+  "finder_text": "ตอบ 3 ข้อจากกาแฟที่ชอบดื่ม แล้วลองดูว่าเมล็ดตัวไหนน่าลอง"
 }

@@ -1,22 +1,22 @@
 {
   "visible": true,
-  "title": "Before you visit.",
+  "title": "ก่อนแวะมาที่ร้าน",
   "items": [
     {
       "question": "มีที่จอดรถไหม?",
-      "answer": "มีที่จอดรถภายในบริเวณสถานีบริการ Shell"
+      "answer": "จอดรถได้ในบริเวณปั๊ม Shell"
     },
     {
       "question": "มีเมล็ดกาแฟสำหรับซื้อกลับไหม?",
-      "answer": "มี House Blend, Single Origin, Drip Bag และ Coffee Capsule สำหรับนำกลับไปชงที่บ้าน สอบถามรายการที่มีในวันนั้นกับทางร้านได้"
+      "answer": "มีเมล็ด House Blend, Single Origin, กาแฟดริปแบบซอง และแคปซูล รายการที่มีขายสอบถามร้านได้"
     },
     {
       "question": "มี Pour Over หรือ Single Origin ไหม?",
-      "answer": "มี Single Origin หมุนเวียนสำหรับ Filter และ Pour Over ส่วนเมล็ดสำหรับ Espresso เลือกได้ตามรายการของร้าน"
+      "answer": "มี Single Origin สลับกันมาให้ลอง ทั้ง Filter และ Pour Over ส่วน Espresso เลือกเมล็ดได้ตามรายการของร้าน"
     },
     {
       "question": "มี Matcha และขนมไหม?",
-      "answer": "มี Matcha และเบเกอรี่โฮมเมดหมุนเวียนตามวันเวลา"
+      "answer": "มีมัทฉะและเบเกอรี่โฮมเมด ขนมแต่ละวันอาจไม่เหมือนกัน"
     }
   ]
 }

@@ -1,0 +1,78 @@
+name: Website language and catalogue checks
+on:
+  push:
+    branches: [release/natural-thai-20261108, main]
+    paths: ['_data/**', '_includes/**', 'index.html', '_config.yml', '.pages.yml', 'brewtanist/**', 'catalogue/**', 'tools/**', 'render.yaml', '.github/workflows/website-release-check.yml']
+permissions:
+  contents: write
+concurrency:
+  group: brewtanist-release-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  check:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+      - name: Install test tools
+        run: |
+          python3 -m pip install --disable-pip-version-check PyYAML==6.0.2 playwright==1.56.0
+          python3 -m playwright install --with-deps chromium
+      - name: Apply authored copy once on release branch only
+        if: github.ref == 'refs/heads/release/natural-thai-20261108'
+        run: python3 tools/prepare_thai_release.py
+      - name: Build customer catalogue without a guessed live URL
+        run: python3 catalogue/build.py --base-url https://release.example.invalid
+      - name: Build existing informational website
+        uses: actions/jekyll-build-pages@44a6e6beabd48582f863aeeb6cb2151cc1716697
+        with:
+          source: ./
+          destination: ./_site
+      - name: Set temporary connection fixture
+        run: |
+          cp _data/brewtanist/settings.json /tmp/brewtanist-settings-before-test.json
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('_data/brewtanist/settings.json');d=json.loads(p.read_text());d['catalogue_url']='https://catalogue.example.invalid';p.write_text(json.dumps(d,ensure_ascii=False,indent=2))
+          PY
+      - name: Build connection paths through the real Jekyll template
+        uses: actions/jekyll-build-pages@44a6e6beabd48582f863aeeb6cb2151cc1716697
+        with:
+          source: ./
+          destination: ./_site-connected
+      - name: Restore actual settings before tests or commits
+        if: always()
+        run: if [ -f /tmp/brewtanist-settings-before-test.json ]; then cp /tmp/brewtanist-settings-before-test.json _data/brewtanist/settings.json; fi
+      - name: Test copy, both websites and connection paths
+        run: python3 tools/test_release.py
+      - name: Verify actual public website after approved main release
+        if: github.ref == 'refs/heads/main'
+        run: python3 tools/verify_live.py
+      - name: Upload checked files and browser evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: brewtanist-natural-thai-release
+          path: |
+            _site/
+            catalogue/dist/
+            qa/
+            RELEASE.md
+          retention-days: 30
+      - name: Save prepared source and evidence to release branch only
+        if: github.ref == 'refs/heads/release/natural-thai-20261108'
+        run: |
+          set -euo pipefail
+          git fetch origin release/natural-thai-20261108
+          test "$(git rev-parse FETCH_HEAD)" = "$GITHUB_SHA" || { echo 'Newer owner change exists; refusing overwrite'; exit 1; }
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add _data index.html brewtanist/site.css .pages.yml _config.yml catalogue/site.css tools/THAI-APPLIED.json qa
+          if ! git diff --cached --quiet; then
+            git commit -m 'Save tested natural Thai copy and gated catalogue integration [skip ci]'
+            git push origin HEAD:refs/heads/release/natural-thai-20261108
+          fi
