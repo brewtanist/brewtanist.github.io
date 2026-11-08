@@ -28,15 +28,19 @@ def record(name):
     print('PASS:', name, flush=True)
 
 def assert_images(page):
-    page.locator('img').evaluate_all('(images) => Promise.all(images.map(i => i.decode().catch(() => {})))')
-    assert page.locator('img').evaluate_all('(images) => images.every(i => i.naturalWidth > 0)'), 'Broken image'
+    images=page.locator('#app img[src]')
+    assert images.count()>0
+    images.evaluate_all('(images) => Promise.all(images.map(i => {i.loading="eager";return i.decode().catch(() => {});} ))')
+    broken=images.evaluate_all('(images) => images.filter(i => !i.naturalWidth).map(i => ({alt:i.alt,src:i.src.slice(0,60)}))')
+    assert not broken, 'Broken page images: '+repr(broken)
 
 def no_overflow(page):
-    assert page.evaluate('document.documentElement.scrollWidth <= innerWidth + 1'), 'Horizontal document overflow'
+    sizes=page.evaluate('({doc:document.documentElement.scrollWidth,window:innerWidth})')
+    assert sizes['doc']<=sizes['window']+1, 'Horizontal document overflow: '+repr(sizes)
 
 prod_files = [ROOT/'index.html', ROOT/'.pages.yml', *sorted((ROOT/'_data'/'brewtanist').glob('*.json'))]
 before = {str(p.relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest() for p in prod_files}
-report = {'result': 'FAIL', 'checks': checks, 'production_files_unchanged': False}
+report = {'result': 'FAIL', 'checks': checks, 'production_files_unchanged': None}
 try:
     with sync_playwright() as pw:
         browser = pw.chromium.launch()
@@ -69,6 +73,7 @@ try:
         assert_images(page)
         page.locator('[data-zoom="plantman"]').click()
         expect(page.locator('#zoom')).to_be_visible()
+        assert page.locator('#zoom-image').evaluate('(i)=>i.naturalWidth>0')
         page.keyboard.press('Escape')
         expect(page.locator('#zoom')).not_to_be_visible()
         page.screenshot(path=str(QA/'02-product-desktop.png'), full_page=True)
@@ -114,8 +119,7 @@ try:
         record('All 36 answer combinations, ambiguity and capsule/Drip Bag fallback')
 
         page.locator('.links [data-nav="studio"]').click()
-        name = page.locator('input[data-field="name"]')
-        name.fill('Mr. Plantman — ทดลองแก้ไข')
+        page.locator('input[data-field="name"]').fill('Mr. Plantman — ทดลองแก้ไข')
         expect(page.frame_locator('#preview').locator('h1')).to_have_text('Mr. Plantman — ทดลองแก้ไข')
         page.locator('[data-action="save-draft"]').click()
         page.reload(wait_until='networkidle')
@@ -201,6 +205,8 @@ except Exception as exc:
     report['traceback']=traceback.format_exc()
     raise
 finally:
+    after={str(p.relative_to(ROOT)):hashlib.sha256(p.read_bytes()).hexdigest() for p in prod_files}
+    report['production_files_unchanged']=before==after
     (QA/'test-report.json').write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding='utf-8')
     print(json.dumps(report,ensure_ascii=False,indent=2),flush=True)
     for path in [QA/'test-export.json',QA/'test-export.html']:
