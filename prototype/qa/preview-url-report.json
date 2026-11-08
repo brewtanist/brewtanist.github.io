@@ -1,0 +1,25 @@
+{
+  "revision": 3,
+  "tested_commit": "30b43dc95ceb947618428499fd106fb46f8a5fb8",
+  "results": [
+    {
+      "preview_url": "https://rawcdn.githack.com/brewtanist/brewtanist.github.io/30b43dc95ceb947618428499fd106fb46f8a5fb8/prototype/dist/index.html?source=github",
+      "html_check": "PASS",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 524270,
+      "matches_tested_artifact": true,
+      "sha256": "2f93f519bd2f6114faaad0490d5504bc6f5ffd6d2d625e444470e43e75d25d67"
+    },
+    {
+      "preview_url": "https://raw.githack.com/brewtanist/brewtanist.github.io/30b43dc95ceb947618428499fd106fb46f8a5fb8/prototype/dist/index.html?source=github",
+      "html_check": "PASS",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 524270,
+      "matches_tested_artifact": true,
+      "sha256": "2f93f519bd2f6114faaad0490d5504bc6f5ffd6d2d625e444470e43e75d25d67"
+    }
+  ],
+  "note": "HTTP delivery/byte comparison only. Browser behavior was checked separately on the built artifact in Chromium. No production deployment."
+}

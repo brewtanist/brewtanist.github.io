@@ -1,0 +1,68 @@
+name: Check prototype review links
+on:
+  push:
+    branches: ['preview/brewtanist-lab-20261108']
+    paths: ['.github/workflows/prototype-link-check.yml']
+permissions:
+  contents: write
+jobs:
+  check:
+    if: github.ref == 'refs/heads/preview/brewtanist-lab-20261108'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+      - name: Verify saved-source HTML delivery and byte integrity
+        run: |
+          python3 - <<'PY'
+          import hashlib, json, re
+          from pathlib import Path
+          from urllib.request import urlopen, Request
+          latest=Path('prototype/LATEST.md').read_text()
+          match=re.search(r'https://rawcdn\.githack\.com/brewtanist/brewtanist\.github\.io/([a-f0-9]{40})/prototype/dist/index\.html',latest)
+          if not match: raise ValueError('Missing tested preview URL')
+          rev=match.group(1)
+          expected=Path('prototype/dist/index.html').read_bytes()
+          reports=[]
+          for host in ['rawcdn.githack.com','raw.githack.com']:
+              url=f'https://{host}/brewtanist/brewtanist.github.io/{rev}/prototype/dist/index.html?source=github'
+              row={'preview_url':url,'html_check':'FAIL'}
+              try:
+                  with urlopen(Request(url,headers={'User-Agent':'BrewtanistPreviewCheck/3.0'}),timeout=30) as response:
+                      body=response.read()
+                      row.update(status=response.status,content_type=response.headers.get('content-type'),bytes=len(body))
+                      assert response.status==200 and 'text/html' in row['content_type']
+                      assert body==expected, 'Public HTML differs from tested artifact'
+                      row.update(html_check='PASS',matches_tested_artifact=True,sha256=hashlib.sha256(body).hexdigest())
+              except Exception as exc:
+                  row['error']=str(exc)
+              reports.append(row)
+          output={'revision':3,'tested_commit':rev,'results':reports,'note':'HTTP delivery/byte comparison only. Browser behavior was checked separately on the built artifact in Chromium. No production deployment.'}
+          Path('prototype/qa/preview-url-report.json').write_text(json.dumps(output,ensure_ascii=False,indent=2))
+          print(json.dumps(output,ensure_ascii=False,indent=2))
+          PY
+      - name: Save report only if preview branch has no newer edit
+        run: |
+          set -euo pipefail
+          test "$GITHUB_REF" = 'refs/heads/preview/brewtanist-lab-20261108'
+          git diff --exit-code origin/main -- index.html _data _config.yml brewtanist admin _includes robots.txt sitemap.xml
+          git fetch origin preview/brewtanist-lab-20261108
+          test "$(git rev-parse FETCH_HEAD)" = "$GITHUB_SHA"
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add prototype/qa/preview-url-report.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'Record Preview 03 saved-source delivery check [skip ci]'
+            git push origin HEAD:refs/heads/preview/brewtanist-lab-20261108
+          fi
+      - name: Fail if neither preview URL matched
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          report=json.loads(Path('prototype/qa/preview-url-report.json').read_text())
+          assert any(row['html_check']=='PASS' for row in report['results']), 'Preview delivery not verified'
+          PY

@@ -1,0 +1,12 @@
+{
+  "revision": 2,
+  "title": "เลือกกาแฟ\nกลับไปชงที่บ้าน",
+  "intro": "ชอบช็อกโกแลต หอมวานิลลา หรือกลิ่นผลไม้? ลองดู House Blend ทั้งสามตัว หรือให้เราช่วยเลือกจากรสที่ชอบ",
+  "sourceDescription": "Brewtanist มี House Blend ให้เลือกสามแบบ ลองดูรสที่ชอบ แล้วเลือกกลับไปชงที่บ้าน",
+  "descriptions": {
+    "plantman": "รสเข้มเต็มปาก โทนดาร์กช็อกโกแลต คาราเมล และถั่ว ดื่มได้ทั้งกาแฟดำและกาแฟนม",
+    "ozmo": "โทนวานิลลา รัมเรซิน และมิลก์ช็อกโกแลต กลิ่นหอมหวาน รสเข้มข้น",
+    "lazybug": "กลิ่นรสโทนดอกไม้ ผลไม้ และชา เหมาะกับคนชอบกาแฟดำโทนสดชื่น"
+  },
+  "editorial_notes": "Rewrite only the existing descriptions. Keep names, roast profiles, tasting notes, images and recommendation tags from the saved source. No new price, stock, brewing, ingredient or origin claims."
+}

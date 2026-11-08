@@ -1,0 +1,102 @@
+name: Brewtanist prototype review
+
+on:
+  push:
+    branches: ['preview/brewtanist-lab-20261108']
+    paths:
+      - 'prototype/template.html'
+      - 'prototype/*.py'
+      - 'prototype/copy.th.json'
+      - 'prototype/products.json'
+      - 'prototype/media/**'
+      - '.pages.yml'
+      - '.github/workflows/prototype-check.yml'
+
+permissions:
+  contents: write
+concurrency:
+  group: brewtanist-prototype-review
+  cancel-in-progress: true
+jobs:
+  review:
+    if: github.ref == 'refs/heads/preview/brewtanist-lab-20261108'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - name: Checkout exact preview revision
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          fetch-depth: 0
+          ref: ${{ github.sha }}
+      - name: Verify production content is unchanged
+        run: |
+          test "$GITHUB_REF" = 'refs/heads/preview/brewtanist-lab-20261108'
+          git diff --exit-code origin/main -- index.html _data _config.yml brewtanist admin _includes robots.txt sitemap.xml
+      - name: Install validation and browser testing tools
+        run: |
+          python3 -m pip install --disable-pip-version-check 'PyYAML==6.0.2' 'Pillow==11.3.0' 'playwright==1.56.0'
+          python3 -m playwright install --with-deps chromium
+      - name: Validate draft CMS, products, media and rejected inputs
+        run: python3 prototype/check_cms.py
+      - name: Compile preview builder and tests
+        run: python3 -m py_compile prototype/build.py prototype/catalog_data.py prototype/test_preview.py prototype/check_cms.py
+      - name: Build draft from saved text, products and raster images
+        run: python3 prototype/build.py
+      - name: Test browser flows and simulate product and image saves
+        run: python3 prototype/test_preview.py
+      - name: Upload review bundle and evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: brewtanist-preview-review
+          path: |
+            prototype/dist/
+            prototype/qa/
+            prototype/START-HERE.md
+            prototype/VOICE.md
+          retention-days: 30
+      - name: Save tested preview and review entry on preview branch only
+        env:
+          PREVIEW_BRANCH: preview/brewtanist-lab-20261108
+        run: |
+          set -euo pipefail
+          test "$GITHUB_REF" = "refs/heads/$PREVIEW_BRANCH"
+          git diff --exit-code origin/main -- index.html _data _config.yml brewtanist admin _includes robots.txt sitemap.xml
+          git diff --exit-code HEAD -- prototype/products.json prototype/copy.th.json .pages.yml
+          test ! -e prototype/media/qa-only-test-upload.webp
+          git fetch origin "$PREVIEW_BRANCH"
+          test "$(git rev-parse FETCH_HEAD)" = "$GITHUB_SHA" || { echo 'Newer owner changes exist; refusing to overwrite them.'; exit 1; }
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add prototype/dist prototype/qa
+          if ! git diff --cached --quiet; then
+            git commit -m 'Save tested catalogue editor preview and evidence [skip ci]'
+          fi
+          REVIEW_SHA="$(git rev-parse HEAD)" python3 - <<'PY'
+          import json, os
+          from pathlib import Path
+          sha=os.environ['REVIEW_SHA']
+          url=f'https://rawcdn.githack.com/brewtanist/brewtanist.github.io/{sha}/prototype/dist/index.html'
+          run=f"https://github.com/{os.environ['GITHUB_REPOSITORY']}/actions/runs/{os.environ['GITHUB_RUN_ID']}"
+          report=json.loads(Path('prototype/qa/test-report.json').read_text())
+          assert report['result']=='PASS'
+          text='# Brewtanist — ร่างล่าสุดที่ผ่านการตรวจ\n\n'
+          text+=f'[เปิดข้อมูลล่าสุดจาก GitHub]({url}?source=github) · [ทดลองแก้ในเครื่อง]({url}#/studio)\n\n'
+          text+='[แก้ร่างออนไลน์ผ่าน Pages CMS](https://app.pagescms.org/)\n\n'
+          text+='เลือก `brewtanist/brewtanist.github.io` → branch `preview/brewtanist-lab-20261108`\n\n'
+          text+='เมนู **01 · ข้อความหน้าแรกและคำอธิบายกาแฟ** และ **02 · รูปและข้อมูลสินค้า** พร้อมคลังรูป `prototype/media`\n\n'
+          text+=f"ผ่าน Chromium {report['checks_count']} กลุ่ม และคำตอบ Coffee Finder 36 แบบ [ดูผลตรวจ]({run})\n\n"
+          text+=f'รุ่นไฟล์ `{sha}`\n\n'
+          text+='Save ใน Pages CMS เก็บลง GitHub และเริ่มสร้างตัวอย่างใหม่ ลิงก์ด้านบนจะเปลี่ยนเมื่อรอบตรวจผ่านเท่านั้น ลิงก์เก่าเป็นภาพรวมรุ่นเก่า ไม่ได้เปลี่ยนตาม Save\n\n'
+          text+='เปิด “ข้อมูลล่าสุดจาก GitHub” เพื่อข้ามร่างเก่าในเบราว์เซอร์โดยไม่ลบทิ้ง ส่วน Content Studio ยังเป็นตัวทดลองในเครื่อง ไม่ซิงก์กลับ GitHub\n\n'
+          text+='ราคา ขนาด แหล่งปลูก และลิงก์สินค้าไม่ได้ถูกสมมติขึ้นมา การเลือก “ตรวจแล้ว” เป็นสถานะร่าง ไม่ใช่อนุมัติให้เผยแพร่\n\n'
+          text+='ทดสอบการเปลี่ยนไฟล์ข้อมูลและรูปผ่าน build แล้ว แต่ยังไม่ได้ล็อกอินและกด Save ใน Pages CMS ด้วยบัญชีเจ้าของ ไม่ได้ทดสอบ iPhone/Safari จริง\n\n'
+          text+='เว็บหลักยังไม่เปลี่ยน ไม่มี Checkout ไม่รับเงิน ไม่เก็บข้อมูลลูกค้า และไม่ได้สมัครบริการเสียเงิน\n'
+          Path('prototype/LATEST.md').write_text(text,encoding='utf-8')
+          with open(os.environ['GITHUB_STEP_SUMMARY'],'a') as f: f.write(text)
+          PY
+          git add prototype/LATEST.md
+          if ! git diff --cached --quiet; then
+            git commit -m 'Refresh latest tested product draft link; production untouched [skip ci]'
+          fi
+          git push origin "HEAD:refs/heads/$PREVIEW_BRANCH"
