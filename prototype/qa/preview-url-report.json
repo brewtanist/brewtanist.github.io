@@ -1,57 +1,59 @@
 {
+  "revision": 2,
+  "tested_commit": "70ffbad6635d130fa81b903d6542a930597347d0",
   "results": [
     {
-      "preview_url": "https://rawcdn.githack.com/brewtanist/brewtanist.github.io/7127269dcf214aafbde04680c70868518f65a4de/prototype/dist/index.html",
+      "preview_url": "https://rawcdn.githack.com/brewtanist/brewtanist.github.io/70ffbad6635d130fa81b903d6542a930597347d0/prototype/dist/index.html",
       "html_check": "PASS",
       "screenshots": [
         {
-          "url": "https://rawcdn.githack.com/brewtanist/brewtanist.github.io/7127269dcf214aafbde04680c70868518f65a4de/prototype/qa/01-catalog-desktop.png",
+          "url": "https://rawcdn.githack.com/brewtanist/brewtanist.github.io/70ffbad6635d130fa81b903d6542a930597347d0/prototype/qa/01-catalog-desktop.png",
           "check": "PASS",
           "status": 200
         },
         {
-          "url": "https://rawcdn.githack.com/brewtanist/brewtanist.github.io/7127269dcf214aafbde04680c70868518f65a4de/prototype/qa/04-content-studio.png",
+          "url": "https://rawcdn.githack.com/brewtanist/brewtanist.github.io/70ffbad6635d130fa81b903d6542a930597347d0/prototype/qa/04-content-studio.png",
           "check": "PASS",
           "status": 200
         },
         {
-          "url": "https://rawcdn.githack.com/brewtanist/brewtanist.github.io/7127269dcf214aafbde04680c70868518f65a4de/prototype/qa/05-catalog-mobile.png",
+          "url": "https://rawcdn.githack.com/brewtanist/brewtanist.github.io/70ffbad6635d130fa81b903d6542a930597347d0/prototype/qa/05-catalog-mobile.png",
           "check": "PASS",
           "status": 200
         }
       ],
       "status": 200,
       "content_type": "text/html; charset=utf-8",
-      "bytes": 867485,
+      "bytes": 867071,
       "matches_tested_artifact": true,
-      "sha256": "c9ca790650d45ec2e9cb0abbe0ec0683bd1aa1bf0b77b25ccddfb37a8de8cec8"
+      "sha256": "506c4c6c5b45d9055db37bb6b30cebfb6b2da474991ae3d057c3f41476b03aeb"
     },
     {
-      "preview_url": "https://raw.githack.com/brewtanist/brewtanist.github.io/7127269dcf214aafbde04680c70868518f65a4de/prototype/dist/index.html",
+      "preview_url": "https://raw.githack.com/brewtanist/brewtanist.github.io/70ffbad6635d130fa81b903d6542a930597347d0/prototype/dist/index.html",
       "html_check": "PASS",
       "screenshots": [
         {
-          "url": "https://raw.githack.com/brewtanist/brewtanist.github.io/7127269dcf214aafbde04680c70868518f65a4de/prototype/qa/01-catalog-desktop.png",
+          "url": "https://raw.githack.com/brewtanist/brewtanist.github.io/70ffbad6635d130fa81b903d6542a930597347d0/prototype/qa/01-catalog-desktop.png",
           "check": "PASS",
           "status": 200
         },
         {
-          "url": "https://raw.githack.com/brewtanist/brewtanist.github.io/7127269dcf214aafbde04680c70868518f65a4de/prototype/qa/04-content-studio.png",
+          "url": "https://raw.githack.com/brewtanist/brewtanist.github.io/70ffbad6635d130fa81b903d6542a930597347d0/prototype/qa/04-content-studio.png",
           "check": "PASS",
           "status": 200
         },
         {
-          "url": "https://raw.githack.com/brewtanist/brewtanist.github.io/7127269dcf214aafbde04680c70868518f65a4de/prototype/qa/05-catalog-mobile.png",
+          "url": "https://raw.githack.com/brewtanist/brewtanist.github.io/70ffbad6635d130fa81b903d6542a930597347d0/prototype/qa/05-catalog-mobile.png",
           "check": "PASS",
           "status": 200
         }
       ],
       "status": 200,
       "content_type": "text/html; charset=utf-8",
-      "bytes": 867485,
+      "bytes": 867071,
       "matches_tested_artifact": true,
-      "sha256": "c9ca790650d45ec2e9cb0abbe0ec0683bd1aa1bf0b77b25ccddfb37a8de8cec8"
+      "sha256": "506c4c6c5b45d9055db37bb6b30cebfb6b2da474991ae3d057c3f41476b03aeb"
     }
   ],
-  "note": "HTML and optional screenshot delivery are checked independently. The standalone HTML embeds all owned images; it does not load these screenshot files. These are HTTP byte-integrity checks, not a remote-browser test. A human browser may see the preview provider confirmation screen. This third-party review URL is not the production website."
+  "note": "HTTP byte-integrity check of the immutable preview, not a remote browser test. The preview remains separate from production."
 }
