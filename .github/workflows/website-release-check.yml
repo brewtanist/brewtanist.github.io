@@ -49,6 +49,9 @@ jobs:
         run: if [ -f /tmp/brewtanist-settings-before-test.json ]; then cp /tmp/brewtanist-settings-before-test.json _data/brewtanist/settings.json; fi
       - name: Test copy, both websites and connection paths
         run: python3 tools/test_release.py
+      - name: Verify actual public website after approved main release
+        if: github.ref == 'refs/heads/main'
+        run: python3 tools/verify_live.py
       - name: Upload checked files and browser evidence
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
@@ -69,5 +72,7 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add _data index.html brewtanist/site.css .pages.yml _config.yml catalogue/site.css tools/THAI-APPLIED.json qa
-          git commit -m 'Save tested natural Thai copy and gated catalogue integration [skip ci]'
-          git push origin HEAD:refs/heads/release/natural-thai-20261108
+          if ! git diff --cached --quiet; then
+            git commit -m 'Save tested natural Thai copy and gated catalogue integration [skip ci]'
+            git push origin HEAD:refs/heads/release/natural-thai-20261108
+          fi
