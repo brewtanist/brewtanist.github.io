@@ -1,0 +1,44 @@
+name: Verify published Brewtanist design
+on:
+  push:
+    branches: [main]
+    paths: ['index.html', 'brewtanist/refinement.*', '.github/workflows/design-live-check.yml']
+permissions:
+  contents: read
+jobs:
+  live-check:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 7
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - name: Verify published HTML and exact CSS/JavaScript
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          from urllib.request import Request,urlopen
+          import hashlib,json,time
+          checks=[]
+          for route,path in [('/brewtanist/refinement.css','brewtanist/refinement.css'),('/brewtanist/refinement.js','brewtanist/refinement.js')]:
+            expected=Path(path).read_bytes();last=''
+            for attempt in range(15):
+              try:
+                with urlopen(Request('https://brewtanist.github.io'+route+'?design=20261109',headers={'User-Agent':'Brewtanist-Design-Check/1.0'}),timeout=20) as r:
+                  actual=r.read();assert r.status==200
+                assert hashlib.sha256(actual).digest()==hashlib.sha256(expected).digest(),'Published file differs from source'
+                checks.append({'path':route,'http_status':200,'bytes':len(actual),'sha256':hashlib.sha256(actual).hexdigest()});break
+              except Exception as e:last=str(e);time.sleep(6)
+            else:raise RuntimeError(route+': '+last)
+          with urlopen(Request('https://brewtanist.github.io/?design=20261109',headers={'User-Agent':'Brewtanist-Design-Check/1.0'}),timeout=25) as r:
+            html=r.read().decode();assert r.status==200
+          assert 'class="site-refined"' in html and 'refinement.css?v=20261109-1' in html
+          report={'result':'PASS','homepage_status':200,'design_marker':'site-refined','assets':checks,'catalogue_host_deployed':False}
+          Path('qa/design-20261109').mkdir(parents=True,exist_ok=True)
+          Path('qa/design-20261109/live.json').write_text(json.dumps(report,ensure_ascii=False,indent=2))
+          print(json.dumps(report,ensure_ascii=False,indent=2))
+          PY
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: brewtanist-published-design-proof
+          path: qa/design-20261109/live.json
+          retention-days: 30

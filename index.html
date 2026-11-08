@@ -51,8 +51,10 @@ permalink: /
   "sameAs": [{{ s.facebook | jsonify | replace: '</', '<\/' }}, {{ s.instagram | jsonify | replace: '</', '<\/' }}, {{ s.tiktok | jsonify | replace: '</', '<\/' }}]
 }
 </script>
+<link rel="stylesheet" href="/brewtanist/refinement.css?v=20261109-1">
+<script defer src="/brewtanist/refinement.js?v=20261109-1"></script>
 </head>
-<body>
+<body class="site-refined">
 <a class="skip" href="#main">ข้ามไปยังเนื้อหา</a>
 {% if s.notice != '' %}<div class="announcement">{{ s.notice | escape }}</div>{% endif %}
 <header class="nav">
