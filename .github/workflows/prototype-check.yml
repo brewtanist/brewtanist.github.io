@@ -1,0 +1,77 @@
+name: Brewtanist prototype review
+
+on:
+  push:
+    branches: ['preview/brewtanist-lab-20261108']
+    paths:
+      - 'prototype/template.html'
+      - 'prototype/build.py'
+      - 'prototype/test_preview.py'
+      - '.github/workflows/prototype-check.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: brewtanist-prototype-review
+  cancel-in-progress: true
+
+jobs:
+  review:
+    if: github.ref == 'refs/heads/preview/brewtanist-lab-20261108'
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - name: Checkout prototype branch only
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          fetch-depth: 0
+          ref: preview/brewtanist-lab-20261108
+      - name: Verify production has not changed
+        run: |
+          test "$GITHUB_REF" = 'refs/heads/preview/brewtanist-lab-20261108'
+          git diff --exit-code origin/main -- index.html _data .pages.yml _config.yml brewtanist
+      - name: Normalize catalogue anchor handling
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path('prototype/template.html')
+          s = p.read_text()
+          s = s.replace('href="#blend-list"', 'href="#/catalog" data-scroll="blend-list"')
+          marker = "const f=e.target.closest('[data-filter]');"
+          if 'const jump=e.target.closest' not in s:
+              s = s.replace(marker, "const jump=e.target.closest('[data-scroll]');if(jump){e.preventDefault();document.getElementById(jump.dataset.scroll)?.scrollIntoView({behavior:'smooth'});return;}\n "+marker)
+          p.write_text(s)
+          PY
+      - name: Build single-file prototype from saved brand assets
+        run: python3 prototype/build.py
+      - name: Install browser testing tools
+        run: |
+          python3 -m pip install --disable-pip-version-check 'playwright==1.56.0'
+          python3 -m playwright install --with-deps chromium
+      - name: Exercise catalogue, finder, editor and mobile layouts
+        run: python3 prototype/test_preview.py
+      - name: Upload review bundle and test evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: brewtanist-preview-review
+          path: |
+            prototype/dist/
+            prototype/qa/
+          retention-days: 30
+      - name: Save tested preview on prototype branch only
+        run: |
+          set -euo pipefail
+          test "$GITHUB_REF" = 'refs/heads/preview/brewtanist-lab-20261108'
+          git diff --exit-code origin/main -- index.html _data .pages.yml _config.yml brewtanist
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add prototype/template.html prototype/dist prototype/qa
+          if ! git diff --cached --quiet; then
+            git commit -m 'Save tested Brewtanist preview and browser evidence [skip ci]'
+            git push origin HEAD:refs/heads/preview/brewtanist-lab-20261108
+          fi
+          echo '## Prototype reviewed — production was not deployed' >> "$GITHUB_STEP_SUMMARY"
+          echo 'The preview HTML contains owned images, a catalogue, product routes, comparison, rule-based Coffee Finder and a local-only editing studio.' >> "$GITHUB_STEP_SUMMARY"
+          echo 'No Pages deployment action or main-branch write is used.' >> "$GITHUB_STEP_SUMMARY"
