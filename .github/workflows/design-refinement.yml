@@ -1,8 +1,8 @@
 name: Brewtanist design refinement checks
 on:
   push:
-    branches: ['design/brewtanist-refinement-20261109', 'main']
-    paths: ['brewtanist/refinement.*', 'catalogue/refinement.*', 'tools/refine_site.py', 'tools/test_refinement.py', '.github/workflows/design-refinement.yml', 'index.html']
+    branches: ['design/brewtanist-refinement-20261109', 'feature/shopee-storefront-20261109', 'main']
+    paths: ['_data/brewtanist/**', '_includes/**', 'brewtanist/**', 'catalogue/**', 'shop/**', 'tools/refine_site.py', 'tools/test_refinement.py', '.github/workflows/design-refinement.yml', 'index.html', '.pages.yml', '_config.yml', 'render.yaml']
 permissions:
   contents: read
 concurrency:
@@ -38,11 +38,15 @@ jobs:
         run: |
           python3 - <<'PY'
           from pathlib import Path
+          import json
           from playwright.sync_api import sync_playwright,expect
+          data=json.loads(Path('_data/brewtanist/marketplace.json').read_text())
+          houses={x['id']:x for x in json.loads(Path('_data/brewtanist/products.json').read_text())['items']}
+          visible=[x for x in data['items'] if x['visible'] and (not x.get('houseId') or houses[x['houseId']].get('visible'))]
           with sync_playwright() as pw:
             b=pw.chromium.launch();p=b.new_page();errors=[];p.on('pageerror',lambda e:errors.append(str(e)))
             p.goto((Path.cwd()/'catalogue/review/index.html').as_uri(),wait_until='networkidle')
-            frame=p.frame_locator('#frame');expect(frame.locator('.market-card')).to_have_count(17)
+            frame=p.frame_locator('#frame');expect(frame.locator('.market-card')).to_have_count(len(visible))
             frame.locator('a[href="/item/capsule-ozmo/"]').first.click();expect(p.frame_locator('#frame').locator('h1')).to_have_text('Mr. Ozmo · กาแฟแคปซูล')
             assert not errors,errors;b.close()
           print('Portable catalogue review navigation passed.')
@@ -50,7 +54,7 @@ jobs:
       - name: Record exact presentation changes for publication
         run: |
           git diff -- index.html catalogue/build.py
-          git diff --exit-code 6366d524adb0ed1ef1e499a0c150876d7e4844bd -- _data/brewtanist .pages.yml render.yaml _config.yml admin
+          git diff --exit-code HEAD -- _data/brewtanist .pages.yml render.yaml _config.yml admin
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         if: always()
         with:

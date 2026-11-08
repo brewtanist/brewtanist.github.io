@@ -1,8 +1,8 @@
 name: Shopee catalogue and artwork review
 on:
   push:
-    branches: ['feature/shopee-collections-20261108', 'main']
-    paths: ['_data/brewtanist/marketplace.json', 'catalogue/**', 'tools/setup_marketplace.py', 'tools/test_marketplace.py', '.github/workflows/marketplace-review.yml', '.pages.yml']
+    branches: ['feature/shopee-collections-20261108', 'feature/shopee-storefront-20261109', 'main']
+    paths: ['_data/brewtanist/**', 'brewtanist/assets/**', 'catalogue/**', 'tools/setup_marketplace.py', 'tools/test_marketplace.py', '.github/workflows/marketplace-review.yml', '.pages.yml']
 permissions:
   contents: write
 concurrency:
