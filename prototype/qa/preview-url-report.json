@@ -1,0 +1,21 @@
+{
+  "results": [
+    {
+      "preview_url": "https://rawcdn.githack.com/brewtanist/brewtanist.github.io/7127269dcf214aafbde04680c70868518f65a4de/prototype/dist/index.html",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 867485,
+      "result": "FAIL",
+      "error": "HTTP Error 403: Forbidden"
+    },
+    {
+      "preview_url": "https://raw.githack.com/brewtanist/brewtanist.github.io/7127269dcf214aafbde04680c70868518f65a4de/prototype/dist/index.html",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 867485,
+      "result": "FAIL",
+      "error": "HTTP Error 403: Forbidden"
+    }
+  ],
+  "note": "HTTP content checks; provider may show a confirmation screen in a human browser. Preview hosting is third-party, not the production website. No account/password is required."
+}
