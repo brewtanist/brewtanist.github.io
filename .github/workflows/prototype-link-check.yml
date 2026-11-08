@@ -15,19 +15,21 @@ jobs:
         with:
           ref: preview/brewtanist-lab-20261108
           fetch-depth: 0
-      - name: Verify standalone HTML separately from optional screenshots
+      - name: Verify Preview 02 HTML and optional screenshots
         run: |
           python3 - <<'PY'
           import hashlib
           import json
           from pathlib import Path
           from urllib.request import urlopen, Request
-          REV='7127269dcf214aafbde04680c70868518f65a4de'
+          REV='70ffbad6635d130fa81b903d6542a930597347d0'
           bases=[f'https://rawcdn.githack.com/brewtanist/brewtanist.github.io/{REV}/prototype/', f'https://raw.githack.com/brewtanist/brewtanist.github.io/{REV}/prototype/']
           expected=Path('prototype/dist/index.html').read_bytes()
+          assert b'PREVIEW 02' in expected
+          assert 'เลือกกาแฟ'.encode('utf-8') in expected
           reports=[]
           def request(url):
-              return urlopen(Request(url,headers={'User-Agent':'BrewtanistPreviewCheck/1.0'}),timeout=30)
+              return urlopen(Request(url,headers={'User-Agent':'BrewtanistPreviewCheck/2.0'}),timeout=30)
           for base in bases:
               row={'preview_url':base+'dist/index.html','html_check':'FAIL','screenshots':[]}
               try:
@@ -35,7 +37,7 @@ jobs:
                       body=r.read()
                       row.update(status=r.status,content_type=r.headers.get('content-type'),bytes=len(body))
                       assert r.status==200 and 'text/html' in row['content_type']
-                      assert hashlib.sha256(body).digest()==hashlib.sha256(expected).digest(), 'HTML differs from tested standalone artifact'
+                      assert hashlib.sha256(body).digest()==hashlib.sha256(expected).digest(), 'HTML differs from tested artifact'
                       row.update(html_check='PASS',matches_tested_artifact=True,sha256=hashlib.sha256(body).hexdigest())
               except Exception as e:
                   row.update(html_error=str(e))
@@ -51,7 +53,7 @@ jobs:
                       shot.update(check='FAIL',error=str(e))
                   row['screenshots'].append(shot)
               reports.append(row)
-          report={'results':reports,'note':'HTML and optional screenshot delivery are checked independently. The standalone HTML embeds all owned images; it does not load these screenshot files. These are HTTP byte-integrity checks, not a remote-browser test. A human browser may see the preview provider confirmation screen. This third-party review URL is not the production website.'}
+          report={'revision':2,'tested_commit':REV,'results':reports,'note':'HTTP byte-integrity check of the immutable preview, not a remote browser test. The preview remains separate from production.'}
           Path('prototype/qa/preview-url-report.json').write_text(json.dumps(report,indent=2,ensure_ascii=False))
           print(json.dumps(report,indent=2,ensure_ascii=False))
           if not any(r['html_check']=='PASS' for r in reports):
@@ -65,6 +67,6 @@ jobs:
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add prototype/qa/preview-url-report.json
           if ! git diff --cached --quiet; then
-            git commit -m 'Record standalone preview integrity and optional screenshot checks [skip ci]'
+            git commit -m 'Record verified Preview 02 URL and file integrity [skip ci]'
             git push origin HEAD:refs/heads/preview/brewtanist-lab-20261108
           fi
