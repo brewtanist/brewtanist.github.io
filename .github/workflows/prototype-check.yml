@@ -19,7 +19,7 @@ concurrency:
 jobs:
   review:
     if: github.ref == 'refs/heads/preview/brewtanist-lab-20261108'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 12
     steps:
       - name: Checkout prototype branch only
@@ -31,7 +31,7 @@ jobs:
         run: |
           test "$GITHUB_REF" = 'refs/heads/preview/brewtanist-lab-20261108'
           git diff --exit-code origin/main -- index.html _data .pages.yml _config.yml brewtanist
-      - name: Normalize catalogue anchor handling
+      - name: Normalize catalogue and keyboard anchor handling
         run: |
           python3 - <<'PY'
           from pathlib import Path
@@ -41,6 +41,8 @@ jobs:
           marker = "const f=e.target.closest('[data-filter]');"
           if 'const jump=e.target.closest' not in s:
               s = s.replace(marker, "const jump=e.target.closest('[data-scroll]');if(jump){e.preventDefault();document.getElementById(jump.dataset.scroll)?.scrollIntoView({behavior:'smooth'});return;}\n "+marker)
+          if "document.querySelector('.skip').addEventListener" not in s:
+              s = s.replace("window.addEventListener('hashchange',()=>render());", "document.querySelector('.skip').addEventListener('click',e=>{e.preventDefault();document.getElementById('app').focus();});\nwindow.addEventListener('hashchange',()=>render());")
           p.write_text(s)
           PY
       - name: Build single-file prototype from saved brand assets
