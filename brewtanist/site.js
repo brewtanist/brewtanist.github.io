@@ -3,10 +3,16 @@
 const menu = document.querySelector('.mobile-nav');
 if (menu) {
   menu.querySelectorAll('a').forEach(link => link.addEventListener('click', () => { menu.open = false; }));
-  document.addEventListener('keydown', event => {
-    if (event.key === 'Escape' && menu.open) { menu.open = false; menu.querySelector('summary').focus(); }
-  });
 }
+document.addEventListener('keydown', event => {
+  if (event.key !== 'Escape' || event.defaultPrevented) return;
+  const submenu = document.activeElement?.closest('.coffee-menu[open]');
+  const disclosure = submenu || (menu?.open ? menu : null);
+  if (!disclosure) return;
+  event.preventDefault();
+  disclosure.open = false;
+  disclosure.querySelector('summary').focus();
+});
 // Optional desktop image-side control. Mobile always keeps the headline first.
 const leftHero = document.querySelector('.hero-grid.image-left .hero-visual');
 if (leftHero) {

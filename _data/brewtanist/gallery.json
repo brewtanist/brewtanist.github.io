@@ -1,7 +1,7 @@
 {
   "visible": true,
-  "title": "มุมต่าง ๆ\nของ Brewtanist",
-  "description": "ดูบรรยากาศร้าน กาแฟ และขนม ก่อนแวะมาเจอกัน",
+  "title": "บรรยากาศที่ร้าน",
+  "description": "แตะรูปเพื่อดูบาร์กาแฟ เครื่องดื่ม และขนมของร้านใกล้ ๆ",
   "images": [
     {
       "visible": true,
@@ -13,7 +13,7 @@
     {
       "visible": true,
       "image": "/brewtanist/assets/gallery-coffee-bakery.jpg",
-      "alt": "กาแฟเย็นกับ Scone และ Croissant ของ Brewtanist",
+      "alt": "กาแฟเย็นกับสโคนและครัวซองต์ที่ Brewtanist",
       "caption": "กาแฟกับขนม",
       "position": "center"
     },
@@ -34,15 +34,15 @@
     {
       "visible": true,
       "image": "/brewtanist/assets/gallery-coldbrew.jpg",
-      "alt": "ขวด Cold Brew ของ Brewtanist",
-      "caption": "Cold Brew",
+      "alt": "กาแฟโคลด์บรูว์บรรจุขวดของ Brewtanist",
+      "caption": "กาแฟโคลด์บรูว์",
       "position": "center"
     },
     {
       "visible": true,
       "image": "/brewtanist/assets/gallery-signature-drink.jpg",
       "alt": "เครื่องดื่มเย็นในแก้วลาย Brewtanist",
-      "caption": "อีกแก้วจาก Brewtanist",
+      "caption": "แก้วลาย Brewtanist",
       "position": "center"
     },
     {

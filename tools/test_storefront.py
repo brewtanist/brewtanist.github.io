@@ -241,6 +241,13 @@ def check(build):
         require(any(link.attrs.get("href") == "/" for link in navigation.select(tag="a")), "Shop menu cannot return home")
         require(any(link.attrs.get("href") == "/shop/" and link.attrs.get("aria-current") == "page"
                     for link in navigation.select(tag="a")), "Shop menu missing current-page navigation")
+        menu_links = {link.attrs.get("href") for link in navigation.select(tag="a")}
+        for section in ("coffee", "gallery"):
+            visible_section = read_data(section).get("visible") is not False
+            require((section in pages["/"].ids) == visible_section,
+                    f"Homepage {section} does not respect CMS visibility")
+            require((f"/#{section}" in menu_links) == visible_section,
+                    f"Shop {class_name}: {section} link does not match CMS visibility")
     if not settings.get("catalogue_url", "").startswith("https://") and read_data("products").get("visible") is not False:
         for class_name in ("nav-links", "mobile-nav"):
             navigation = single(pages["/"].select(class_name=class_name), f"Homepage missing {class_name}")

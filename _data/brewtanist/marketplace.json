@@ -4,10 +4,10 @@
   "shopId": "985117757",
   "retrievedOn": "2026-11-09",
   "sourceStatus": "public_listing_and_product_images_not_live_inventory",
-  "sourceNote": "Eighteen identified Shopee listings from the Brewtanist public shop. Product images and selected label facts were rechecked on 9 November 2026 (Asia/Bangkok); exact sources and verification limits are in catalogue/shopee-sources.json. Search/storefront snapshots are not live stock or pricing. Unverified images remain empty; no other product image is substituted. Prices, stock, promotions, review totals and exact compatible capsule machine models are not asserted.",
-  "title": "กาแฟที่ชอบ\nชงที่บ้านได้ทุกวัน",
-  "intro": "เริ่มจากรสที่ชอบ เลือกแบบที่ชงได้สะดวก แล้วให้ Brewtanist อยู่ในมุมกาแฟของคุณ",
-  "notice": "ราคา ตัวเลือก จำนวนต่อชุด และสินค้าที่มีขาย อาจเปลี่ยนได้ กรุณาดูรายละเอียดบน Shopee ก่อนสั่งซื้อ",
+  "sourceNote": "Eighteen identified Shopee listings from the Brewtanist public shop. Seller images, owner catalogue artwork and selected label facts were rechecked on 9 November 2026 (Asia/Bangkok); exact sources and verification limits are in catalogue/shopee-sources.json. Search/storefront snapshots are not live stock or pricing. Unverified images remain empty; no other product image is substituted. Prices, stock, promotions, review totals and exact compatible capsule machine models are not asserted.",
+  "title": "กาแฟสำหรับ\nชงที่บ้าน",
+  "intro": "มีทั้งเมล็ดกาแฟที่เราคั่ว แคปซูล และกาแฟดริปแบบซอง เลือกตามวิธีชงที่บ้าน หรือค้นหาจากกลิ่นรสที่ชอบ",
+  "notice": "ดูราคาล่าสุด ตัวเลือก จำนวนต่อชุด และสินค้าที่มีขายใน Shopee ก่อนสั่งซื้อ",
   "items": [
     {
       "id": "plantman",
@@ -52,7 +52,7 @@
       "category": "single-origin",
       "shopeeItemId": "48914111971",
       "visible": true,
-      "description": "Geisha จากปานามา โทนกุหลาบ ฝรั่งชมพู และบลูเบอร์รีแจม",
+      "description": "เกอิชาจากปานามา ให้กลิ่นรสของกุหลาบ ฝรั่งชมพู และแยมบลูเบอร์รี",
       "details": [
         "ประเทศ: Panama",
         "Process: Washed",
@@ -107,7 +107,7 @@
       "category": "single-origin",
       "shopeeItemId": "23157401400",
       "visible": true,
-      "description": "กาแฟฮอนดูรัสโทนวานิลลา น้ำผึ้ง วิสกี้ และองุ่น สำหรับสาย Filter",
+      "description": "กาแฟฮอนดูรัสสำหรับชงฟิลเตอร์ ให้กลิ่นรสของวานิลลา น้ำผึ้ง วิสกี้ และองุ่น",
       "details": [
         "ประเทศ: Honduras",
         "ขนาดในภาพ: 100 กรัม",
@@ -182,10 +182,10 @@
       "description": "Mr. Plantman ในแบบแคปซูล กล่องละ 10 แคปซูล ดูรุ่นเครื่องที่รองรับใน Shopee",
       "details": [
         "จำนวนต่อกล่อง: 10 แคปซูล",
-        "Nespresso Compatible — ตรวจรุ่นเครื่องที่รองรับกับร้านก่อนซื้อ"
+        "ใช้กับเครื่อง Nespresso บางรุ่น ตรวจรุ่นเครื่องกับร้านก่อนซื้อ"
       ],
-      "image": "",
-      "alt": ""
+      "image": "/brewtanist/assets/shop/18083267431-capsule-plantman.jpg",
+      "alt": "กล่องแคปซูลกาแฟ Mr. Plantman สีน้ำตาล มีรูปตัวการ์ตูนประจำเบลนด์"
     },
     {
       "id": "capsule-ozmo",
@@ -197,10 +197,10 @@
       "description": "Mr. Ozmo ในแบบแคปซูล กล่องละ 10 แคปซูล ดูรุ่นเครื่องที่รองรับใน Shopee",
       "details": [
         "จำนวนต่อกล่อง: 10 แคปซูล",
-        "Nespresso Compatible — ตรวจรุ่นเครื่องที่รองรับกับร้านก่อนซื้อ"
+        "ใช้กับเครื่อง Nespresso บางรุ่น ตรวจรุ่นเครื่องกับร้านก่อนซื้อ"
       ],
-      "image": "",
-      "alt": ""
+      "image": "/brewtanist/assets/shop/24575852120-capsule-ozmo.jpg",
+      "alt": "กล่องแคปซูลกาแฟ Mr. Ozmo สีม่วง มีรูปตัวการ์ตูนประจำเบลนด์"
     },
     {
       "id": "capsule-lazybug",
@@ -211,7 +211,7 @@
       "visible": true,
       "description": "กาแฟแคปซูลโทนดอกไม้ ผลไม้ และชา ดูตัวเลือกและรุ่นเครื่องที่รองรับใน Shopee",
       "details": [
-        "Nespresso Compatible — ตรวจรุ่นเครื่องที่รองรับกับร้านก่อนซื้อ",
+        "ใช้กับเครื่อง Nespresso บางรุ่น ตรวจรุ่นเครื่องกับร้านก่อนซื้อ",
         "ระดับคั่วตามภาพ: Light–Medium",
         "กลิ่นรส: Floral · Fruity · Tea-like"
       ],
@@ -239,7 +239,7 @@
       "category": "gifts",
       "shopeeItemId": "47502787333",
       "visible": true,
-      "description": "House Blend ครบ 3 คาแรกเตอร์ในชุดเดียว: Mr. Plantman, Mr. Ozmo และ Ms. Lazybug",
+      "description": "ชุดเมล็ดกาแฟประจำร้าน ครบทั้ง Mr. Plantman, Mr. Ozmo และ Ms. Lazybug",
       "details": [
         "ในชุดมี 3 ถุง: Mr. Plantman, Ms. Lazybug, Mr. Ozmo",
         "ชื่อรายการเดิม: Holiday Special Set",
@@ -255,7 +255,7 @@
       "category": "gifts",
       "shopeeItemId": "48352804708",
       "visible": true,
-      "description": "ชุดแคปซูล 3 กล่อง รวม Mr. Plantman, Mr. Ozmo และ Ms. Lazybug สำหรับมุมกาแฟหรือเป็นของฝาก",
+      "description": "ชุดแคปซูลสำหรับชงที่บ้านหรือซื้อเป็นของฝาก มี Mr. Plantman, Mr. Ozmo และ Ms. Lazybug อย่างละกล่อง",
       "details": [
         "ในชุดมี 3 กล่อง: Mr. Plantman, Ms. Lazybug, Mr. Ozmo",
         "ชื่อรายการเดิม: Holiday Set"

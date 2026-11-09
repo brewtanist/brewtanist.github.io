@@ -66,6 +66,11 @@ try:
         page.set_viewport_size({'width':1440,'height':1000});page.goto('http://127.0.0.1:8767/',wait_until='networkidle')
         if p['visible']:
             page.locator('.nav-links .coffee-menu summary').click();assert page.locator('.nav-links .coffee-menu a').nth(0).get_attribute('href')=='https://catalogue.example.invalid';assert page.locator('.nav-links .coffee-menu a').nth(1).get_attribute('href')=='https://catalogue.example.invalid/finder/'
+            coffee_menu = page.locator('.nav-links .coffee-menu')
+            coffee_menu.locator('a').first.focus()
+            page.keyboard.press('Escape')
+            expect(coffee_menu).not_to_have_attribute('open', '')
+            expect(coffee_menu.locator('summary')).to_be_focused()
             for item in visible:assert page.locator('a[href="https://catalogue.example.invalid/product/'+item['id']+'/"]').count()==2
             assert page.locator('.catalogue-invite a').get_attribute('href')=='https://catalogue.example.invalid/finder/'
         overflow(page);record('Connected-state Jekyll build: navigation, product image/detail links and finder CTA')

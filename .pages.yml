@@ -15,7 +15,7 @@ content:
   format: json
   fields:
   - name: hero_eyebrow
-    label: ข้อความเล็กเหนือหัวเรื่อง
+    label: คำประจำร้านที่ท้ายหน้าแรก (ถ้ามี)
     type: string
   - name: hero_title
     label: หัวเรื่องหน้าแรก (ขึ้นบรรทัดใหม่ได้)
@@ -52,7 +52,7 @@ content:
       - name: left
         label: ภาพซ้าย / ข้อความขวา
   - name: hero_caption
-    label: ข้อความใต้ภาพหน้าแรก
+    label: ข้อความเพิ่มเติมใต้คำแนะนำร้าน (ถ้ามี)
     type: string
   - name: hero_button
     label: ข้อความปุ่มเลือกกาแฟกลับบ้าน

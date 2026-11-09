@@ -1,8 +1,8 @@
 {
   "visible": true,
-  "title": "เลือกกาแฟ\nกลับไปชงที่บ้าน",
-  "description": "ชอบโทนช็อกโกแลต หอมวานิลลา หรือกลิ่นผลไม้? ลองดู House Blend ของเรา แล้วเลือกจากรสที่ชอบ",
-  "note": "มี Single Origin, กาแฟดริปแบบซอง และแคปซูลด้วย ดูรายการล่าสุดที่ Shopee หรือสอบถามร้านได้",
+  "title": "เมล็ดกาแฟ\nประจำร้าน",
+  "description": "เอสเปรสโซที่บาร์มีสามเบลนด์ให้เลือก ตั้งแต่รสเข้มแบบช็อกโกแลต กลิ่นหวานแบบวานิลลา ไปจนถึงกลิ่นดอกไม้กับผลไม้",
+  "note": "นอกจากเบลนด์ประจำร้าน เรายังมีเมล็ด Single Origin กาแฟดริปแบบซอง และแคปซูล ดูรายการที่มีขายได้ใน Shopee หรือถามที่ร้าน",
   "button": "ดูสินค้าใน Shopee",
   "items": [
     {
@@ -10,7 +10,7 @@
       "name": "Mr. Plantman",
       "profile": "Espresso blend · Medium–Dark",
       "notes": "Dark chocolate · Caramel · Nutty",
-      "description": "เข้มข้น โทนดาร์กช็อกโกแลต คาราเมล และถั่ว ชงเป็นกาแฟดำหรือใส่นมก็ได้",
+      "description": "รสเข้ม นึกถึงดาร์กช็อกโกแลต คาราเมล และถั่ว จะชงเป็นกาแฟดำหรือดื่มกับนมก็ได้",
       "image": "/brewtanist/assets/plantman-3d.webp",
       "alt": "ภาพ 3D ถุงเมล็ดกาแฟ Mr. Plantman ของ Brewtanist",
       "theme": "plantman",
@@ -34,7 +34,7 @@
       "name": "Mr. Ozmo",
       "profile": "Espresso blend · Medium–Dark",
       "notes": "Vanilla · Rum-Raisin · Milk Chocolate",
-      "description": "กลิ่นรสโทนวานิลลา รัมเรซิน และมิลก์ช็อกโกแลต หอมหวานและเข้มข้น",
+      "description": "กลิ่นคล้ายวานิลลากับลูกเกดแช่รัม รสเข้มและหอมหวานแบบช็อกโกแลตนม",
       "image": "/brewtanist/assets/ozmo-3d.webp",
       "alt": "ภาพ 3D ถุงเมล็ดกาแฟ Mr. Ozmo ของ Brewtanist",
       "theme": "ozmo",
@@ -56,7 +56,7 @@
       "name": "Ms. Lazybug",
       "profile": "Espresso blend · Light–Medium",
       "notes": "Floral · Fruity · Tea-like",
-      "description": "กลิ่นรสโทนดอกไม้ ผลไม้ และชา เหมาะกับคนที่ชอบกาแฟดำโทนสดชื่น",
+      "description": "หอมดอกไม้กับผลไม้ กลิ่นรสคล้ายชา เหมาะกับคนที่ชอบกาแฟดำรสสดชื่น",
       "image": "/brewtanist/assets/lazybug-3d.webp",
       "alt": "ภาพ 3D ถุงเมล็ดกาแฟ Ms. Lazybug ของ Brewtanist",
       "theme": "lazybug",
@@ -75,6 +75,6 @@
       "verified": false
     }
   ],
-  "finder_title": "ยังเลือกไม่ถูก?",
-  "finder_text": "ตอบ 3 ข้อจากกาแฟที่ชอบดื่ม แล้วลองดูว่าเมล็ดตัวไหนน่าลอง"
+  "finder_title": "เบลนด์ไหนเข้ากับกาแฟที่ชอบ",
+  "finder_text": "ตอบ 3 คำถามเกี่ยวกับกาแฟที่ดื่ม แล้วดูว่าเบลนด์ไหนน่าลอง"
 }

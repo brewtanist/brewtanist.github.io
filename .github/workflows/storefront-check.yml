@@ -35,6 +35,24 @@ jobs:
           destination: ./_site
       - name: Verify rendered products, Shopee links, assets and navigation
         run: python3 tools/test_storefront.py _site --report "$RUNNER_TEMP/brewtanist-storefront-report.json"
+      - name: Hide optional homepage sections in the test checkout
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          for section in ("coffee", "gallery"):
+              path = Path("_data/brewtanist") / (section + ".json")
+              data = json.loads(path.read_text())
+              data["visible"] = False
+              path.write_text(json.dumps(data, ensure_ascii=False))
+          PY
+      - name: Rebuild with optional sections hidden
+        uses: actions/jekyll-build-pages@44a6e6beabd48582f863aeeb6cb2151cc1716697
+        with:
+          source: ./
+          destination: ./_site
+      - name: Check links against the hidden-section build
+        run: python3 tools/test_storefront.py _site
       - name: Preserve the validation report
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02

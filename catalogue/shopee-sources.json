@@ -4,15 +4,15 @@
   "shopUrl": "https://shopee.co.th/brewtanist",
   "retrievedAt": "2026-11-09T00:53:59+07:00",
   "timezone": "Asia/Bangkok",
-  "method": "Public Shopee listing retrieval, matching item ID, and visual review of the seller image",
+  "method": "Public Shopee listing snapshots and visual review of seller images, supplemented by product artwork in the Brewtanist owner’s catalogue.",
   "liveInventory": false,
   "livePrices": false,
   "notes": [
-    "These are product images and stable descriptive facts from public listing snapshots. This does not constitute a live inventory connection.",
+    "Listings and selected product facts come from public Shopee snapshots. Assets with a sourceFile come from Brewtanist’s local product artwork. These records do not establish live stock or prices.",
     "All existing 17 listings remain visible. Snapshot stock labels were not used to hide or remove any product.",
     "No prices, sales, ratings, shipping promises or promotions have been added to catalogue fields.",
     "Known missing images are left empty instead of substituting a different product or coffee format.",
-    "Source URLs retain the observed product slug; tracking query parameters were removed."
+    "Shopee image records retain the observed listing slug. Owner artwork records link to the product using the existing shop and item IDs."
   ],
   "assets": [
     {
@@ -234,6 +234,34 @@
         "กลิ่นรส: Tangerine · Mango · Hazelnut"
       ],
       "reviewNote": "Description reflects the product label. Current size options, price and availability remain on Shopee."
+    },
+    {
+      "id": "capsule-plantman",
+      "shopeeItemId": "18083267431",
+      "sourceUrl": "https://shopee.co.th/product/985117757/18083267431",
+      "sourceType": "owner_catalogue_artwork",
+      "sourceFile": "00_Shopee_/Beans/00/Capsule newpackage_plant.jpg",
+      "sourceSha256": "f943a3ca5b5a3d9493c018ee266d3e38887d4605c8cacfde1cc01ac1c1d9c1c5",
+      "verifiedAt": "2026-11-09T23:07:09+07:00",
+      "localPath": "brewtanist/assets/shop/18083267431-capsule-plantman.jpg",
+      "imageSha256": "e876e9eecf981189bd53668ab8fe965611ddd35472189b443925b34a5d0e0ba4",
+      "imageProcessing": "Full, uncropped artwork resized proportionally to 960 px wide and saved as a progressive JPEG.",
+      "verification": "The box reads Mr. Plantman and Coffee Capsule. The artwork identifies Nespresso compatibility and a ten-capsule pack, matching the existing listing.",
+      "factsAdded": []
+    },
+    {
+      "id": "capsule-ozmo",
+      "shopeeItemId": "24575852120",
+      "sourceUrl": "https://shopee.co.th/product/985117757/24575852120",
+      "sourceType": "owner_catalogue_artwork",
+      "sourceFile": "00_Shopee_/Beans/00/Capsule newpackage_ozmo.jpg",
+      "sourceSha256": "41d614972b0e3173cf960e3f2173d4d6815d3d422315e6ba7ee2110f0e67e5c5",
+      "verifiedAt": "2026-11-09T23:07:09+07:00",
+      "localPath": "brewtanist/assets/shop/24575852120-capsule-ozmo.jpg",
+      "imageSha256": "f09970ae231d9b1ff795a6d28cc22ebd95a6a62bde28d4ef068a3ec86a4b6b10",
+      "imageProcessing": "Full, uncropped artwork resized proportionally to 960 px wide and saved as a progressive JPEG.",
+      "verification": "The box reads Mr. Ozmo and Coffee Capsule. The artwork identifies Nespresso compatibility and a ten-capsule pack, matching the existing listing.",
+      "factsAdded": []
     }
   ],
   "pendingImages": [
@@ -245,16 +273,6 @@
     {
       "id": "thailand-ban-huay-khanum",
       "shopeeItemId": "55764092003",
-      "status": "No verified image located; image field intentionally empty"
-    },
-    {
-      "id": "capsule-plantman",
-      "shopeeItemId": "18083267431",
-      "status": "No verified image located; image field intentionally empty"
-    },
-    {
-      "id": "capsule-ozmo",
-      "shopeeItemId": "24575852120",
       "status": "No verified image located; image field intentionally empty"
     },
     {
