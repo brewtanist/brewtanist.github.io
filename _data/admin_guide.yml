@@ -88,39 +88,39 @@ zh:
   language: 选择语言
   title: 网站编辑指南
   heading: 编辑网站文字和图片
-  intro: 门店团队可以使用 Pages CMS 更新泰语文案、商品图片和门店信息。保存后，GitHub Pages 会重新构建并发布网站。
+  intro: 用 Pages CMS 可以更新泰语文案、商品图片和门店信息。保存后，GitHub Pages 会重新生成并发布网站。
   open_editor: 打开 Pages CMS
   open_site: 查看网站
-  setup_heading: 首次使用
+  setup_heading: 首次登录
   steps:
-    - '打开 Pages CMS，选择 <strong>Sign in with GitHub</strong>，使用 <code>pumplcrs-hub</code> 或其他有权编辑门店代码库的账号登录。'
-    - '系统提示安装 Pages CMS GitHub App 时，在 <code>brewtanist</code> 组织下选择 <strong>Only select repositories</strong>，然后选中 <code>brewtanist.github.io</code>。'
-    - '打开 <code>brewtanist/brewtanist.github.io</code>，选择 <strong>main</strong> 分支，再打开需要编辑的栏目。'
-    - '核对文字和图片，点击 <strong>Save</strong>。保存到 main 分支后，改动将发布到线上网站。'
-  menu_heading: 选择要编辑的栏目
+    - '打开 Pages CMS，点击 <strong>Sign in with GitHub</strong>，使用 <code>pumplcrs-hub</code> 或其他有权编辑门店仓库的 GitHub 账号登录。'
+    - '如果系统提示安装 Pages CMS GitHub App，请在 <code>brewtanist</code> 组织下选择 <strong>Only select repositories</strong>，再选中 <code>brewtanist.github.io</code>。'
+    - '打开 <code>brewtanist/brewtanist.github.io</code>，选择 <strong>main</strong> 分支，再进入要编辑的栏目。'
+    - '核对文字和图片后点击 <strong>Save</strong>。保存到 main 分支即可触发发布。'
+  menu_heading: 在哪里修改内容
   section: CMS 栏目
-  fields: 可编辑内容
+  fields: 可修改的内容
   menus:
-    - [首页与门店故事, 首页标题、简介、主图、按钮、门店故事和联系方式旁的图片。]
-    - [咖啡与烘焙点心, 菜单卡片的名称、说明、图片和顺序。]
-    - [商品与三维图片, 各款拼配咖啡的名称、风味、烘焙程度、咖啡袋图片及背景色。]
-    - [烘焙工坊, 咖啡烘焙步骤和工坊照片。]
-    - [相册, 照片、说明、顺序，以及是否显示。]
-    - [常见问题, 补充的问题与解答。地址和营业时间取自门店信息。]
-    - [门店信息、链接与搜索设置, 地址、营业时间、电话、付款方式、链接及供搜索引擎使用的介绍。]
-    - [Shopee 商品, 商品卡片、分类、图片、详情，以及用于生成 Shopee 链接的商品编号。]
-  translation_heading: 编辑面向顾客的多语言内容
-  translation_note: 在 Pages CMS 中编辑泰语文案，在网站的语言文件中更新英语和简体中文译文。修改门店信息后，请在发布前核对三个语言版本中的相关内容。
-  en_file: 打开英语文件
-  zh_file: 打开简体中文文件
+    - [首页与门店故事, 首页标题、简介、主图、按钮、门店故事和联系方式旁的配图。]
+    - [咖啡与自制点心, 菜单卡片的名称、说明、图片和排列顺序。]
+    - [商品与 3D 效果图, 招牌拼配的名称、风味、烘焙程度、咖啡袋效果图和背景色。]
+    - [烘焙工坊, 烘焙步骤和工坊照片。]
+    - [相册, 照片、说明、排列顺序和显示设置。]
+    - [常见问题, 补充问题与解答。地址和营业时间会从门店信息中自动读取。]
+    - [门店信息、链接与搜索设置, 地址、营业时间、联系电话、付款方式、链接和搜索结果中显示的网站简介。]
+    - [Shopee 商品, 商品卡片、分类、图片、详情，以及生成 Shopee 商品链接所需的商品编号。]
+  translation_heading: 更新英文和简体中文内容
+  translation_note: 泰语文案在 Pages CMS 中修改。英文和简体中文的首页文案及商品说明在下方文件中维护。门店信息有变动时，请在发布前核对三个语言版本。
+  en_file: 打开英文文案
+  zh_file: 打开简体中文文案
   image_heading: 更换图片
   image_notes:
-    - '打开相应栏目的图片字段，从图库选择图片，或上传 JPG、PNG、WebP 文件。保存在 <code>brewtanist/assets</code> 中的图片会公开显示，请使用门店有权发布的图片。'
-    - '替换图片时，请使用新的文件名上传。裁切焦点可以设在中间、上方、下方、左侧或右侧。咖啡袋效果图会完整显示。首页主图居左或居右的设置适用于桌面端。'
-    - '拖动照片或卡片可以调整顺序。如果一张图片仍在其他位置使用，可以关闭显示开关，将它从当前栏目隐藏。'
-  publish_heading: 保存后检查网站
-  publish_text: '打开 GitHub Actions，找到最近一次改动对应的 <strong>pages build and deployment</strong>。任务成功后，用手机和电脑打开网站，逐一检查各语言版本。'
-  actions: 在 GitHub Actions 中查看发布状态
+    - '在相应栏目的图片选项中，可以从图库选图，也可以上传 JPG、PNG 或 WebP 文件。保存在 <code>brewtanist/assets</code> 中的图片会公开显示，请使用门店有权发布的图片。'
+    - '替换旧图时，请用新文件名上传。可以选择裁切时保留的区域（中间、上方、下方、左侧或右侧）。咖啡袋效果图会完整显示。首页主图在电脑端还可以设为居左或居右。'
+    - '拖动照片或卡片可以调整排列顺序。要在当前栏目隐藏其他地方还在使用的图片，关闭显示开关即可。'
+  publish_heading: 检查发布结果
+  publish_text: '打开 GitHub Actions，找到此次修改对应的 <strong>pages build and deployment</strong>。任务成功后，在手机和电脑上打开网站，切换语言检查内容。'
+  actions: 查看 GitHub Actions 发布状态
   history: 查看修改记录
-  recover: 如果发布失败，请打开失败的任务查看错误信息。要恢复以前的内容，可以在 GitHub 的文件历史记录中找到旧版本，再将需要的内容保存回去。
+  recover: 如果发布失败，打开对应任务查看错误信息。要恢复某段旧文案，可以在 GitHub 的文件历史记录中找到旧版本，把需要的内容复制回来并保存。
   docs: Pages CMS 快速入门指南

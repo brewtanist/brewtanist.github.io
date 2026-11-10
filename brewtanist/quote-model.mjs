@@ -98,19 +98,26 @@ export function requestFile(rfq, labels) {
   }
   return {kind:'brewtanist-oem-quote',schemaVersion:1,current:q,history:[],request:rfq};
 }
+// Older v1 files stored the generated Chinese description as plain text.
+const previousChineseSpecs = {
+  packSpec:'每袋克重（克） {n}', boxSpec:'每盒胶囊数 {n}',
+  light:'浅焙', medium:'中焙', dark:'深焙', whole:'整豆', ground:'研磨'
+};
 function requestDescription(product,type,t) {
   const parts=type==='beans' ? [
-    product.packGrams && t.packGrams+' '+product.packGrams,
+    product.packGrams && t.packSpec.replace('{n}',product.packGrams),
     product.roast!=='discuss' && t[product.roast],
     product.grind!=='discuss' && t[product.grind]
-  ] : [product.system, product.perBox && t.perBox+' '+product.perBox];
+  ] : [product.system, product.perBox && t.boxSpec.replace('{n}',product.perBox)];
   return parts.filter(Boolean).join(' · ');
 }
 export function documentDescription(line,request,lang,labels) {
   const product=request?.products[line.type];
   if(!product || lang===request.language) return line.description;
   const original=requestDescription(product,line.type,labels[request.language]);
-  return line.description===original ? requestDescription(product,line.type,labels[lang]) : line.description;
+  const wasGenerated=line.description===original || (request.language==='zh' &&
+    line.description===requestDescription(product,line.type,previousChineseSpecs));
+  return wasGenerated ? requestDescription(product,line.type,labels[lang]) : line.description;
 }
 function assertOfferShape(q) {
   if (!q || !langOK(q.doclang) || !Number.isInteger(q.revision) || q.revision<1 || q.revision>MAX_REVISIONS+1 ||

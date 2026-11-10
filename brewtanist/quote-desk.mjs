@@ -1,4 +1,4 @@
-import {TYPES,UNITS,MAX_LINES,makeLine,newOffer,extendedLine,calculate,currency,validateForIssue,revise,importData,isRFQ,documentDescription} from './quote-model.mjs?v=1';
+import {TYPES,UNITS,MAX_LINES,makeLine,newOffer,extendedLine,calculate,currency,validateForIssue,revise,importData,isRFQ,documentDescription} from './quote-model.mjs?v=2';
 
 const get=id=>document.getElementById(id);
 const allLabels=JSON.parse(get('quote-labels').textContent);
@@ -36,17 +36,20 @@ function readHeader() {
   for(const key of headerFields)file.current[key]=field(key).value;
 }
 function tableValue(dl,label,value) {dl.append(node('dt',label),node('dd',value));}
+function amountWithUnit(value,lang) {
+  return currency(value,lang)+' '+allLabels[lang].baht;
+}
 function showTotals() {
   const q=file.current, t=allLabels[language], out=get('totals');
   const prices={};
   try {Object.assign(prices,calculate(q));} catch { /* Incomplete rows remain visibly unpriced. */ }
   out.replaceChildren();
   for(const key of ['subtotal','discount','tax','total']) {
-    tableValue(out,t[key],prices[key]==null?'—':currency(prices[key],language)+' THB');
+    tableValue(out,t[key],prices[key]==null?'—':amountWithUnit(prices[key],language));
   }
   for (let i=0;i<q.lines.length;i++) {
     const output=get('lines').children[i]?.querySelector('output');if(!output)continue;
-    try {output.value=currency(extendedLine(q.lines[i]),language)+' THB';} catch {output.value='—';}
+    try {output.value=amountWithUnit(extendedLine(q.lines[i]),language);} catch {output.value='—';}
   }
 }
 function makeSelect(options,selected,onChange) {
@@ -73,7 +76,7 @@ function drawLines() {
     const qty=makeInput(line.qty,edit('qty'),{type:'number',step:'.001',min:'.001',max:'999999999.999',inputMode:'decimal',required:true});
     const price=makeInput(line.price,edit('price'),{type:'number',step:'.01',min:'0',max:'9999999999.99',inputMode:'decimal',required:true});
     top.append(labeled(tr('type'),typeSelect),labeled(tr('qty'),qty),labeled(tr('unit'),unitSelect),labeled(tr('unitPrice'),price));
-    const desc=makeInput(line.description,edit('description'),{maxLength:1000});
+    const desc=makeInput(documentDescription(line,file.request,language,allLabels),edit('description'),{maxLength:1000});
     const descLabel=labeled(tr('desc'),desc);descLabel.className='description';
     const foot=node('div',null,'line-foot'), money=node('span');
     money.append(document.createTextNode(tr('lineTotal')+' '),node('output','—'));
@@ -91,7 +94,8 @@ function drawSource() {
   tableValue(list,tr('rfq'),request.reference);
   for(const key of projectKeys) {
     const value=request.project[key];if(!value)continue;
-    tableValue(list,tr(key),key==='frequency'&&['discuss','once','monthly','other'].includes(value)?tr(value):value);
+    const frequencyLabel = value === 'discuss' ? 'undecided' : value;
+    tableValue(list,tr(key),key==='frequency'&&['undecided','once','monthly','other'].includes(frequencyLabel)?tr(frequencyLabel):value);
   }
   const b=request.products.beans, c=request.products.capsules;
   if(b) {
@@ -109,8 +113,8 @@ function drawHistory() {
   const hist=get('history');hist.replaceChildren();
   if(!file.history.length){hist.append(node('li',tr('emptyHistory')));return;}
   for(const q of [...file.history].reverse()) {
-    const value=currency(calculate(q).total,language);
-    const li=node('li',q.number+' · '+tr('revision')+' '+q.revision+' · '+q.issued+' · '+value+' THB ');
+    const value=amountWithUnit(calculate(q).total,language);
+    const li=node('li',q.number+' · '+tr('revisionText').replace('{n}',q.revision)+' · '+q.issued+' · '+value+' ');
     li.append(button(tr('prior'),()=>printOffer(q)));hist.append(li);
   }
 }
@@ -159,15 +163,15 @@ function currentIsReady() {
 }
 function prepareDocument(q) {
   const t=allLabels[q.doclang], doc=get('document');
-  const c=calculate(q), money=value=>currency(value,q.doclang)+' THB';
-  doc.replaceChildren();doc.lang=langs[q.doclang];
+  const c=calculate(q), money=value=>amountWithUnit(value,q.doclang);
+  doc.replaceChildren();doc.lang=langs[q.doclang];doc.setAttribute('aria-label',t.quotation);
   const head=node('header');head.append(node('h1',t.quotation));
   const meta=node('div',null,'doc-meta');
   for(const [key,value] of [['number',q.number],['revision',q.revision],['issued',q.issued],['valid',q.valid],['rfq',q.rfq]]) {
-    if(value)meta.append(node('span',t[key]+' '+value));
+    if(value)meta.append(node('span',key==='revision'?t.revisionText.replace('{n}',value):t[key]+' '+value));
   }
   head.append(meta);doc.append(head);
-  const sender=node('section',null,'doc-contact');sender.append(node('h2',t.provider),node('strong',seller.brand),node('p',seller.address[q.doclang]),node('p',seller.phone+' · brewtanist@gmail.com'));
+  const sender=node('section',null,'doc-contact');sender.append(node('h2',t.provider),node('strong',seller.brand),node('p',seller.address[q.doclang]),node('p',(q.doclang==='zh' ? seller.phoneZh : seller.phone)+' · brewtanist@gmail.com'));
   const customer=node('section',null,'doc-contact');customer.append(node('h2',t.billed),node('strong',[q.company,q.name].filter(Boolean).join(' · ')));
   const reach=[q.email,q.phone].filter(Boolean);if(reach.length)customer.append(node('p',reach.join(' · ')));
   doc.append(sender,customer);
@@ -198,7 +202,7 @@ window.addEventListener('beforeprint',()=>{
 window.addEventListener('afterprint',()=>{printTarget=null;});
 get('compose').addEventListener('click',()=>{
   if(!currentIsReady() || get('compose').disabled)return;
-  const q=file.current,t=allLabels[q.doclang],subject=t.quotation+' '+q.number+' · '+t.revision+' '+q.revision;
+  const q=file.current,t=allLabels[q.doclang],subject=t.quotation+' '+q.number+' · '+t.revisionText.replace('{n}',q.revision);
   const body=[subject,q.rfq?t.rfq+' '+q.rfq:'',t.draftBody,seller.brand].filter(Boolean).join('\n\n');
   const email=q.email.trim().split('@').map(encodeURIComponent).join('@');
   location.href='mailto:'+email+'?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);

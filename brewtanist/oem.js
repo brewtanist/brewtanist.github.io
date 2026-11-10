@@ -4,6 +4,9 @@
   if (!form) return;
   const root = document.querySelector("main[data-language]");
   const copy = JSON.parse(document.getElementById("oem-text").textContent);
+  const chinese = root.dataset.language === "zh";
+  const fieldSeparator = chinese ? "：" : ": ";
+  const quantityWithUnit = (number, unit) => number + (chinese ? "" : " ") + unit;
   const review = document.getElementById("oem-review");
   const title = document.getElementById("oem-review-title");
   const summary = document.getElementById("oem-summary");
@@ -64,12 +67,12 @@
     };
   }
   function formatBrief(rfq) {
-    const lines = [copy.title, copy.reference + ": " + rfq.reference];
-    const line = (label, text) => { if (text !== null && text !== undefined && text !== "") lines.push(label + ": " + text); };
+    const lines = [copy.title, copy.reference + fieldSeparator + rfq.reference];
+    const line = (label, text) => { if (text !== null && text !== undefined && text !== "") lines.push(label + fieldSeparator + text); };
     const beans = rfq.products.beans;
     if (beans) {
       lines.push("", copy.beans);
-      line(copy.quantity, beans.quantityKg + " " + copy.kg);
+      line(copy.quantity, quantityWithUnit(beans.quantityKg, copy.kg));
       line(copy.grams, beans.packGrams);
       line(copy.roast, copy[beans.roast]);
       line(copy.grind, copy[beans.grind]);
@@ -77,7 +80,7 @@
     const capsules = rfq.products.capsules;
     if (capsules) {
       lines.push("", copy.capsules);
-      line(copy.quantity, capsules.quantityUnits + " " + copy.units);
+      line(copy.quantity, quantityWithUnit(capsules.quantityUnits, copy.units));
       line(copy.system, capsules.system);
       line(copy.per_box, capsules.perBox);
     }
@@ -102,8 +105,8 @@
     const complete = prefix + encodeURIComponent(summary.value);
     const attach = complete.length > 1900;
     const short = [copy.email_body, request.reference, request.contact.name, request.contact.email || request.contact.phone];
-    if (request.products.beans) short.push(copy.beans + ": " + request.products.beans.quantityKg + " kg");
-    if (request.products.capsules) short.push(copy.capsules + ": " + request.products.capsules.quantityUnits);
+    if (request.products.beans) short.push(copy.beans + fieldSeparator + quantityWithUnit(request.products.beans.quantityKg, copy.kg));
+    if (request.products.capsules) short.push(copy.capsules + fieldSeparator + quantityWithUnit(request.products.capsules.quantityUnits, copy.units));
     emailLink.href = attach ? prefix + encodeURIComponent(short.join("\n")) : complete;
     emailLink.hidden = false;
     emailLink.className = root.dataset.endpoint ? "oem-link" : "btn";

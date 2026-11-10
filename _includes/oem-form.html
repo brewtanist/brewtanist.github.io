@@ -3,6 +3,7 @@
 {%- assign ui = site.data.ui[lang] -%}
 {%- assign tx = site.data.oem_form[lang] -%}
 {%- assign shop = site.data.brewtanist.settings -%}
+{%- capture contact_phone -%}{% include contact-phone.html lang=lang %}{%- endcapture -%}
 {%- assign brand_text = shop -%}
 {%- if lang != 'th' -%}{%- assign brand_text = site.data.translations[lang].settings -%}{%- endif -%}
 {%- assign channel = site.data.oem_intake -%}
@@ -28,7 +29,8 @@
   <link rel="stylesheet" href="/brewtanist/refinement.css?v=20261110-languages">
   <link rel="stylesheet" href="/brewtanist/oem.css?v=1">
   <script defer src="/brewtanist/site.js?v=20261110-languages"></script>
-  <script defer src="/brewtanist/oem.js?v=1"></script>
+  {% if lang == 'zh' %}<script defer src="/brewtanist/zh-form-feedback.js"></script>{% endif %}
+  <script defer src="/brewtanist/oem.js?v=20261110-zh"></script>
 </head>
 <body class="site-refined oem-page" data-home="{{ home_path }}" data-shop="{{ shop_path }}">
   <a class="skip" href="#main">{{ ui.skip | escape }}</a>
@@ -54,7 +56,7 @@
     </div><figure>{% include cafe-photo.html src="/brewtanist/assets/brewtanist-products.jpg" alt=ui.shelf_alt width="735" height="410" sizes="(max-width: 760px) 1px, (max-width: 1300px) 30vw, 360px" %}</figure></div>
     <div class="oem-grid">
       <div>
-        <noscript><p>{{ tx.noscript | escape }}</p><p><a href="tel:{{ shop.phone | remove: ' ' | escape }}">{{ shop.phone | escape }}</a> · <a href="{% include brewtanist-url.html url=chat %}">{{ tx.chat | escape }}</a></p></noscript>
+        <noscript><p>{{ tx.noscript | escape }}</p><p><a href="tel:{{ contact_phone | remove: ' ' | remove: '-' | escape }}">{{ contact_phone | escape }}</a> · <a href="{% include brewtanist-url.html url=chat %}">{{ tx.chat | escape }}</a></p></noscript>
         <form id="oem-form" method="post" hidden>
           <p class="oem-required">{{ tx.required_help | escape }}</p>
           <fieldset class="oem-section">
@@ -123,7 +125,7 @@
       <aside>
         <section><h2>{{ tx.how | escape }}</h2><p>{{ tx.how_body | escape }}</p></section>
         <section><h2>{{ tx.talk | escape }}</h2><p>{{ tx.talk_body | escape }}</p>
-          <a class="oem-phone" href="tel:{{ shop.phone | remove: ' ' | escape }}">{{ shop.phone | escape }}</a>
+          <a class="oem-phone" href="tel:{{ contact_phone | remove: ' ' | remove: '-' | escape }}">{{ contact_phone | escape }}</a>
           {% if channel.email %}<a class="oem-contact-email" href="mailto:{{ channel.email | escape }}">{{ channel.email | escape }}</a>{% endif %}
         </section>
       </aside>

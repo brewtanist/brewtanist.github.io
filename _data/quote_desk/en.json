@@ -92,5 +92,10 @@
   "budget": "Customer budget",
   "notes": "Customer notes",
   "draftBody": "Please find our OEM quotation attached.",
-  "inbox": "Open private OEM inbox"
+  "inbox": "Open private OEM inbox",
+  "packSpec": "Bag size (g) {n}",
+  "boxSpec": "Capsules per box {n}",
+  "revisionText": "Revision {n}",
+  "undecided": "Not decided yet",
+  "baht": "THB"
 }

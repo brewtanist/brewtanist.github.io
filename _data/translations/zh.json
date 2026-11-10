@@ -8,7 +8,7 @@
     "opening_days": "每日营业",
     "payment": "现金、PromptPay、扫码支付",
     "seo_title": "The Brewtanist｜巴真府 304 号公路上的咖啡馆与烘焙工坊",
-    "seo_description": "我们在泰国巴真府 Si Maha Phot 的 304 号公路旁，位于 Khlong Rang 壳牌加油站内。来喝杯意式浓缩、手冲咖啡或抹茶，配一份店里烤的点心，也可以带一袋咖啡豆回家。"
+    "seo_description": "小店在泰国巴真府 Si Maha Phot 的 304 号公路旁，就在 Khlong Rang 壳牌加油站里。来喝杯意式浓缩、手冲咖啡或抹茶，配一份自制点心，也可以带袋咖啡豆回家。"
   },
   "home": {
     "hero_eyebrow": "冲煮，栽种，探索。",
@@ -17,7 +17,7 @@
     "hero_alt": "Brewtanist 的两层店面，二楼是木质阳台，透过一楼的玻璃窗可以看到咖啡吧台",
     "hero_caption": "",
     "hero_button": "选购咖啡",
-    "hero_second_button": "查看位置",
+    "hero_second_button": "到店路线",
     "story_title": "Brewtanist 这个名字\n是怎么来的？",
     "story_text": "我们喜欢咖啡，也喜欢植物。把 brew（冲煮）和 botanist（植物学家）两个词放在一起，就有了 Brewtanist 这个名字。\n\n我们自己选豆、烘焙，再试着用不同的方法冲煮，直到找到喜欢的味道。要是还没想好喝什么，可以告诉咖啡师你平常怎么喝，或是今天想试哪种风味。",
     "story_alt": "Brewtanist 店内的咖啡吧台和意式咖啡机",
@@ -64,55 +64,55 @@
         "name": "Mr. Plantman",
         "profile": "意式拼配 · 中深烘焙",
         "notes": "黑巧克力 · 焦糖 · 坚果",
-        "description": "口味浓郁，带黑巧克力、焦糖和坚果风味。做黑咖啡或加奶都合适。",
-        "alt": "Brewtanist 的 Mr. Plantman 咖啡豆包装立体图"
+        "description": "黑巧克力、焦糖和坚果风味浓郁，喝黑咖啡或加奶都合适。",
+        "alt": "金色的 Mr. Plantman 咖啡豆包装效果图"
       },
       {
         "id": "ozmo",
         "name": "Mr. Ozmo",
         "profile": "意式拼配 · 中深烘焙",
-        "notes": "香草 · 朗姆葡萄干 · 牛奶巧克力",
-        "description": "香气让人想到香草和朗姆酒浸葡萄干，入口浓郁，带着牛奶巧克力般的香甜。",
-        "alt": "Brewtanist 的 Mr. Ozmo 咖啡豆包装立体图"
+        "notes": "香草 · 朗姆酒渍葡萄干 · 牛奶巧克力",
+        "description": "香草和朗姆酒渍葡萄干的香气里，带着牛奶巧克力般的甜味。",
+        "alt": "Mr. Ozmo 咖啡豆包装效果图"
       },
       {
         "id": "lazybug",
         "name": "Ms. Lazybug",
         "profile": "意式拼配 · 中浅烘焙",
         "notes": "花香 · 果香 · 茶感",
-        "description": "花香和果香里带着茶感，适合喜欢清爽黑咖啡的人。",
-        "alt": "Brewtanist 的 Ms. Lazybug 咖啡豆包装立体图"
+        "description": "带有花香和果香，口感清爽，有几分茶感。喜欢黑咖啡的话，可以试试这款。",
+        "alt": "粉色的 Ms. Lazybug 咖啡豆包装效果图"
       }
     ],
     "finder_title": "哪款拼配适合你？",
-    "finder_text": "回答三个关于喝咖啡习惯的问题，看看哪款拼配值得一试。"
+    "finder_text": "回答三个关于口味和喝法的小问题，挑一款适合你的招牌拼配。"
   },
   "roastery": {
-    "title": "在烘焙工坊",
-    "description": "吧台用的招牌拼配和单一产地咖啡，以及卖给客人带回家的咖啡豆，都由我们自己烘焙。每款豆子烘好后，我们都会试喝，再调整冲煮配方。",
+    "title": "我们的烘焙工坊",
+    "description": "吧台用的招牌拼配和单一产地咖啡豆，都是我们自己烘的，也可以买回家冲。每款豆子烘好后，我们都会试喝，再调整冲煮配方。",
     "alt": "",
     "caption": "",
     "steps": [
       {
         "id": "select",
         "title": "选豆",
-        "text": "我们先挑出风味让人感兴趣的咖啡豆，再试出适合它的冲法。"
+        "text": "我们从感兴趣的风味入手挑生豆，再试试哪种冲法能带出这些风味。"
       },
       {
         "id": "roast",
         "title": "烘焙",
-        "text": "试喝时，我们会留意甜感、酸度、香气和醇厚度，再据此调整烘焙方式。"
+        "text": "试喝时，我们会留意香气、甜感、酸度和入口时的醇厚感，再调整烘焙方式。"
       },
       {
         "id": "brew",
         "title": "试冲",
-        "text": "豆子上吧台前，我们会反复冲煮、品尝，调整好配方。"
+        "text": "一款豆子上吧台前，我们会反复试冲，边尝边调整配方。"
       }
     ]
   },
   "gallery": {
     "title": "看看店里",
-    "description": "点开照片，可以近看吧台、饮品和店里烤的点心。",
+    "description": "点开照片，看看吧台、饮品和店里做的点心。",
     "images": [
       {
         "id": "bar",
@@ -152,78 +152,78 @@
     ]
   },
   "faq": {
-    "title": "来店前想知道的事",
+    "title": "到店前你可能想问",
     "items": [
       {
         "id": "parking",
         "question": "可以停车吗？",
-        "answer": "可以。把车停在 Khlong Rang 壳牌加油站内，再步行到店就行。"
+        "answer": "可以，车停在 Khlong Rang 壳牌加油站里，走几步就到店。"
       },
       {
         "id": "take-home",
         "question": "有哪些咖啡可以买回家？",
-        "answer": "有招牌拼配豆、单一产地咖啡豆、挂耳咖啡和咖啡胶囊。当天有哪些，可以问吧台。"
+        "answer": "有招牌拼配、单一产地咖啡豆、挂耳咖啡和咖啡胶囊。想知道当天有哪些，可以问问咖啡师。"
       },
       {
         "id": "single-origin",
         "question": "可以喝到单一产地咖啡吗？",
-        "answer": "可以。手冲菜单会轮换不同产地的豆子。点意式浓缩时，也可以从吧台的豆单里选。"
+        "answer": "可以。我们轮流用不同产地的豆子做手冲。如果想喝意式浓缩，也可以从当天的吧台豆单里选。"
       },
       {
         "id": "matcha-bakery",
         "question": "店里有抹茶和点心吗？",
-        "answer": "有抹茶，也有店里烤的点心。每天供应的点心可能不同。"
+        "answer": "有，抹茶可以配店里做的司康、可颂或蛋糕。当天有哪些点心，到吧台看看就知道。"
       }
     ]
   },
   "marketplace": {
     "title": "在家冲一杯咖啡",
-    "intro": "这里有我们自己烘焙的咖啡豆，也有咖啡胶囊和挂耳咖啡。可以按家里的冲煮方式挑选，也可以搜索你喜欢的风味。",
-    "notice": "下单前，请到 Shopee 查看最新价格、可选规格、每组数量和供货情况。",
+    "intro": "喜欢自己磨豆，还是习惯用胶囊机？这里有我们自己烘的咖啡豆，也有咖啡胶囊和挂耳咖啡，按你的喝法来挑。",
+    "notice": "下单前，请到 Shopee 商品页确认价格、包装规格和库存。",
     "items": [
       {
         "id": "plantman",
         "name": "Mr. Plantman",
-        "description": "招牌拼配，带有黑巧克力、焦糖和坚果风味。",
+        "description": "黑巧克力、焦糖和坚果风味浓郁，做黑咖啡或加奶喝都合适。",
         "details": [],
         "alt": "Brewtanist 金色包装的 Mr. Plantman 咖啡豆"
       },
       {
         "id": "ozmo",
         "name": "Mr. Ozmo",
-        "description": "招牌拼配，带有香草、朗姆葡萄干和牛奶巧克力风味。",
+        "description": "带有香草和朗姆酒渍葡萄干的香气，还有牛奶巧克力般的甜味。",
         "details": [],
         "alt": "紫色背景上的 Brewtanist Mr. Ozmo 咖啡豆包装"
       },
       {
         "id": "lazybug",
         "name": "Ms. Lazybug",
-        "description": "招牌拼配，带有花香、果香和茶感。",
+        "description": "这款拼配带有花香和果香，喝起来清爽，有几分茶感。",
         "details": [],
         "alt": "粉色背景上的 Ms. Lazybug 咖啡豆包装，旁边是 Signature Ethiopia Blend 标识"
       },
       {
         "id": "panama-magma-red-1680",
         "name": "巴拿马 Magma Red 1680",
-        "description": "巴拿马瑰夏，有玫瑰、红心芭乐和蓝莓果酱的风味。",
+        "description": "这款水洗瑰夏带有玫瑰香气，还能喝到红心番石榴和蓝莓果酱的风味。",
         "details": [
           "产地：巴拿马",
           "处理法：水洗",
-          "图示规格：100 克",
+          "图中包装：每袋 100 克",
           "品种：瑰夏",
-          "烘焙取向：手冲",
-          "风味：玫瑰、红心芭乐、蓝莓果酱"
+          "建议冲法：手冲",
+          "风味：玫瑰、红心番石榴、蓝莓果酱"
         ],
         "alt": "Brewtanist 的 100 克装巴拿马 Magma Red 1680 咖啡豆"
       },
       {
         "id": "ethiopia-doora",
         "name": "埃塞俄比亚 Doora",
-        "description": "日晒处理的埃塞俄比亚咖啡，带有菠萝、混合莓果和橙子的风味。",
+        "description": "日晒处理，带有菠萝、莓果和橙子的风味。",
         "details": [
           "产地：埃塞俄比亚",
           "处理法：日晒",
-          "图示规格：100 克",
+          "图中包装：每袋 100 克",
           "品种：当地传统品种（Heirloom）",
           "风味：菠萝、混合莓果、新奇士橙"
         ],
@@ -232,12 +232,12 @@
       {
         "id": "ethiopia-nensenbo-mewa",
         "name": "埃塞俄比亚 Nensenbo Mewa",
-        "description": "日晒处理的埃塞俄比亚咖啡，带有橘子、草莓和洛神花茶的风味。",
+        "description": "这款日晒豆带有橘子、草莓和洛神花茶的风味，适合手冲。",
         "details": [
           "产地：埃塞俄比亚",
           "处理法：日晒",
-          "图示规格：100 克",
-          "烘焙取向：手冲",
+          "图中包装：每袋 100 克",
+          "建议冲法：手冲",
           "风味：橘子、草莓、洛神花茶"
         ],
         "alt": "Brewtanist 的 100 克装埃塞俄比亚 Nensenbo Mewa 咖啡豆"
@@ -245,12 +245,12 @@
       {
         "id": "honduras-finca-moka-whisky",
         "name": "洪都拉斯 Finca Moka Whisky",
-        "description": "来自洪都拉斯的手冲咖啡，带有香草、蜂蜜、威士忌和葡萄的风味。",
+        "description": "适合手冲，杯里能喝到香草、蜂蜜、威士忌和葡萄的风味。",
         "details": [
           "产地：洪都拉斯",
-          "图示规格：100 克",
+          "图中包装：每袋 100 克",
           "处理法：威士忌陈化",
-          "烘焙取向：手冲",
+          "建议冲法：手冲",
           "风味：香草、蜂蜜、威士忌、葡萄"
         ],
         "alt": "Brewtanist 的 100 克装洪都拉斯 Finca Moka Whisky 咖啡豆"
@@ -268,13 +268,13 @@
       {
         "id": "guatemala-agua-tibia-geisha",
         "name": "危地马拉 Finca Agua Tibia 瑰夏",
-        "description": "来自危地马拉的水洗瑰夏。",
+        "description": "危地马拉的水洗瑰夏，带有茉莉花、佛手柑、杏和柠檬的风味。",
         "details": [
           "产地：危地马拉",
           "品种：瑰夏",
           "处理法：水洗",
-          "图示规格：100 克",
-          "烘焙取向：手冲",
+          "图中包装：每袋 100 克",
+          "建议冲法：手冲",
           "风味：茉莉花、佛手柑、杏、柠檬"
         ],
         "alt": "Brewtanist 的 100 克装危地马拉 Finca Agua Tibia 瑰夏咖啡豆"
@@ -282,14 +282,14 @@
       {
         "id": "colombia-risaralda-wush-wush",
         "name": "哥伦比亚 Risaralda Wush Wush",
-        "description": "来自哥伦比亚的厌氧水洗咖啡，带有橘子、芒果和榛子的风味。",
+        "description": "采用厌氧水洗处理法，带有橘子、芒果和榛子的风味。",
         "details": [
           "产地：哥伦比亚",
           "产区：Risaralda",
-          "图示规格：100 克",
+          "图中包装：每袋 100 克",
           "品种：Wush Wush",
           "处理法：厌氧水洗",
-          "烘焙取向：手冲",
+          "建议冲法：手冲",
           "风味：橘子、芒果、榛子"
         ],
         "alt": "Brewtanist 的 100 克装哥伦比亚 Risaralda Wush Wush 咖啡豆"
@@ -297,30 +297,30 @@
       {
         "id": "capsule-plantman",
         "name": "Mr. Plantman 咖啡胶囊",
-        "description": "Mr. Plantman 的胶囊装，每盒 10 颗。可到 Shopee 查看适用的咖啡机型号。",
+        "description": "把 Mr. Plantman 做成了咖啡胶囊，每盒 10 粒。适用机型请看 Shopee 商品页。",
         "details": [
-          "每盒 10 颗胶囊",
-          "适用于部分 Nespresso 咖啡机，下单前请向店家确认型号。"
+          "每盒 10 粒",
+          "适用于部分 Nespresso 机型，下单前请向我们确认型号。"
         ],
         "alt": "棕色 Mr. Plantman 咖啡胶囊盒，印着这款拼配的卡通形象"
       },
       {
         "id": "capsule-ozmo",
         "name": "Mr. Ozmo 咖啡胶囊",
-        "description": "Mr. Ozmo 的胶囊装，每盒 10 颗。可到 Shopee 查看适用的咖啡机型号。",
+        "description": "喜欢 Mr. Ozmo 的话，也可以选择咖啡胶囊，每盒 10 粒。适用机型请看 Shopee 商品页。",
         "details": [
-          "每盒 10 颗胶囊",
-          "适用于部分 Nespresso 咖啡机，下单前请向店家确认型号。"
+          "每盒 10 粒",
+          "适用于部分 Nespresso 机型，下单前请向我们确认型号。"
         ],
         "alt": "紫色 Mr. Ozmo 咖啡胶囊盒，印着这款拼配的卡通形象"
       },
       {
         "id": "capsule-lazybug",
         "name": "Ms. Lazybug 咖啡胶囊",
-        "description": "带花香、果香和茶感的咖啡胶囊。可到 Shopee 查看规格和适用的咖啡机型号。",
+        "description": "咖啡胶囊也能喝到这款拼配的花香、果香和茶感。包装规格和适用机型请看 Shopee 商品页。",
         "details": [
-          "适用于部分 Nespresso 咖啡机，下单前请向店家确认型号。",
-          "包装标注的烘焙程度：中浅烘焙",
+          "适用于部分 Nespresso 机型，下单前请向我们确认型号。",
+          "烘焙程度：中浅烘焙（见包装）",
           "风味：花香、果香、茶感"
         ],
         "alt": "Brewtanist 的粉色 Ms. Lazybug 咖啡胶囊盒"
@@ -328,27 +328,27 @@
       {
         "id": "drip-bag",
         "name": "Brewtanist 挂耳咖啡",
-        "description": "每袋装有磨好的咖啡粉，打开就能冲。挑一款喜欢的风味，在家冲或带去上班都方便。",
+        "description": "咖啡粉已磨好，独立装在挂耳袋里。挑个喜欢的风味，在家或在办公室都能冲。",
         "details": [
-          "类型：独立包装挂耳咖啡"
+          "独立挂耳袋，每袋一杯"
         ],
         "alt": "多款 Brewtanist 挂耳咖啡，包装上标有各自的风味"
       },
       {
         "id": "gift-house-blends",
         "name": "招牌拼配咖啡豆礼盒",
-        "description": "一套尝齐三款招牌拼配：Mr. Plantman、Mr. Ozmo 和 Ms. Lazybug。",
+        "description": "三款招牌拼配各一袋，一次就能尝到 Mr. Plantman、Mr. Ozmo 和 Ms. Lazybug。",
         "details": [
           "内含 3 袋：Mr. Plantman、Ms. Lazybug、Mr. Ozmo",
           "商品曾用名：Holiday Special Set",
-          "可选袋装规格：100 克或 200 克"
+          "可选规格：每袋 100 克或 200 克"
         ],
         "alt": "Brewtanist 咖啡豆礼盒，内含 Mr. Plantman、Ms. Lazybug 和 Mr. Ozmo"
       },
       {
         "id": "gift-capsules",
         "name": "咖啡胶囊礼盒",
-        "description": "适合在家冲煮或送礼，内含 Mr. Plantman、Mr. Ozmo 和 Ms. Lazybug 胶囊各一盒。",
+        "description": "三款招牌拼配的咖啡胶囊各一盒，可以自己慢慢喝，也适合送人。",
         "details": [
           "内含 3 盒：Mr. Plantman、Ms. Lazybug、Mr. Ozmo",
           "商品曾用名：Holiday Set"
@@ -358,9 +358,9 @@
       {
         "id": "clever-dripper-small",
         "name": "Clever Dripper 聪明杯 · 小号",
-        "description": "小号 Clever Dripper 聪明杯，容量 240 毫升，附商品页所列的滤纸。",
+        "description": "小号聪明杯，容量 240 毫升，随附滤纸。滤纸规格请看 Shopee 商品页。",
         "details": [
-          "尺寸：小号（S），240 毫升",
+          "小号（S），容量 240 毫升",
           "产地：台湾"
         ],
         "alt": "Clever Dripper 聪明杯及其包装盒、杯盖、底座和滤纸"
@@ -368,7 +368,7 @@
       {
         "id": "everyday-bucket-bag",
         "name": "Everyday Bucket Bag 帆布水桶包",
-        "description": "Brewtanist 的 14 盎司帆布水桶包，尺寸为 13 × 15 × 5 英寸。",
+        "description": "用 14 盎司帆布做的 Brewtanist 水桶包，尺寸为 13 × 15 × 5 英寸。",
         "details": [
           "尺寸：13 × 15 × 5 英寸",
           "面料：14 盎司帆布"

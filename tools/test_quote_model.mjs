@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
 import {calculate,currency,revise,makeLine,newOffer,importData,requestFile,documentDescription,extendedLine} from '../brewtanist/quote-model.mjs';
 
 const quote=newOffer('th');
@@ -30,13 +31,26 @@ const request={kind:'brewtanist-oem-rfq',schemaVersion:1,reference:'RFQ-20261110
   createdAt:'2026-11-10T01:00:00Z', contact:{name:'A',company:'B',email:'c@example.com',phone:''},
   products:{beans:{quantityKg:70,packGrams:250,roast:'medium',grind:'whole'},capsules:{quantityUnits:1200,system:'Example',perBox:10}},
   project:{flavour:'',packaging:'',frequency:'once',destination:'',targetDate:'',budget:'',notes:''}};
-const labels={en:{packGrams:'g',perBox:'per box',medium:'Medium',whole:'Whole beans'}};
+const labels=Object.fromEntries(['th','en','zh'].map(lang=>[
+  lang,JSON.parse(readFileSync(new URL('../_data/quote_desk/'+lang+'.json',import.meta.url),'utf8'))
+]));
 const received=requestFile(request,labels);
 assert.deepEqual(received.current.lines.map(l=>[l.qty,l.unit,l.price]),[['70','kg',''],['1200','capsule','']]);
 assert.equal(received.current.rfq,request.reference);
 assert.equal(received.current.doclang,'en');
-labels.th={packGrams:'กรัม',medium:'คั่วกลาง',whole:'เต็มเมล็ด'};
-assert.equal(documentDescription(received.current.lines[0],request,'th',labels),'กรัม 250 · คั่วกลาง · เต็มเมล็ด');
+assert.equal(documentDescription(received.current.lines[0],request,'th',labels),'ขนาดถุง (กรัม) 250 · คั่วกลาง · เต็มเมล็ด');
+assert.equal(documentDescription(received.current.lines[0],request,'zh',labels),'每袋 250 克 · 中度烘焙 · 整豆');
+assert.equal(documentDescription(received.current.lines[1],request,'zh',labels),'Example · 每盒 10 粒');
 assert.equal(documentDescription({...received.current.lines[0],description:'Custom'},request,'th',labels),'Custom');
+const zhRequest={...request,language:'zh'};
+const zhQuote=requestFile(zhRequest,labels);
+const oldChineseBeans={...zhQuote.current.lines[0],description:'每袋克重（克） 250 · 中焙 · 整豆'};
+const oldChineseCapsules={...zhQuote.current.lines[1],description:'Example · 每盒胶囊数 10'};
+const sourceLines=received.current.lines;
+assert.equal(documentDescription(oldChineseBeans,zhRequest,'zh',labels),oldChineseBeans.description);
+assert.equal(documentDescription(oldChineseBeans,zhRequest,'en',labels),sourceLines[0].description);
+assert.equal(documentDescription(oldChineseCapsules,zhRequest,'en',labels),sourceLines[1].description);
+const staffEdited={...oldChineseBeans,description:oldChineseBeans.description+'（仅限首单）'};
+assert.equal(documentDescription(staffEdited,zhRequest,'en',labels),staffEdited.description);
 assert.throws(()=>importData({kind:'unknown'},labels));
 console.log('Quote math, version history and request import checks passed.');
