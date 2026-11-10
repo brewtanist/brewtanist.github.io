@@ -4,7 +4,7 @@
   "shopId": "985117757",
   "retrievedOn": "2026-11-09",
   "sourceStatus": "public_listing_and_product_images_not_live_inventory",
-  "sourceNote": "Eighteen identified Shopee listings from the Brewtanist public shop. Seller images, owner catalogue artwork and selected label facts were rechecked on 9 November 2026 (Asia/Bangkok); exact sources and verification limits are in catalogue/shopee-sources.json. Search/storefront snapshots are not live stock or pricing. Unverified images remain empty; no other product image is substituted. Prices, stock, promotions, review totals and exact compatible capsule machine models are not asserted.",
+  "sourceNote": "Eighteen identified Shopee listings from the Brewtanist public shop. Seller images and selected label facts were rechecked on 9 November 2026. Product artwork from the owner has individual verification dates in catalogue/shopee-sources.json. Search/storefront snapshots are not live stock or pricing. Unverified images remain empty; no other product image is substituted. Prices, stock, promotions, review totals and exact compatible capsule machine models are not asserted.",
   "title": "กาแฟสำหรับ\nชงที่บ้าน",
   "intro": "มีทั้งเมล็ดกาแฟที่เราคั่ว แคปซูล และกาแฟดริปแบบซอง เลือกตามวิธีชงที่บ้าน หรือค้นหาจากกลิ่นรสที่ชอบ",
   "notice": "ดูราคาล่าสุด ตัวเลือก จำนวนต่อชุด และสินค้าที่มีขายใน Shopee ก่อนสั่งซื้อ",
@@ -42,8 +42,8 @@
       "visible": true,
       "description": "House Blend โทนดอกไม้ ผลไม้ และชา",
       "details": [],
-      "image": "",
-      "alt": ""
+      "image": "/brewtanist/assets/shop/18883253578-lazybug.webp",
+      "alt": "ถุงเมล็ดกาแฟ Ms. Lazybug บนพื้นสีชมพู พร้อมตรา Signature Ethiopia Blend"
     },
     {
       "id": "panama-magma-red-1680",

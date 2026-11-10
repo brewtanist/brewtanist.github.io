@@ -263,6 +263,12 @@ def check(build):
                 references.append(node.attrs["href"])
             if node.tag in {"img", "script", "source", "video"} and node.attrs.get("src"):
                 references.append(node.attrs["src"])
+            if node.tag in {"img", "source"} and node.attrs.get("srcset"):
+                for candidate in node.attrs["srcset"].split(","):
+                    fields = candidate.strip().split()
+                    require(len(fields) == 2 and re.fullmatch(r"[1-9][0-9]*w", fields[1]),
+                            f"{route}: invalid responsive image candidate: {candidate}")
+                    references.append(fields[0])
             for reference in references:
                 resolved = urlsplit(urljoin(ORIGIN + route, reference))
                 if resolved.scheme not in {"http", "https"} or resolved.netloc != urlsplit(ORIGIN).netloc:

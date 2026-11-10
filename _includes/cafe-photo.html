@@ -1,0 +1,12 @@
+{%- assign widths = site.data.photo_widths[include.src] -%}
+{%- if widths -%}
+  {%- assign stem = include.src | split: '/' | last | remove: '.jpg' -%}
+  <picture>
+    <source type="image/avif" sizes="{{ include.sizes }}" srcset="{% for width in widths %}/brewtanist/assets/photos/{{ stem }}-{{ width }}.avif {{ width }}w{% unless forloop.last %}, {% endunless %}{% endfor %}">
+{%- endif -%}
+<img src="{{ include.src | escape }}" alt="{{ include.alt | escape }}" width="{{ include.width }}" height="{{ include.height }}"
+     {% if include.position %}class="focus-{{ include.position | default: 'center' | escape }}"{% endif %}
+     {% if include.subject %}data-source="client" data-subject="{{ include.subject }}" fetchpriority="high"{% else %}loading="lazy"{% endif %}
+     {% if include.subject == 'shopfront' and include.src == '/brewtanist/assets/brewtanist-storefront-cover.jpg' %}srcset="/brewtanist/assets/brewtanist-storefront-cover-800.jpg 800w, /brewtanist/assets/brewtanist-storefront-cover.jpg 1600w" sizes="{{ include.sizes }}"{% endif %}
+     decoding="async">
+{%- if widths -%}</picture>{%- endif -%}

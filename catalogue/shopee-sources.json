@@ -45,6 +45,20 @@
       "factsAdded": []
     },
     {
+      "id": "lazybug",
+      "shopeeItemId": "18883253578",
+      "sourceUrl": "https://shopee.co.th/product/985117757/18883253578",
+      "sourceType": "owner_catalogue_artwork",
+      "sourceFile": "00_Shopee_/Beans/Beans in stock_2025-02.jpg",
+      "sourceSha256": "393bf182b40e5c6abee4f02d8ae0b81e0c52e844db38cdc929b85d2520c6a915",
+      "verifiedAt": "2026-11-10T11:37:09+07:00",
+      "localPath": "brewtanist/assets/shop/18883253578-lazybug.webp",
+      "imageSha256": "71f9ea61653fb01cc3033f15940aa7c0234de2bb3c1fa9292a1aeed58f63287a",
+      "imageProcessing": "Full square artwork resized from 3000 to 800 pixels and encoded as WebP.",
+      "verification": "Compared with the owner’s Shopee screenshot. The pink coffee bag, MS. LAZYBUG heading, Espresso Blend lettering and Signature Ethiopia Blend seal match the bean listing.",
+      "factsAdded": []
+    },
+    {
       "id": "panama-magma-red-1680",
       "shopeeItemId": "48914111971",
       "sourceUrl": "https://shopee.co.th/-New-in-!-Panama-Magma-Red-1680-(Process-Washed)-เมล็ดกาแฟ-Single-Origin-จากโรงคั่วเดอะบรูทานิสต์-i.985117757.48914111971",
@@ -265,11 +279,6 @@
     }
   ],
   "pendingImages": [
-    {
-      "id": "lazybug",
-      "shopeeItemId": "18883253578",
-      "status": "No verified image located; image field intentionally empty"
-    },
     {
       "id": "thailand-ban-huay-khanum",
       "shopeeItemId": "55764092003",

@@ -13,7 +13,7 @@ First use requires the owner to sign in to Pages CMS with GitHub and grant its G
 - Text is HTML-escaped by Liquid. External link output accepts HTTPS or local absolute paths only.
 - Production content and JSON-LD are generated as HTML; website visitors do not need client-side JavaScript to read them.
 - Images are served from `/brewtanist/assets/`. Do not hotlink private Drive URLs.
-- Google Fonts are loaded externally. No font binaries are included.
+- Bai Jamjuree (Thai and Latin), Lexend and MuseoModerno are served locally as WOFF2. License files are next to them in `brewtanist/fonts/`.
 - Save to `main` publishes through the existing Pages deployment. There is no independent draft system or one-click WYSIWYG live preview in this configuration.
 - No checkout, user accounts, payment collection or analytics trackers were added.
 
@@ -26,6 +26,8 @@ Content defaults were adapted from the previous website and the owner's confirme
 
 ## Editing images
 Use the CMS image picker to upload or reuse files. Do not delete an image used by another section. Use `position` / image position fields to change crop focus: center/top/bottom/left/right. Product renders use contain rather than cover. Uploaded images are public; only upload approved brand assets.
+
+For an updated photograph, upload it under a new filename so the CMS uses that original immediately. For shop JPGs, run `python3 tools/build_shop_thumbnails.py` (Pillow) and commit the generated WebP files and `_data/shop_thumbnails.json`. The browser uses an available thumbnail size and retains the original as a fallback.
 
 ## Rollback
 Pre-redesign snapshot: branch `backup/brewtanist-before-cms-20260912`, commit `eaa0bf79085471f9923b2f98136d204620d3325d`.

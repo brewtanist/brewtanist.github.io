@@ -22,3 +22,25 @@ if (leftHero) {
   if (desktop.addEventListener) desktop.addEventListener('change', placeHero);
   else desktop.addListener(placeHero);
 }
+
+// Warm the other customer page only on pointer/keyboard intent. Native links
+// stay usable without JavaScript and no background prefetch runs on page load.
+(() => {
+  const connection = navigator.connection;
+  if (connection?.saveData || /(^|-)2g$/.test(connection?.effectiveType || '')) return;
+  const next = location.pathname === '/' ? '/shop/' : '/';
+  let requested = false;
+  const warm = event => {
+    if (requested || (event.type === 'pointerover' && event.pointerType !== 'mouse')) return;
+    const anchor = event.target.closest?.('a[href]');
+    if (!anchor || anchor.origin !== location.origin || anchor.pathname !== next) return;
+    const hint = document.createElement('link');
+    if (!hint.relList.supports('prefetch')) return;
+    requested = true;
+    hint.rel = 'prefetch';
+    hint.href = anchor.pathname + anchor.search;
+    document.head.append(hint);
+  };
+  document.addEventListener('focusin', warm);
+  document.addEventListener('pointerover', warm, {passive: true});
+})();

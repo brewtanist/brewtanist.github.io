@@ -19,7 +19,6 @@ body.site-refined {
 .site-refined h2 { font: 600 clamp(34px, 4.4vw, 62px)/1.23 var(--body); letter-spacing: -.035em; }
 .site-refined h3 { font: 600 clamp(23px, 2vw, 30px)/1.36 var(--body); letter-spacing: -.025em; }
 .site-refined :is(figure, .section-head, .story-copy, .hero-copy) { min-width: 0; }
-html:has(.site-refined :focus-visible) { scroll-behavior: auto; }
 .site-refined a, .site-refined summary { text-underline-offset: .25em; }
 .site-refined .nav { background: var(--paper); }
 .site-refined .nav-inner { height: 78px; }

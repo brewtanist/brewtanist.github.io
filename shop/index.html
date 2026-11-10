@@ -22,14 +22,12 @@ permalink: /shop/
   <meta property="og:url" content="https://brewtanist.github.io/shop/">
   <meta property="og:image" content="{{ s.social_image | absolute_url | escape }}">
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bai+Jamjuree:wght@400;500;600;700&family=Lexend:wght@400;500;600;700&family=MuseoModerno:wght@500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/brewtanist/site.css?v=20261109">
-  <link rel="stylesheet" href="/brewtanist/refinement.css?v=20261109-storefront">
-  <link rel="stylesheet" href="/brewtanist/shop.css?v=20261109-storefront">
-  <script defer src="/brewtanist/site.js?v=20261109-navigation"></script>
-  <script defer src="/brewtanist/refinement.js?v=20261109"></script>
+  <link rel="preload" as="font" type="font/woff2" href="/brewtanist/fonts/baijamjuree-600-thai.woff2" crossorigin>
+  <link rel="stylesheet" href="/brewtanist/site.css?v=20261110-speed">
+  <link rel="stylesheet" href="/brewtanist/refinement.css?v=20261110-speed">
+  <link rel="stylesheet" href="/brewtanist/shop.css?v=20261110-speed">
+  <script defer src="/brewtanist/site.js?v=20261110-speed"></script>
+  <script defer src="/brewtanist/refinement.js?v=20261110-speed"></script>
   <script defer src="/brewtanist/shop.js?v=20261109"></script>
 </head>
 <body class="site-refined shop-page">
@@ -44,7 +42,7 @@ permalink: /shop/
     <section class="shop-hero" aria-labelledby="shop-heading"><div class="wrap shop-hero-grid">
       <div class="shop-hero-copy"><h1 id="shop-heading">{{ m.title | escape | newline_to_br }}</h1><p>{{ m.intro | escape }}</p><a class="btn" href="#catalog">เลือกดูสินค้า</a></div>
       <figure class="shop-hero-photo">
-        <img src="/brewtanist/assets/brewtanist-products.jpg" width="735" height="410" alt="กล่องกาแฟแคปซูล Plantman, Lazybug และ Ozmo พร้อมตัวอย่างแคปซูลบนชั้นในร้าน" data-source="client" data-subject="coffee" decoding="async" fetchpriority="high">
+        {% include cafe-photo.html src="/brewtanist/assets/brewtanist-products.jpg" alt="กล่องกาแฟแคปซูล Plantman, Lazybug และ Ozmo พร้อมตัวอย่างแคปซูลบนชั้นในร้าน" width="735" height="410" subject="coffee" sizes="(max-width: 400px) calc(100vw - 40px), (max-width: 800px) 90vw, (max-width: 1400px) 50vw, 690px" %}
       </figure>
     </div></section>
     <section class="shop-catalog" id="catalog" aria-labelledby="catalog-heading"><div class="wrap">
