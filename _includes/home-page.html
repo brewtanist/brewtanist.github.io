@@ -6,6 +6,11 @@
 {%- assign home_path = locale.prefix | append: '/' -%}
 {%- assign shop_path = locale.prefix | append: '/shop/' -%}
 {%- assign s = content_data.settings -%}
+{%- assign visit_phone = site.data.brewtanist.settings.phone -%}
+{%- assign phone_prefix = visit_phone | slice: 0, 1 -%}
+{%- if lang == 'zh' and phone_prefix == '0' -%}
+  {%- assign visit_phone = visit_phone | remove_first: '0' | prepend: '+66 ' -%}
+{%- endif -%}
 {%- assign h = content_data.home -%}
 {%- assign c = content_data.coffee -%}
 {%- assign p = content_data.products -%}
@@ -112,7 +117,7 @@
   {% endif %}
   <section class="section" id="visit" aria-labelledby="visit-heading"><div class="wrap visit-grid">
     <div><h2 id="visit-heading">{{ h.visit_title | escape | newline_to_br }}</h2><p class="intro">{{ h.visit_text | escape }}</p>
-      <dl class="visit-details"><div><dt>{{ ui.address | escape }}</dt><dd>{{ s.address | escape }}<br>{{ s.location_note | escape }}</dd></div><div><dt>{{ ui.hours | escape }}</dt><dd>{{ s.opening_days | escape }}<br>{{ site.data.brewtanist.settings.opens | escape }}–{{ site.data.brewtanist.settings.closes | escape }}{{ ui.hour_suffix | escape }}</dd></div><div><dt>{{ ui.phone | escape }}</dt><dd><a href="tel:{{ site.data.brewtanist.settings.phone | remove: ' ' | remove: '-' | escape }}">{{ site.data.brewtanist.settings.phone | escape }}</a></dd></div><div><dt>{{ ui.payment | escape }}</dt><dd>{{ s.payment | escape }}</dd></div></dl>
+      <dl class="visit-details"><div><dt>{{ ui.address | escape }}</dt><dd>{{ s.address | escape }}<br>{{ s.location_note | escape }}</dd></div><div><dt>{{ ui.hours | escape }}</dt><dd>{{ s.opening_days | escape }}<br>{{ site.data.brewtanist.settings.opens | escape }}–{{ site.data.brewtanist.settings.closes | escape }}{{ ui.hour_suffix | escape }}</dd></div><div><dt>{{ ui.phone | escape }}</dt><dd><a href="tel:{{ visit_phone | remove: ' ' | remove: '-' | escape }}">{{ visit_phone | escape }}</a></dd></div><div><dt>{{ ui.payment | escape }}</dt><dd>{{ s.payment | escape }}</dd></div></dl>
       <a class="btn" href="{% include brewtanist-url.html url=site.data.brewtanist.settings.maps %}" target="_blank" rel="noopener noreferrer">{{ ui.maps | escape }}</a>
     </div><figure class="visit-photo">{% include cafe-photo.html src=site.data.brewtanist.home.visit_image alt=h.visit_alt position=site.data.brewtanist.home.visit_position width="1000" height="1250" sizes="auto, (max-width: 800px) 90vw, 45vw" %}</figure>
   </div></section>

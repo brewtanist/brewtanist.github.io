@@ -3,60 +3,60 @@
     "brand": "The Brewtanist",
     "descriptor": "咖啡馆与烘焙工坊",
     "notice": "精品咖啡 · 304 号公路 · 巴真府",
-    "address": "泰国巴真府 Si Maha Phot 县 Krok Sombun 乡第 4 村 78 号，邮编 25140",
+    "address": "78 Moo 4, Krok Sombun, Si Maha Phot, Prachinburi 25140, Thailand",
     "location_note": "304 号公路旁，Khlong Rang 壳牌加油站内",
-    "opening_days": "每天营业",
-    "payment": "现金 · PromptPay · 扫码支付",
+    "opening_days": "每日营业",
+    "payment": "现金、PromptPay、扫码支付",
     "seo_title": "The Brewtanist｜巴真府 304 号公路上的咖啡馆与烘焙工坊",
     "seo_description": "我们在泰国巴真府 Si Maha Phot 的 304 号公路旁，位于 Khlong Rang 壳牌加油站内。来喝杯意式浓缩、手冲咖啡或抹茶，配一份店里烤的点心，也可以带一袋咖啡豆回家。"
   },
   "home": {
     "hero_eyebrow": "冲煮，栽种，探索。",
-    "hero_title": "在 Si Maha Phot\n烘焙的咖啡",
-    "hero_text": "小店在巴真府 304 号公路旁的 Khlong Rang 壳牌加油站内。路过时可以来吧台喝杯咖啡，也可以挑一袋豆子回家慢慢冲。",
+    "hero_title": "Si Maha Phot 的\n自家烘焙咖啡",
+    "hero_text": "小店在巴真府 304 号公路旁的 Khlong Rang 壳牌加油站里。路过时，来吧台喝杯咖啡，也可以挑一袋喜欢的豆子带回家冲。",
     "hero_alt": "Brewtanist 的两层店面，二楼是木质阳台，透过一楼的玻璃窗可以看到咖啡吧台",
     "hero_caption": "",
     "hero_button": "选购咖啡",
     "hero_second_button": "查看位置",
     "story_title": "Brewtanist 这个名字\n是怎么来的？",
-    "story_text": "我们喜欢咖啡，也喜欢植物，于是把 Brew（冲煮）和 Botanist（植物学家）两个词合在一起，取名 Brewtanist。\n\n我们自己选豆、烘焙，再试着用不同方式冲煮，直到喝到喜欢的味道。如果一时拿不定主意，可以跟咖啡师聊聊你平常喝什么，或者今天想试哪种风味。",
+    "story_text": "我们喜欢咖啡，也喜欢植物。把 brew（冲煮）和 botanist（植物学家）两个词放在一起，就有了 Brewtanist 这个名字。\n\n我们自己选豆、烘焙，再试着用不同的方法冲煮，直到找到喜欢的味道。要是还没想好喝什么，可以告诉咖啡师你平常怎么喝，或是今天想试哪种风味。",
     "story_alt": "Brewtanist 店内的咖啡吧台和意式咖啡机",
     "story_caption": "我们的咖啡吧台",
     "visit_title": "来店里坐坐",
-    "visit_text": "把车停在加油站就可以步行到店。上下两层都有座位和 Wi-Fi，适合歇脚或坐下来工作。想买豆子回家，可以在吧台慢慢挑。",
+    "visit_text": "把车停在加油站，走几步就到店里。上下两层都有座位，店里也有 Wi-Fi，歇脚或带电脑来工作都方便。想带咖啡豆回家，临走前可以在吧台挑一袋。",
     "visit_alt": "Khlong Rang 壳牌加油站内的 Brewtanist 咖啡馆正面"
   },
   "coffee": {
-    "title": "吧台喝什么",
-    "description": "喜欢浓郁的咖啡、习惯加奶，还是想试试带果香的口味？告诉咖啡师，我们可以帮你选豆。",
+    "title": "今天想喝什么？",
+    "description": "喜欢浓郁的意式浓缩，平时爱喝奶咖，还是想试试带果香的豆子？告诉咖啡师你的口味，我们帮你挑。",
     "cards": [
       {
         "id": "espresso",
         "label": "意式浓缩",
         "title": "招牌拼配",
-        "text": "Mr. Plantman、Mr. Ozmo 和 Ms. Lazybug 是店里的三款拼配。它们的烘焙程度和风味各有不同。",
+        "text": "吧台有三款意式拼配豆：Mr. Plantman、Mr. Ozmo 和 Ms. Lazybug。三款豆子的烘焙程度和风味各有不同。",
         "alt": "Brewtanist 吧台上的磨豆机和招牌拼配咖啡豆"
       },
       {
         "id": "pour-over",
         "label": "手冲咖啡",
-        "title": "单一产地咖啡",
-        "text": "手冲菜单会轮换不同产地的豆子。想知道今天在冲哪一款，可以到吧台问问。",
+        "title": "单一产地咖啡豆",
+        "text": "我们轮流用不同产地的豆子做手冲。想知道今天能喝到哪一款，可以问问咖啡师。",
         "alt": "在 Brewtanist 手冲咖啡"
       },
       {
         "id": "matcha-bakery",
         "label": "咖啡之外",
-        "title": "抹茶与烘焙点心",
-        "text": "点一杯抹茶，配店里烤的司康、可颂或蛋糕。每天供应的点心会有变化。",
+        "title": "抹茶与自制点心",
+        "text": "点一杯抹茶，配一份店里做的司康、可颂或蛋糕。每天供应的点心会有变化。",
         "alt": "Brewtanist 的饮品和烘焙点心"
       }
     ]
   },
   "products": {
     "title": "我们的招牌拼配",
-    "description": "吧台有三款意式拼配可以选，有的带浓郁的巧克力味，有的透着香草甜香，也有花香和果香轻盈的一款。",
-    "note": "除了招牌拼配，我们也卖单一产地咖啡豆、挂耳咖啡和咖啡胶囊。想知道目前有哪些选择，可以看看 Shopee 或到吧台问问。",
+    "description": "Mr. Plantman 带有浓郁的黑巧克力风味，Mr. Ozmo 有香草的甜香，Ms. Lazybug 则带有清新的花香和果香。",
+    "note": "除了招牌拼配，我们也卖单一产地咖啡豆、挂耳咖啡和咖啡胶囊。想知道现在有哪些，可以看看我们的 Shopee 店铺，也可以直接问咖啡师。",
     "button": "在 Shopee 查看商品",
     "items": [
       {
