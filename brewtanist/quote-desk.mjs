@@ -1,4 +1,4 @@
-import {TYPES,UNITS,MAX_LINES,makeLine,newOffer,extendedLine,calculate,currency,validateForIssue,revise,importData,isRFQ,documentDescription} from './quote-model.mjs?v=2';
+import {TYPES,UNITS,MAX_LINES,makeLine,newOffer,extendedLine,calculate,currency,validateForIssue,revise,importData,isRFQ,documentDescription,unitName} from './quote-model.mjs?v=3';
 
 const get=id=>document.getElementById(id);
 const allLabels=JSON.parse(get('quote-labels').textContent);
@@ -104,7 +104,7 @@ function drawSource() {
     tableValue(list,tr('roast'),tr(b.roast));tableValue(list,tr('grind'),tr(b.grind));
   }
   if(c) {
-    tableValue(list,tr('capsules'),String(c.quantityUnits)+' '+tr('capsule'));
+    tableValue(list,tr('capsules'),String(c.quantityUnits)+' '+unitName('capsule',c.quantityUnits,allLabels[language]));
     if(c.perBox)tableValue(list,tr('perBox'),String(c.perBox));
     if(c.system)tableValue(list,tr('system'),c.system);
   }
@@ -171,7 +171,7 @@ function prepareDocument(q) {
     if(value)meta.append(node('span',key==='revision'?t.revisionText.replace('{n}',value):t[key]+' '+value));
   }
   head.append(meta);doc.append(head);
-  const sender=node('section',null,'doc-contact');sender.append(node('h2',t.provider),node('strong',seller.brand),node('p',seller.address[q.doclang]),node('p',(q.doclang==='zh' ? seller.phoneZh : seller.phone)+' · brewtanist@gmail.com'));
+  const sender=node('section',null,'doc-contact');sender.append(node('h2',t.provider),node('strong',seller.brand),node('p',seller.address[q.doclang]),node('p',(q.doclang==='th' ? seller.phone : seller.internationalPhone)+' · brewtanist@gmail.com'));
   const customer=node('section',null,'doc-contact');customer.append(node('h2',t.billed),node('strong',[q.company,q.name].filter(Boolean).join(' · ')));
   const reach=[q.email,q.phone].filter(Boolean);if(reach.length)customer.append(node('p',reach.join(' · ')));
   doc.append(sender,customer);
@@ -183,7 +183,7 @@ function prepareDocument(q) {
     const row=node('tr'),description=node('td');
     description.append(node('strong',t[line.type]));
     if(line.description)description.append(node('p',documentDescription(line,file.request,q.doclang,allLabels),'doc-copy'));
-    row.append(description,node('td',line.qty),node('td',t[line.unit]),node('td',currency(extendedLine({...line,qty:'1'}),q.doclang)),node('td',currency(c.amounts[i],q.doclang)));tbody.append(row);
+    row.append(description,node('td',line.qty),node('td',unitName(line.unit,line.qty,t)),node('td',currency(extendedLine({...line,qty:'1'}),q.doclang)),node('td',currency(c.amounts[i],q.doclang)));tbody.append(row);
   });
   table.append(tbody);doc.append(table);
   const totals=node('dl',null,'totals doc-money');

@@ -29,8 +29,8 @@
   <link rel="stylesheet" href="/brewtanist/refinement.css?v=20261110-languages">
   <link rel="stylesheet" href="/brewtanist/oem.css?v=1">
   <script defer src="/brewtanist/site.js?v=20261110-languages"></script>
-  {% if lang == 'zh' %}<script defer src="/brewtanist/zh-form-feedback.js"></script>{% endif %}
-  <script defer src="/brewtanist/oem.js?v=20261110-zh"></script>
+  {% if lang != 'th' %}<script defer src="/brewtanist/form-feedback.js"></script>{% endif %}
+  <script defer src="/brewtanist/oem.js?v=20261110-en"></script>
 </head>
 <body class="site-refined oem-page" data-home="{{ home_path }}" data-shop="{{ shop_path }}">
   <a class="skip" href="#main">{{ ui.skip | escape }}</a>

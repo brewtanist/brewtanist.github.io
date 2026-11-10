@@ -43,44 +43,44 @@ th:
 en:
   tag: en
   home_url: /en/
-  language: Choose language
+  language: Choose a language
   title: Website editing guide
   heading: Edit the website’s text and photos
-  intro: The shop team uses Pages CMS to update Thai copy, product photos and café details. After a save, GitHub Pages builds and publishes the updated website.
+  intro: Use Pages CMS to update the Thai text, product photos and café details. GitHub Pages publishes the changes you save.
   open_editor: Open Pages CMS
   open_site: View the website
-  setup_heading: Getting started
+  setup_heading: Sign in to Pages CMS
   steps:
-    - 'Open Pages CMS, choose <strong>Sign in with GitHub</strong> and sign in as <code>pumplcrs-hub</code> or with another account that can edit the shop’s repository.'
-    - 'When asked to install the Pages CMS GitHub App, choose <strong>Only select repositories</strong> under the <code>brewtanist</code> organization and select <code>brewtanist.github.io</code>.'
+    - 'In Pages CMS, choose <strong>Sign in with GitHub</strong>. Use <code>pumplcrs-hub</code> or another account with permission to edit the café’s repository.'
+    - 'If GitHub asks you to install the Pages CMS app, choose the <code>brewtanist</code> organisation and <strong>Only select repositories</strong>. Select <code>brewtanist.github.io</code>.'
     - 'Open <code>brewtanist/brewtanist.github.io</code>, select the <strong>main</strong> branch and choose the section you want to edit.'
-    - 'Check your text and photos, then choose <strong>Save</strong>. Saving to main publishes your changes to the live website.'
-  menu_heading: Choose a section in the editor
-  section: CMS section
-  fields: What you can change
+    - 'Check the text and photos, then choose <strong>Save</strong>. Saving to <code>main</code> starts the website update.'
+  menu_heading: Where to make each change
+  section: Section in Pages CMS
+  fields: What you can edit
   menus:
-    - ["Homepage and story", "Headline, introduction, main photo, buttons, the shop’s story and the photo next to its contact details."]
-    - ["Coffee and bakery", "Names, descriptions, photos and order of menu cards."]
-    - ["Products and 3D images", "Coffee names, tasting notes, roast levels, bag artwork and background colours for each blend."]
-    - ["Roastery", "Roasting steps and a photo of the roastery."]
-    - ["Gallery", "Photos, captions, display order and visibility."]
-    - ["Frequently asked questions", "Additional questions and answers. The address and opening hours come from the café details."]
-    - ["Café details, links and SEO", "Address, opening hours, phone number, payment methods, links and search descriptions."]
-    - ["Shopee products", "Product cards, categories, photos, details and the item IDs used in Shopee links."]
-  translation_heading: Customer-facing translations
-  translation_note: Edit Thai copy in Pages CMS and update the website’s language files for English and Simplified Chinese. When café details change, review the related text in all three languages before publishing.
-  en_file: Open the English file
-  zh_file: Open the Simplified Chinese file
-  image_heading: Change a photo
+    - ["Homepage and café story", "The headline, introduction, main photo, buttons, café story and photo beside the contact details."]
+    - ["Coffee and baking", "The names, descriptions, photos and order of the menu cards."]
+    - ["Products and 3D images", "Blend names, tasting notes, roast levels, bag images and background colours."]
+    - ["Roastery", "The roasting process and the roastery photo."]
+    - ["Gallery", "Photos, captions, their order and which photos appear on the site."]
+    - ["Frequently asked questions", "Questions and answers. To change the address or opening hours, edit the café details."]
+    - ["Café details, links and SEO", "Address, opening hours, phone number, payment methods, links and descriptions for search results."]
+    - ["Shopee products", "Product cards, categories, photos, descriptions and the product IDs used in Shopee links."]
+  translation_heading: Update the English and Simplified Chinese text
+  translation_note: Edit the Thai text in Pages CMS. The files below contain the English and Simplified Chinese homepage and product descriptions. When café details change, check all three languages.
+  en_file: English homepage and product text
+  zh_file: Simplified Chinese homepage and product text
+  image_heading: Replace or rearrange photos
   image_notes:
-    - 'Open the image field in the relevant section. Pick an existing image or upload a JPG, PNG or WebP. Files saved in <code>brewtanist/assets</code> are public. Use photos the shop has permission to publish.'
-    - 'When replacing an image, upload it under a new filename. Set the crop focus to center, top, bottom, left or right. Coffee bag renders show the full bag. The left or right placement of the homepage photo applies on desktop.'
-    - 'Drag photos or cards to change their order. Use the visibility switch to hide an image that is still used elsewhere.'
-  publish_heading: Check the published site
-  publish_text: 'Open GitHub Actions and find <strong>pages build and deployment</strong> for your latest change. Once it succeeds, open the site on mobile and desktop and try switching languages.'
-  actions: View deployment status in GitHub Actions
-  history: View change history
-  recover: If deployment fails, open the failed job to read the error. To restore earlier content, check the file’s history on GitHub and save the values you want to restore.
+    - 'Open the image field in the section you want to edit. Choose an existing image or upload a JPG, PNG or WebP file. Photos in <code>brewtanist/assets</code> are public, so use images the café has permission to publish.'
+    - 'Give a replacement photo a new filename. Choose which part to keep in view when the photo is cropped. Product renders show the whole coffee bag. On desktop, you can also place the homepage photo on the left or right.'
+    - 'Drag photos or cards to change their order. To hide an image in one section and keep it available elsewhere, turn off its visibility in that section.'
+  publish_heading: Check the live website
+  publish_text: 'In GitHub Actions, open <strong>pages build and deployment</strong> for your latest change. Once it finishes successfully, check the site on a phone and a computer and try the language switcher.'
+  actions: Check deployment status
+  history: View changes on GitHub
+  recover: If an update fails, open the failed job in GitHub Actions to see the error. To restore earlier text, open the file’s history on GitHub, copy the version you want and save your change.
   docs: Pages CMS quick-start guide
 zh:
   tag: zh-Hans

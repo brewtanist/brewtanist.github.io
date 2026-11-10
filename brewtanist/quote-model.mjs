@@ -98,25 +98,35 @@ export function requestFile(rfq, labels) {
   }
   return {kind:'brewtanist-oem-quote',schemaVersion:1,current:q,history:[],request:rfq};
 }
-// Older v1 files stored the generated Chinese description as plain text.
-const previousChineseSpecs = {
-  packSpec:'每袋克重（克） {n}', boxSpec:'每盒胶囊数 {n}',
-  light:'浅焙', medium:'中焙', dark:'深焙', whole:'整豆', ground:'研磨'
+// The first saved quotations stored generated descriptions as ordinary text.
+const previousSpecs = {
+  en: {
+    packSpec:'Bag size (g) {n}', boxSpec:'Capsules per box {n}',
+    light:'Light roast', medium:'Medium roast', dark:'Dark roast', whole:'Whole bean', ground:'Ground'
+  },
+  zh: {
+    packSpec:'每袋克重（克） {n}', boxSpec:'每盒胶囊数 {n}',
+    light:'浅焙', medium:'中焙', dark:'深焙', whole:'整豆', ground:'研磨'
+  }
 };
+export function unitName(unit,quantity,labels) {
+  return Number(quantity) === 1 ? labels.singularUnits?.[unit] || labels[unit] : labels[unit];
+}
 function requestDescription(product,type,t) {
   const parts=type==='beans' ? [
     product.packGrams && t.packSpec.replace('{n}',product.packGrams),
     product.roast!=='discuss' && t[product.roast],
     product.grind!=='discuss' && t[product.grind]
-  ] : [product.system, product.perBox && t.boxSpec.replace('{n}',product.perBox)];
+  ] : [product.system, product.perBox && t.boxSpec.replace('{n}',product.perBox).replace('{unit}',unitName('capsule',product.perBox,t))];
   return parts.filter(Boolean).join(' · ');
 }
 export function documentDescription(line,request,lang,labels) {
   const product=request?.products[line.type];
   if(!product || lang===request.language) return line.description;
   const original=requestDescription(product,line.type,labels[request.language]);
-  const wasGenerated=line.description===original || (request.language==='zh' &&
-    line.description===requestDescription(product,line.type,previousChineseSpecs));
+  const previous=previousSpecs[request.language];
+  const wasGenerated=line.description===original || (previous &&
+    line.description===requestDescription(product,line.type,previous));
   return wasGenerated ? requestDescription(product,line.type,labels[lang]) : line.description;
 }
 function assertOfferShape(q) {

@@ -4,59 +4,59 @@
     "descriptor": "Café & Coffee Roaster",
     "notice": "Specialty coffee · Route 304 · Prachinburi",
     "address": "78 Moo 4, Krok Sombun, Si Maha Phot, Prachinburi 25140, Thailand",
-    "location_note": "At the Khlong Rang Shell station on Route 304",
+    "location_note": "Inside the Khlong Rang Shell station on Route 304",
     "opening_days": "Open daily",
-    "payment": "Cash · PromptPay · QR payments",
-    "seo_title": "The Brewtanist | Café and coffee roaster on Route 304, Prachinburi",
-    "seo_description": "Find our café and roastery at the Khlong Rang Shell station on Route 304 in Si Maha Phot, Prachinburi. Stop for an espresso, pour-over or matcha, try our baking, or pick up beans for home."
+    "payment": "Cash, PromptPay and QR payments",
+    "seo_title": "The Brewtanist | Café and roastery in Prachinburi",
+    "seo_description": "Visit The Brewtanist at the Khlong Rang Shell station on Route 304 in Si Maha Phot. We roast the beans for our espresso and pour-over coffee and bake our own scones, croissants and cakes."
   },
   "home": {
     "hero_eyebrow": "Brew. Grow. Explore.",
-    "hero_title": "Coffee roasted\nin Si Maha Phot",
-    "hero_text": "Find us at the Khlong Rang Shell station on Route 304 in Prachinburi. Stop for a coffee at the bar or pick up a bag of beans to brew at home.",
-    "hero_alt": "The two-storey Brewtanist café with a wooden balcony and a coffee bar visible through the ground-floor windows",
+    "hero_title": "We roast coffee\nin Si Maha Phot",
+    "hero_text": "You’ll find our café at the Khlong Rang Shell station on Route 304 in Prachinburi. Stop for a coffee at the bar or take a bag of beans home.",
+    "hero_alt": "The two-storey Brewtanist café, with a wooden balcony above and the coffee bar visible through the ground-floor windows",
     "hero_caption": "",
     "hero_button": "Shop coffee",
-    "hero_second_button": "Find us",
-    "story_title": "Why the name\nBrewtanist?",
-    "story_text": "We love coffee and plants, so we put “brew” and “botanist” together to name the café.\n\nWe choose our beans, roast them and try different brews until we find a cup we like. If you’re unsure what to order, tell the barista what you usually drink or which flavours you’d like to try.",
+    "hero_second_button": "Get directions",
+    "story_title": "Where does the name\nBrewtanist come from?",
+    "story_text": "We love coffee and plants. Put “brew” and “botanist” together and you get Brewtanist.\n\nWe choose our beans, roast them and try different ways to brew them until we find a cup we love. If you’re wondering what to order, tell us what you usually drink or which flavours you’d like to try.",
     "story_alt": "The coffee bar and espresso machine inside Brewtanist",
     "story_caption": "Our coffee bar",
     "visit_title": "Visit the café",
-    "visit_text": "Park at the Shell station and walk over. There’s seating on both floors and Wi-Fi if you want to get some work done. You can pick up beans at the bar before you leave.",
+    "visit_text": "Park at the Shell station and walk over to the café. There’s seating on both floors and Wi-Fi if you’re bringing your laptop. You can pick out a bag of beans at the bar before you go.",
     "visit_alt": "The front of Brewtanist café at the Khlong Rang Shell station"
   },
   "coffee": {
-    "title": "At the coffee bar",
-    "description": "Do you like a bold espresso, coffee with milk, or something fruity? Tell the barista and we’ll help you choose beans for your cup.",
+    "title": "What would you like to drink?",
+    "description": "Do you like a bold espresso, something fruity or coffee with milk? Tell our baristas how you take your coffee and they’ll help you choose.",
     "cards": [
       {
         "id": "espresso",
         "label": "Espresso",
-        "title": "Our house blends",
-        "text": "Choose from Mr. Plantman, Mr. Ozmo and Ms. Lazybug. Each blend has its own roast level and flavour profile.",
+        "title": "House blends",
+        "text": "Choose Mr. Plantman, Mr. Ozmo or Ms. Lazybug for your espresso. Each of our house blends has its own roast level and flavour.",
         "alt": "Coffee grinders and Brewtanist house blends at the bar"
       },
       {
         "id": "pour-over",
-        "label": "Filter coffee",
-        "title": "Single origin",
-        "text": "We rotate the beans on our pour-over menu. Ask at the bar which origins we’re brewing today.",
+        "label": "Pour-over",
+        "title": "Single-origin coffee",
+        "text": "We change the beans on our pour-over menu regularly. Ask at the bar what we’re brewing today.",
         "alt": "Brewing pour-over coffee at Brewtanist"
       },
       {
         "id": "matcha-bakery",
         "label": "Beyond coffee",
-        "title": "Matcha and baking",
-        "text": "Pair a matcha with one of our house-baked scones, croissants or cakes. The selection changes from day to day.",
+        "title": "Matcha and pastries",
+        "text": "Have a matcha with a scone, a croissant or a slice of cake. We bake them here, and the selection changes from day to day.",
         "alt": "Drinks and baked goods at Brewtanist"
       }
     ]
   },
   "products": {
     "title": "Our house blends",
-    "description": "We serve three espresso blends at the bar, from rich chocolate to sweet vanilla and bright floral and fruit notes.",
-    "note": "Alongside our house blends, we sell single-origin beans, drip bags and capsules. See what’s available on Shopee or ask at the café.",
+    "description": "Mr. Plantman has rich dark chocolate notes, Mr. Ozmo has the sweetness of vanilla, and Ms. Lazybug is light and floral with a hint of fruit.",
+    "note": "We also sell single-origin coffee, drip bags and coffee capsules. Browse our Shopee shop or ask at the bar what’s available.",
     "button": "Shop on Shopee",
     "items": [
       {
@@ -64,55 +64,55 @@
         "name": "Mr. Plantman",
         "profile": "Espresso blend · Medium-dark roast",
         "notes": "Dark chocolate · Caramel · Nuts",
-        "description": "Bold flavours of dark chocolate, caramel and nuts. Enjoy it black or with milk.",
-        "alt": "3D illustration of the Brewtanist Mr. Plantman coffee bag"
+        "description": "Dark chocolate, caramel and nutty notes make this a bold cup, whether you drink it black or with milk.",
+        "alt": "Illustration of the gold Mr. Plantman coffee bag"
       },
       {
         "id": "ozmo",
         "name": "Mr. Ozmo",
         "profile": "Espresso blend · Medium-dark roast",
-        "notes": "Vanilla · Rum raisin · Milk chocolate",
-        "description": "Aromas of vanilla and rum-soaked raisins, with the rich sweetness of milk chocolate.",
-        "alt": "3D illustration of the Brewtanist Mr. Ozmo coffee bag"
+        "notes": "Vanilla · Rum-soaked raisins · Milk chocolate",
+        "description": "Vanilla and rum-soaked raisin aromas give way to the sweetness of milk chocolate.",
+        "alt": "Illustration of the Mr. Ozmo coffee bag"
       },
       {
         "id": "lazybug",
         "name": "Ms. Lazybug",
         "profile": "Espresso blend · Light-medium roast",
         "notes": "Floral · Fruity · Tea-like",
-        "description": "Floral and fruity, with a tea-like finish. A good choice if you enjoy a refreshing black coffee.",
-        "alt": "3D illustration of the Brewtanist Ms. Lazybug coffee bag"
+        "description": "Light and fruity with a floral aroma and a tea-like finish. Try it black if you like a refreshing cup.",
+        "alt": "Illustration of the pink Ms. Lazybug coffee bag"
       }
     ],
-    "finder_title": "Which blend would you like?",
-    "finder_text": "Answer three questions about the coffee you drink to find a blend to try."
+    "finder_title": "Which house blend suits you?",
+    "finder_text": "Answer three questions about how you brew and what you like to drink."
   },
   "roastery": {
-    "title": "In our roastery",
-    "description": "We roast the house blends and single origins that we serve at the bar and sell by the bag. Then we taste each one and adjust the brew recipe to suit the beans.",
+    "title": "Inside our roastery",
+    "description": "We roast our house blends and single-origin coffee for the café and for you to brew at home. After roasting, we taste each coffee and adjust how we brew it.",
     "alt": "",
     "caption": "",
     "steps": [
       {
         "id": "select",
         "title": "Choosing the beans",
-        "text": "We start with beans that have flavours we’d like to explore, then work out how best to brew them."
+        "text": "We look for green coffee with flavours we want to explore and try different ways to bring them out in the cup."
       },
       {
         "id": "roast",
         "title": "Roasting",
-        "text": "We taste for sweetness, acidity, aroma and body, and use what we find to adjust the roast."
+        "text": "We taste for sweetness, acidity, aroma and body, then adjust the roast."
       },
       {
         "id": "brew",
-        "title": "Test brewing",
-        "text": "We taste and fine-tune the brew recipe before serving the coffee at the bar."
+        "title": "Brewing at the bar",
+        "text": "Before a coffee goes on the menu, we brew it several times and fine-tune the recipe."
       }
     ]
   },
   "gallery": {
     "title": "Around the café",
-    "description": "Open a photo for a closer look at the coffee bar, drinks and baking.",
+    "description": "Take a closer look at the coffee bar, the drinks we make and what’s on the pastry counter.",
     "images": [
       {
         "id": "bar",
@@ -122,7 +122,7 @@
       {
         "id": "coffee-bakery",
         "alt": "Iced coffee with a scone and croissant at Brewtanist",
-        "caption": "Coffee and baking"
+        "caption": "Iced coffee and pastries"
       },
       {
         "id": "apple-drink",
@@ -157,221 +157,221 @@
       {
         "id": "parking",
         "question": "Is there parking?",
-        "answer": "Yes. Park at the Khlong Rang Shell station and walk over to the café."
+        "answer": "Yes. You can park at the Khlong Rang Shell station and walk over to the café."
       },
       {
         "id": "take-home",
         "question": "What coffee can I take home?",
-        "answer": "We sell house blends, single-origin beans, drip bags and capsules. Ask at the bar what’s available today."
+        "answer": "We sell house blends, single-origin coffee, drip bags and coffee capsules. Ask at the bar what’s available today."
       },
       {
         "id": "single-origin",
         "question": "Can I try single-origin coffee?",
-        "answer": "Yes. We rotate the single origins on our pour-over menu. For espresso, you can also choose from the beans listed at the bar."
+        "answer": "Yes. We rotate the single-origin coffee on our pour-over menu. If you prefer espresso, ask which beans are on the bar today."
       },
       {
         "id": "matcha-bakery",
-        "question": "Do you serve matcha and baked goods?",
-        "answer": "Yes. We serve matcha and bake in-house. The selection of baked goods can vary each day."
+        "question": "Do you serve matcha and pastries?",
+        "answer": "Yes. We serve matcha and bake our own scones, croissants and cakes. The pastry selection changes from day to day."
       }
     ]
   },
   "marketplace": {
     "title": "Coffee to brew\nat home",
-    "intro": "Choose from beans we roast ourselves, coffee capsules and drip bags. Browse by brewing method or search for the flavours you like.",
-    "notice": "Check Shopee for current prices, available options, pack sizes and availability before ordering.",
+    "intro": "Shop our house blends and single-origin coffee, or pick up drip bags and coffee capsules. If you’re choosing a gift, you’ll find sets here too.",
+    "notice": "Check the Shopee listing for current prices, pack sizes and availability.",
     "items": [
       {
         "id": "plantman",
         "name": "Mr. Plantman",
-        "description": "Our house blend with notes of dark chocolate, caramel and nuts.",
+        "description": "A bold house blend with notes of dark chocolate, caramel and nuts. It works well black or with milk.",
         "details": [],
         "alt": "Gold bag of Brewtanist Mr. Plantman coffee beans"
       },
       {
         "id": "ozmo",
         "name": "Mr. Ozmo",
-        "description": "Our house blend with notes of vanilla, rum raisin and milk chocolate.",
+        "description": "This house blend has aromas of vanilla and rum-soaked raisins, with sweet milk chocolate notes in the cup.",
         "details": [],
         "alt": "A bag of Brewtanist Mr. Ozmo coffee beans on a purple background"
       },
       {
         "id": "lazybug",
         "name": "Ms. Lazybug",
-        "description": "Our house blend with floral, fruity and tea-like notes.",
+        "description": "A floral house blend with fruit notes and a tea-like finish.",
         "details": [],
-        "alt": "A bag of Ms. Lazybug coffee on a pink background with the Signature Ethiopia Blend seal"
+        "alt": "Pink Ms. Lazybug coffee bag on a pink background, with the Signature Ethiopia Blend seal"
       },
       {
         "id": "panama-magma-red-1680",
         "name": "Panama Magma Red 1680",
-        "description": "A Panamanian Geisha with notes of rose, pink guava and blueberry jam.",
+        "description": "A washed Geisha from Panama with notes of rose, pink guava and blueberry jam.",
         "details": [
-          "Country: Panama",
-          "Process: Washed",
-          "Pack shown: 100 g",
-          "Variety: Geisha",
-          "Roast profile: Filter",
-          "Tasting notes: Rose · Pink guava · Blueberry jam"
+          "Grown in Panama",
+          "Process · Washed",
+          "100 g bag pictured",
+          "Variety · Geisha",
+          "Roasted for filter coffee",
+          "Tasting notes · Rose · Pink guava · Blueberry jam"
         ],
         "alt": "100 g bag of Brewtanist Panama Magma Red 1680 coffee"
       },
       {
         "id": "ethiopia-doora",
         "name": "Ethiopia Doora",
-        "description": "A natural-process Ethiopian coffee with notes of pineapple, mixed berries and orange.",
+        "description": "This naturally processed Ethiopian coffee has notes of pineapple, mixed berries and orange.",
         "details": [
-          "Country: Ethiopia",
-          "Process: Natural",
-          "Pack shown: 100 g",
-          "Variety: Heirloom",
-          "Tasting notes: Pineapple · Mixed berries · Sunkist orange"
+          "Grown in Ethiopia",
+          "Process · Natural",
+          "100 g bag pictured",
+          "Variety · Heirloom",
+          "Tasting notes · Pineapple · Mixed berries · Sunkist orange"
         ],
         "alt": "100 g bag of Brewtanist Ethiopia Doora coffee"
       },
       {
         "id": "ethiopia-nensenbo-mewa",
         "name": "Ethiopia Nensenbo Mewa",
-        "description": "A natural-process Ethiopian coffee with notes of tangerine, strawberry and hibiscus tea.",
+        "description": "A naturally processed Ethiopian coffee with notes of tangerine, strawberry and hibiscus tea.",
         "details": [
-          "Country: Ethiopia",
-          "Process: Natural",
-          "Pack shown: 100 g",
-          "Roast profile: Filter",
-          "Tasting notes: Tangerine · Strawberry · Hibiscus tea"
+          "Grown in Ethiopia",
+          "Process · Natural",
+          "100 g bag pictured",
+          "Roasted for filter coffee",
+          "Tasting notes · Tangerine · Strawberry · Hibiscus tea"
         ],
         "alt": "100 g bag of Brewtanist Ethiopia Nensenbo Mewa coffee"
       },
       {
         "id": "honduras-finca-moka-whisky",
         "name": "Honduras Finca Moka Whisky",
-        "description": "A filter coffee from Honduras with notes of vanilla, honey, whisky and grape.",
+        "description": "Roasted for filter coffee, this whisky-aged Honduran coffee has notes of vanilla, honey, whisky and grape.",
         "details": [
-          "Country: Honduras",
-          "Pack shown: 100 g",
-          "Process: Whisky-aged",
-          "Roast profile: Filter",
-          "Tasting notes: Vanilla · Honey · Whisky · Grape"
+          "Grown in Honduras",
+          "100 g bag pictured",
+          "Process · Whisky-aged",
+          "Roasted for filter coffee",
+          "Tasting notes · Vanilla · Honey · Whisky · Grape"
         ],
         "alt": "100 g bag of Brewtanist Honduras Finca Moka Whisky coffee"
       },
       {
         "id": "thailand-ban-huay-khanum",
         "name": "Thailand Ban Huay Khanum",
-        "description": "Thai beans from Ban Huay Khanum, made with the red honey process.",
+        "description": "A red honey-processed coffee from Ban Huay Khanum in Thailand.",
         "details": [
-          "Country: Thailand",
-          "Process: Red honey"
+          "Grown in Thailand",
+          "Process · Red honey"
         ],
         "alt": ""
       },
       {
         "id": "guatemala-agua-tibia-geisha",
         "name": "Guatemala Finca Agua Tibia Geisha",
-        "description": "A washed Geisha from Guatemala.",
+        "description": "A washed Geisha from Guatemala with notes of jasmine, bergamot, apricot and lemon.",
         "details": [
-          "Country: Guatemala",
-          "Variety: Geisha",
-          "Process: Washed",
-          "Pack shown: 100 g",
-          "Roast profile: Filter",
-          "Tasting notes: Jasmine · Bergamot · Apricot · Lemon"
+          "Grown in Guatemala",
+          "Variety · Geisha",
+          "Process · Washed",
+          "100 g bag pictured",
+          "Roasted for filter coffee",
+          "Tasting notes · Jasmine · Bergamot · Apricot · Lemon"
         ],
         "alt": "100 g bag of Brewtanist Guatemala Finca Agua Tibia Geisha coffee"
       },
       {
         "id": "colombia-risaralda-wush-wush",
         "name": "Colombia Risaralda Wush Wush",
-        "description": "An anaerobic washed coffee from Colombia with notes of tangerine, mango and hazelnut.",
+        "description": "This Wush Wush from Risaralda has notes of tangerine, mango and hazelnut.",
         "details": [
-          "Country: Colombia",
-          "Growing region: Risaralda",
-          "Pack shown: 100 g",
-          "Variety: Wush Wush",
-          "Process: Anaerobic washed",
-          "Roast profile: Filter",
-          "Tasting notes: Tangerine · Mango · Hazelnut"
+          "Grown in Colombia",
+          "Growing region · Risaralda",
+          "100 g bag pictured",
+          "Variety · Wush Wush",
+          "Process · Anaerobic washed",
+          "Roasted for filter coffee",
+          "Tasting notes · Tangerine · Mango · Hazelnut"
         ],
         "alt": "100 g bag of Brewtanist Colombia Risaralda Wush Wush coffee"
       },
       {
         "id": "capsule-plantman",
         "name": "Mr. Plantman coffee capsules",
-        "description": "Mr. Plantman in a box of 10 capsules. See the Shopee listing for compatible machines.",
+        "description": "A box of 10 coffee capsules with the dark chocolate and caramel notes of Mr. Plantman.",
         "details": [
           "Box of 10 capsules",
-          "For selected Nespresso machines. Check your model with the shop before ordering."
+          "Fits selected Nespresso machines. Check your model with us on Shopee before ordering."
         ],
-        "alt": "Brown box of Mr. Plantman coffee capsules with the blend’s illustrated character"
+        "alt": "Brown box of Mr. Plantman coffee capsules with the illustrated character on the front"
       },
       {
         "id": "capsule-ozmo",
         "name": "Mr. Ozmo coffee capsules",
-        "description": "Mr. Ozmo in a box of 10 capsules. See the Shopee listing for compatible machines.",
+        "description": "Our house blend with vanilla and milk chocolate notes, in a box of 10 coffee capsules.",
         "details": [
           "Box of 10 capsules",
-          "For selected Nespresso machines. Check your model with the shop before ordering."
+          "Fits selected Nespresso machines. Check your model with us on Shopee before ordering."
         ],
-        "alt": "Purple box of Mr. Ozmo coffee capsules with the blend’s illustrated character"
+        "alt": "Purple box of Mr. Ozmo coffee capsules with the illustrated character on the front"
       },
       {
         "id": "capsule-lazybug",
         "name": "Ms. Lazybug coffee capsules",
-        "description": "Coffee capsules with floral, fruity and tea-like notes. See Shopee for options and compatible machines.",
+        "description": "The floral and fruity notes of Ms. Lazybug in a coffee capsule, with the same tea-like finish.",
         "details": [
-          "For selected Nespresso machines. Check your model with the shop before ordering.",
-          "Roast shown on the pack: Light-medium",
-          "Tasting notes: Floral · Fruity · Tea-like"
+          "Fits selected Nespresso machines. Check your model with us on Shopee before ordering.",
+          "Light-medium roast, as shown on the pack",
+          "Tasting notes · Floral · Fruity · Tea-like"
         ],
         "alt": "A pink box of Brewtanist Ms. Lazybug coffee capsules"
       },
       {
         "id": "drip-bag",
         "name": "Brewtanist Drip Bag",
-        "description": "Ground coffee in individual drip bags. Pick a flavour to brew at home or take to work.",
+        "description": "Each drip bag holds enough ground coffee for one cup. Hang it over your mug and add hot water.",
         "details": [
-          "Format: Ground coffee in single-serve drip bags"
+          "Ground coffee in individual drip bags"
         ],
         "alt": "Brewtanist drip bags with tasting notes on each pack"
       },
       {
         "id": "gift-house-blends",
         "name": "House Blend Gift Set",
-        "description": "A set of all three house blends: Mr. Plantman, Mr. Ozmo and Ms. Lazybug.",
+        "description": "One bag of each of our three house blends, so you can try Mr. Plantman, Mr. Ozmo and Ms. Lazybug side by side.",
         "details": [
-          "Three bags: Mr. Plantman, Ms. Lazybug and Mr. Ozmo",
-          "Previous listing name: Holiday Special Set",
-          "Bag sizes listed: 100 g or 200 g"
+          "One bag each of Mr. Plantman, Ms. Lazybug and Mr. Ozmo",
+          "Previously listed as Holiday Special Set",
+          "The listing offers 100 g or 200 g bags"
         ],
         "alt": "Brewtanist coffee gift set with Mr. Plantman, Ms. Lazybug and Mr. Ozmo beans"
       },
       {
         "id": "gift-capsules",
         "name": "Capsule Gift Set",
-        "description": "Coffee capsules for home or as a gift, with one box each of Mr. Plantman, Mr. Ozmo and Ms. Lazybug.",
+        "description": "A set of three boxes of coffee capsules, one each of Mr. Plantman, Mr. Ozmo and Ms. Lazybug.",
         "details": [
-          "Three boxes: Mr. Plantman, Ms. Lazybug and Mr. Ozmo",
-          "Previous listing name: Holiday Set"
+          "One box each of Mr. Plantman, Ms. Lazybug and Mr. Ozmo",
+          "Previously listed as Holiday Set"
         ],
         "alt": "Brewtanist gift set with three boxes of coffee capsules"
       },
       {
         "id": "clever-dripper-small",
         "name": "Clever Dripper · S",
-        "description": "Small 240 ml Clever Dripper with the paper filters specified in the shop listing.",
+        "description": "The small Clever Dripper holds 240 ml and comes with paper filters. Check the Shopee listing for the filter specifications.",
         "details": [
-          "Size: S / 240 ml",
-          "Country: Taiwan"
+          "Size S · 240 ml capacity",
+          "Country of origin · Taiwan"
         ],
         "alt": "Clever Dripper with its box, lid, stand and paper filters"
       },
       {
         "id": "everyday-bucket-bag",
         "name": "Everyday Bucket Bag",
-        "description": "Brewtanist bucket bag in 14 oz canvas, measuring 13 × 15 × 5 inches.",
+        "description": "A Brewtanist bucket bag made from 14 oz canvas. It measures 13 × 15 × 5 inches.",
         "details": [
-          "Dimensions: 13 × 15 × 5 inches",
-          "Fabric: 14 oz canvas"
+          "13 × 15 × 5 inches",
+          "14 oz canvas"
         ],
         "alt": ""
       }

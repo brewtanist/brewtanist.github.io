@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import {calculate,currency,revise,makeLine,newOffer,importData,requestFile,documentDescription,extendedLine} from '../brewtanist/quote-model.mjs';
+import {calculate,currency,revise,makeLine,newOffer,importData,requestFile,documentDescription,extendedLine,unitName} from '../brewtanist/quote-model.mjs';
 
 const quote=newOffer('th');
 Object.assign(quote,{name:'Sample',discount:'3.10',taxRate:'7',lines:[
@@ -38,6 +38,21 @@ const received=requestFile(request,labels);
 assert.deepEqual(received.current.lines.map(l=>[l.qty,l.unit,l.price]),[['70','kg',''],['1200','capsule','']]);
 assert.equal(received.current.rfq,request.reference);
 assert.equal(received.current.doclang,'en');
+assert.equal(received.current.lines[0].description,'250 g per bag · Medium roast · Whole beans');
+assert.equal(received.current.lines[1].description,'Example · 10 capsules per box');
+const singleCapsule={...request,products:{capsules:{...request.products.capsules,quantityUnits:1,perBox:1}}};
+assert.equal(requestFile(singleCapsule,labels).current.lines[0].description,'Example · 1 capsule per box');
+for (const [unit,one,many] of [['capsule','capsule','capsules'],['box','box','boxes'],['lot','lot','lots'],['kg','kg','kg']]) {
+  assert.equal(unitName(unit,'1.00',labels.en),one);
+  assert.equal(unitName(unit,'2',labels.en),many);
+}
+const firstEnglishBeans={...received.current.lines[0],description:'Bag size (g) 250 · Medium roast · Whole bean'};
+const firstEnglishCapsules={...received.current.lines[1],description:'Example · Capsules per box 10'};
+assert.equal(documentDescription(firstEnglishBeans,request,'en',labels),firstEnglishBeans.description);
+assert.equal(documentDescription(firstEnglishBeans,request,'zh',labels),'每袋 250 克 · 中度烘焙 · 整豆');
+assert.equal(documentDescription(firstEnglishCapsules,request,'zh',labels),'Example · 每盒 10 粒');
+const editedEnglish={...firstEnglishBeans,description:'Bag size (g) 250 · Medium roast · Whole bean · seasonal blend'};
+assert.equal(documentDescription(editedEnglish,request,'zh',labels),editedEnglish.description);
 assert.equal(documentDescription(received.current.lines[0],request,'th',labels),'ขนาดถุง (กรัม) 250 · คั่วกลาง · เต็มเมล็ด');
 assert.equal(documentDescription(received.current.lines[0],request,'zh',labels),'每袋 250 克 · 中度烘焙 · 整豆');
 assert.equal(documentDescription(received.current.lines[1],request,'zh',labels),'Example · 每盒 10 粒');

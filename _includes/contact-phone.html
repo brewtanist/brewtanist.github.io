@@ -1,6 +1,6 @@
 {%- assign phone = site.data.brewtanist.settings.phone -%}
 {%- assign prefix = phone | slice: 0, 1 -%}
-{%- if include.lang == 'zh' and prefix == '0' -%}
+{%- if prefix == '0' and include.lang != 'th' -%}
   {{- phone | remove_first: '0' | prepend: '+66 ' -}}
 {%- else -%}
   {{- phone -}}

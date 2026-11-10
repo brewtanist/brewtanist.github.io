@@ -6,7 +6,10 @@
   const copy = JSON.parse(document.getElementById("oem-text").textContent);
   const chinese = root.dataset.language === "zh";
   const fieldSeparator = chinese ? "：" : ": ";
-  const quantityWithUnit = (number, unit) => number + (chinese ? "" : " ") + unit;
+  function quantityWithUnit(number, unit) {
+    const label = number === 1 && unit === copy.units ? (copy.units_one || unit) : unit;
+    return number + (chinese ? "" : " ") + label;
+  }
   const review = document.getElementById("oem-review");
   const title = document.getElementById("oem-review-title");
   const summary = document.getElementById("oem-summary");
@@ -67,7 +70,8 @@
     };
   }
   function formatBrief(rfq) {
-    const lines = [copy.title, copy.reference + fieldSeparator + rfq.reference];
+    const heading = root.dataset.language === "en" ? copy.short_name : copy.title;
+    const lines = [heading, copy.reference + fieldSeparator + rfq.reference];
     const line = (label, text) => { if (text !== null && text !== undefined && text !== "") lines.push(label + fieldSeparator + text); };
     const beans = rfq.products.beans;
     if (beans) {

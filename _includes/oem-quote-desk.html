@@ -9,8 +9,8 @@
   <title>{{ l.title | escape }} | Brewtanist</title>
   <link rel="stylesheet" href="/brewtanist/site.css?v=20261110-speed">
   <link rel="stylesheet" href="/brewtanist/quote-desk.css?v=1">
-  <script defer src="/brewtanist/zh-form-feedback.js"></script>
-  <script type="module" src="/brewtanist/quote-desk.mjs?v=2"></script>
+  <script defer src="/brewtanist/form-feedback.js"></script>
+  <script type="module" src="/brewtanist/quote-desk.mjs?v=3"></script>
 </head>
 <body class="quote-page" data-lang="{{ lang }}">
   <div id="desk" class="quote-shell">
@@ -86,7 +86,7 @@
   </div>
   <article id="document" aria-label="{{ l.quotation }}"></article>
   <script type="application/json" id="quote-labels">{{ site.data.quote_desk | jsonify | replace: '</', '<\/' }}</script>
-  {%- capture phone_zh -%}{% include contact-phone.html lang='zh' %}{%- endcapture -%}
-  <script type="application/json" id="quote-seller">{"brand":{{ site.data.brewtanist.settings.brand | jsonify | replace: '</', '<\/' }},"phone":{{ site.data.brewtanist.settings.phone | jsonify | replace: '</', '<\/' }},"phoneZh":{{ phone_zh | jsonify | replace: '</', '<\/' }},"address":{"th":{{ site.data.brewtanist.settings.address | jsonify | replace: '</', '<\/' }},"en":{{ site.data.translations.en.settings.address | jsonify | replace: '</', '<\/' }},"zh":{{ site.data.translations.zh.settings.address | jsonify | replace: '</', '<\/' }}}}</script>
+  {%- capture international_phone -%}{% include contact-phone.html lang='en' %}{%- endcapture -%}
+  <script type="application/json" id="quote-seller">{"brand":{{ site.data.brewtanist.settings.brand | jsonify | replace: '</', '<\/' }},"phone":{{ site.data.brewtanist.settings.phone | jsonify | replace: '</', '<\/' }},"internationalPhone":{{ international_phone | jsonify | replace: '</', '<\/' }},"address":{"th":{{ site.data.brewtanist.settings.address | jsonify | replace: '</', '<\/' }},"en":{{ site.data.translations.en.settings.address | jsonify | replace: '</', '<\/' }},"zh":{{ site.data.translations.zh.settings.address | jsonify | replace: '</', '<\/' }}}}</script>
 </body>
 </html>
