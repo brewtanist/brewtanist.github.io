@@ -1,5 +1,18 @@
+---
+layout: null
+permalink: /sitemap.xml
+---
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://brewtanist.github.io/</loc></url>
-  <url><loc>https://brewtanist.github.io/shop/</loc></url>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+{% assign routes = '/,/shop/' | split: ',' %}
+{% assign languages = 'th,en,zh' | split: ',' %}
+{% for route in routes %}{% for lang in languages %}
+  <url>
+    <loc>{{ site.url }}{% unless lang == 'th' %}/{{ lang }}{% endunless %}{{ route }}</loc>
+    <xhtml:link rel="alternate" hreflang="th" href="{{ site.url }}{{ route }}"/>
+    <xhtml:link rel="alternate" hreflang="en" href="{{ site.url }}/en{{ route }}"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="{{ site.url }}/zh{{ route }}"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="{{ site.url }}{{ route }}"/>
+  </url>
+{% endfor %}{% endfor %}
 </urlset>

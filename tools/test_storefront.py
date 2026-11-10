@@ -290,6 +290,9 @@ def check(build):
     require({ORIGIN + "/", ORIGIN + "/shop/"} <= sitemap_urls, "Sitemap does not include homepage and shop")
     report["internal_references_checked"] = len(checked_references)
     checks.append("Internal page links, anchors, local images/CSS/JS and sitemap routes exist in the rendered build")
+    from verify_languages import verify_languages
+    report["localized_pages_checked"] = verify_languages(build, ROOT, Page)
+    checks.append("Translated routes, equivalent language links, product copy and shared CMS facts match")
     report["result"] = "PASS"
     return report
 

@@ -1,0 +1,18 @@
+th:
+  name: ไทย
+  short: ไทย
+  prefix: ''
+  tag: th
+  og: th_TH
+en:
+  name: English
+  short: EN
+  prefix: /en
+  tag: en
+  og: en_US
+zh:
+  name: 简体中文
+  short: 中文
+  prefix: /zh
+  tag: zh-Hans
+  og: zh_CN

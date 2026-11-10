@@ -9,7 +9,7 @@ First use requires the owner to sign in to Pages CMS with GitHub and grant its G
 
 ## Architecture
 - Jekyll reads `_data/brewtanist/*.json` and renders root `index.html` on the existing GitHub Pages build.
-- `.pages.yml` defines seven Thai-labeled forms and a media library.
+- `.pages.yml` defines eight Thai-labeled forms and a media library.
 - Text is HTML-escaped by Liquid. External link output accepts HTTPS or local absolute paths only.
 - Production content and JSON-LD are generated as HTML; website visitors do not need client-side JavaScript to read them.
 - Images are served from `/brewtanist/assets/`. Do not hotlink private Drive URLs.
@@ -44,3 +44,11 @@ Docs: https://pagescms.org/docs/quick-start/ ; https://pagescms.org/docs/configu
 
 ## Brand repository
 Production repository: brewtanist/brewtanist.github.io. Sign in as pumplcrs-hub, but select the brewtanist organization and this repository in Pages CMS. Its GitHub App needs separate access to the organization. Do not continue editing the old personal repository. Asset paths remain /brewtanist/assets intentionally.
+
+## Presentation languages
+
+The customer homepage, shop and public editing guide each have Thai, English and Simplified Chinese URLs. Thai uses the original paths; English starts with `/en/`, Chinese with `/zh/`. Each edition is rendered by Jekyll, including metadata and product listings. The language switch works without JavaScript; with JavaScript it also retains the visitor's current search, category and fragment.
+
+Edit Thai copy and shared business facts in `_data/brewtanist/`. Edit the corresponding text in `_data/translations/en.json` and `zh.json`, UI strings in `_data/ui/`, and the public editing guide in `_data/admin_guide.yml`. Translation records match stable IDs, not positions in a list. Keep existing IDs when changing or reordering a card, gallery image, FAQ or roast step. New entries need the same unique ID in Thai and in both translations. Change the photo, stock visibility, opening hours or SKU only in the Thai data; all languages read these values directly from the same records.
+
+Run `python3 tools/test_storefront.py _site` after building. It checks all nine localized pages, equivalent language links and the exact link, description and artwork of every visible shop item. Hosted services such as Shopee, Google Maps, GitHub and Pages CMS use their own language settings.

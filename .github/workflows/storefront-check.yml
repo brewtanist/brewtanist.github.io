@@ -4,7 +4,11 @@ on:
   push:
     branches: [feature/shopee-storefront-20261109, main]
     paths:
-      - '_data/brewtanist/**'
+      - '_data/**'
+      - 'en/**'
+      - 'zh/**'
+      - 'admin/**'
+      - 'tools/verify_languages.py'
       - '_includes/**'
       - 'index.html'
       - 'shop/**'

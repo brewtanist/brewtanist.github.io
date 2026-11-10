@@ -169,3 +169,40 @@ body.site-refined {
 .brew-lightbox-caption{font:400 15px/1.8 'Bai Jamjuree',sans-serif;margin:0}
 .brew-lightbox-controls{display:flex;gap:10px;flex-shrink:0}
 .brew-lightbox [data-lightbox-close]{padding-inline:17px;font-size:14px}
+
+/* The current language is available beside the menu at every screen width. */
+.nav-inner .wordmark { margin-right: auto; }
+.language-menu { position: relative; flex: none; }
+.language-menu > summary {
+  display: inline-flex; align-items: center; gap: .4rem; min-height: 44px;
+  padding: 0 .35rem; font-size: 14px; font-weight: 600; cursor: pointer; list-style: none;
+}
+.language-menu > summary::-webkit-details-marker { display: none; }
+.language-caret { width: 6px; height: 6px; margin: 0 3px 3px 1px; border: solid currentColor; border-width: 0 1.5px 1.5px 0; transform: rotate(45deg); }
+.language-menu[open] .language-caret { transform: rotate(225deg); margin-top: 6px; }
+.language-menu > nav {
+  position: absolute; z-index: 4; right: 0; top: 100%; min-width: 9rem; padding: 5px;
+  background: var(--cream); border: 1px solid var(--line); border-radius: 6px; box-shadow: 0 8px 22px #253b2e1a;
+}
+.language-menu:not([open]) > nav { display: none; }
+.language-menu a { display: flex; align-items: center; min-height: 44px; padding: 0 12px; white-space: nowrap; color: var(--ink); }
+.language-menu a:hover, .language-menu a:focus-visible { background: #eef1e8; }
+.language-menu a[aria-current="page"] { font-weight: 700; text-decoration: underline; text-underline-offset: .25em; }
+html:lang(zh) .site-refined { --body: 'Bai Jamjuree', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', sans-serif; font-family: var(--body); }
+@media (max-width: 1000px) {
+  .site-refined .nav-inner { gap: 10px; }
+  .site-refined .nav-links { display: none; }
+  .site-refined .mobile-nav { display: block; position: relative; }
+  .site-refined .mobile-nav > summary { display: flex; align-items: center; gap: .4rem; min-height: 44px; padding: 0 .2rem; list-style: none; cursor: pointer; }
+  .site-refined .mobile-nav > summary::-webkit-details-marker { display: none; }
+  .site-refined .mobile-nav > nav { position: absolute; z-index: 3; right: 0; top: calc(100% + 4px); width: min(300px, calc(100vw - 40px)); padding: 12px; background: var(--cream); border: 1px solid var(--line); border-radius: 6px; }
+  .site-refined .mobile-nav:not([open]) > nav { display: none; }
+  .site-refined .mobile-nav[open] > nav { display: grid; gap: 2px; }
+  .site-refined .mobile-nav nav a { display: flex; align-items: center; min-height: 44px; padding: 6px 12px; }
+}
+@media (max-width: 370px) {
+  .site-refined .nav-inner { gap: 5px; }
+  .site-refined .wordmark { font-size: 20px; }
+  .site-refined .wordmark small { font-size: 11px; letter-spacing: .06em; }
+  .language-menu > summary { gap: 4px; padding: 0 2px; }
+}

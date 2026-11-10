@@ -25,7 +25,7 @@ def protected_snapshot():
  return {str(p.relative_to(ROOT)):hashlib.sha256(p.read_bytes()).hexdigest() for p in paths if p.is_file()}
 def main():
  before=protected_snapshot()
- page=ROOT/'index.html';text=page.read_text(encoding='utf-8');original=text;tags=DesignTags(text)
+ page=ROOT/'_includes/home-page.html';text=page.read_text(encoding='utf-8');original=text;tags=DesignTags(text)
  if tags.body is None:raise ValueError('Homepage has no body element')
  classes=tags.body.get('class','').split()
  if 'site-refined' not in classes:

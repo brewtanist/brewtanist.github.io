@@ -27,6 +27,12 @@ for attempt in range(24):
             if item.get('image'):assert item['image'] in shop_text, 'Published image is not this release: '+item['id']
             assert 'id="shop-'+item['id']+'"' in shop_text,item['id']
             assert 'https://shopee.co.th/product/'+marketplace['shopId']+'/'+item['shopeeItemId'] in shop_text,item['id']
+        for language, tag in [('en','en'),('zh','zh-Hans')]:
+            translation=json.loads((ROOT/'_data/translations'/(language+'.json')).read_text())
+            for suffix, expected in [('/',translation['home']['hero_text']),('/shop/',translation['marketplace']['intro'])]:
+                route='/'+language+suffix
+                other=get(route+'?release='+stamp).decode('utf-8')
+                assert '<html lang="'+tag+'">' in other and expected in unescape(other), 'Pending localized release: '+route
         break
     except Exception:
         if attempt==23:raise

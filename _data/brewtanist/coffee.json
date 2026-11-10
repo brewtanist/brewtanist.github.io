@@ -4,6 +4,7 @@
   "description": "ถ้าชอบกาแฟเข้ม ดื่มกับนม หรืออยากลองรสผลไม้ บอกบาริสต้าได้ เราช่วยเลือกเมล็ดให้เข้ากับแก้วที่สั่ง",
   "cards": [
     {
+      "id": "espresso",
       "visible": true,
       "label": "เอสเปรสโซ",
       "title": "เบลนด์ประจำร้าน",
@@ -13,6 +14,7 @@
       "position": "center"
     },
     {
+      "id": "pour-over",
       "visible": true,
       "label": "กาแฟฟิลเตอร์",
       "title": "Single Origin",
@@ -22,6 +24,7 @@
       "position": "center"
     },
     {
+      "id": "matcha-bakery",
       "visible": true,
       "label": "เมนูอื่น ๆ",
       "title": "มัทฉะกับเบเกอรี่",

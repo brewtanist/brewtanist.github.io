@@ -11,7 +11,7 @@
   const empty = document.querySelector('[data-shop-empty]');
   const reset = document.querySelector('[data-shop-reset]');
   const categories = new Set(filters.map(button => button.dataset.filter));
-  const normalise = value => value.normalize('NFKC').toLocaleLowerCase('th').replace(/\s+/g, ' ').trim();
+  const normalise = value => value.normalize('NFKC').toLocaleLowerCase(document.documentElement.lang).replace(/\s+/g, ' ').trim();
   const entries = cards.map(card => ({card, search: normalise(card.dataset.search || '')}));
   let category = 'all';
   let query = '';
@@ -33,7 +33,9 @@
       if (show) count += 1;
     }
     for (const button of filters) button.setAttribute('aria-pressed', String(button.dataset.filter === category));
-    result.textContent = count + ' รายการ' + (category !== 'all' || query ? ' จาก ' + cards.length : '');
+    const message = category !== 'all' || query
+      ? result.dataset.filtered : count === 1 ? result.dataset.one : result.dataset.all;
+    result.textContent = message.replace('%count%', count).replace('%total%', cards.length);
     empty.hidden = count !== 0;
     reset.hidden = category === 'all' && !query;
     if (updateLocation) {
@@ -43,6 +45,7 @@
       if (query) url.searchParams.set('q', query);
       else url.searchParams.delete('q');
       window.history.replaceState(null, '', url);
+      document.dispatchEvent(new Event('shopfilterschange'));
     }
   }
 

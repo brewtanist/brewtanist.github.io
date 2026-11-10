@@ -28,7 +28,10 @@ if (leftHero) {
 (() => {
   const connection = navigator.connection;
   if (connection?.saveData || /(^|-)2g$/.test(connection?.effectiveType || '')) return;
-  const next = location.pathname === '/' ? '/shop/' : '/';
+  const home = document.body.dataset.home;
+  const shop = document.body.dataset.shop;
+  if (!home || !shop) return;
+  const next = location.pathname === home ? shop : home;
   let requested = false;
   const warm = event => {
     if (requested || (event.type === 'pointerover' && event.pointerType !== 'mouse')) return;
@@ -43,4 +46,37 @@ if (leftHero) {
   };
   document.addEventListener('focusin', warm);
   document.addEventListener('pointerover', warm, {passive: true});
+})();
+
+
+// Language links already work without JavaScript. Add the current filter and
+// section so the equivalent page opens at the same place in another language.
+(() => {
+  const switcher = document.querySelector('[data-language-menu]');
+  if (!switcher) return;
+  const links = [...switcher.querySelectorAll('a[hreflang]')];
+  const syncLinks = () => {
+    for (const link of links) link.href = link.pathname + location.search + location.hash;
+  };
+  syncLinks();
+  switcher.addEventListener('toggle', () => {
+    if (switcher.open) {
+      syncLinks();
+      if (menu) menu.open = false;
+    }
+  });
+  menu?.addEventListener('toggle', () => { if (menu.open) switcher.open = false; });
+  window.addEventListener('hashchange', syncLinks);
+  window.addEventListener('popstate', syncLinks);
+  document.addEventListener('shopfilterschange', syncLinks);
+  document.addEventListener('click', event => {
+    if (switcher.open && !switcher.contains(event.target)) switcher.open = false;
+  });
+  switcher.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && switcher.open) {
+      event.preventDefault();
+      switcher.open = false;
+      switcher.querySelector('summary').focus();
+    }
+  });
 })();

@@ -1,0 +1,126 @@
+th:
+  tag: th
+  home_url: /
+  language: เลือกภาษา
+  title: คู่มือแก้ไขเว็บไซต์
+  heading: แก้ข้อความและรูปบนเว็บไซต์
+  intro: ทีมร้านใช้ Pages CMS แก้ข้อมูลภาษาไทย รูปสินค้า และข้อมูลร้าน เมื่อบันทึกแล้ว GitHub Pages จะสร้างและเผยแพร่เว็บไซต์เวอร์ชันใหม่
+  open_editor: เปิด Pages CMS
+  open_site: ดูเว็บไซต์
+  setup_heading: เริ่มใช้งาน
+  steps:
+    - 'เปิด Pages CMS แล้วเลือก <strong>Sign in with GitHub</strong> เข้าด้วยบัญชี <code>pumplcrs-hub</code> หรือบัญชีที่มีสิทธิ์แก้ไขคลังของร้าน'
+    - 'เมื่อระบบขอติดตั้ง Pages CMS GitHub App ให้เลือก <strong>Only select repositories</strong> ในองค์กร <code>brewtanist</code> แล้วเลือก <code>brewtanist.github.io</code>'
+    - 'เปิด <code>brewtanist/brewtanist.github.io</code> เลือกสาขา <strong>main</strong> และเปิดหมวดที่จะแก้'
+    - 'ตรวจข้อความและรูปก่อนกด <strong>Save</strong> การบันทึกบนสาขา main จะเผยแพร่ขึ้นเว็บไซต์จริง'
+  menu_heading: เลือกหมวดที่จะแก้
+  section: หมวดใน CMS
+  fields: ข้อมูลที่แก้ได้
+  menus:
+    - [หน้าบนและเรื่องราว, หัวเรื่อง บทนำ รูปหลัก ปุ่ม เรื่องราวของร้าน และภาพข้างข้อมูลติดต่อ]
+    - [กาแฟและเบเกอรี่, ชื่อ คำบรรยาย รูป และลำดับการ์ดเมนู]
+    - [สินค้าและภาพ 3D, ชื่อกาแฟ กลิ่นรส ระดับคั่ว รูปถุง และสีพื้นของแต่ละเบลนด์]
+    - [เรื่องโรงคั่ว, ขั้นตอนการคั่วและภาพโรงคั่ว]
+    - [แกลเลอรี, รูป คำบรรยาย ลำดับ และการแสดงหรือซ่อน]
+    - [คำถามที่พบบ่อย, คำถามและคำตอบเพิ่มเติม ข้อมูลที่อยู่และเวลาเปิดใช้ค่าจากข้อมูลร้าน]
+    - [ข้อมูลร้าน ลิงก์ และ SEO, ที่อยู่ เวลาเปิด เบอร์ติดต่อ วิธีชำระเงิน ลิงก์ และคำอธิบายสำหรับผลการค้นหา]
+    - [สินค้าจาก Shopee, การ์ดสินค้า หมวด รูป รายละเอียด และรหัสสินค้าที่ใช้เชื่อมไป Shopee]
+  translation_heading: ข้อความสำหรับลูกค้าแต่ละภาษา
+  translation_note: แก้ข้อความภาษาไทยใน CMS และแก้คำแปลภาษาอังกฤษหรือจีนตัวย่อในไฟล์ภาษาของเว็บไซต์ เมื่อเปลี่ยนข้อมูลร้าน ให้ตรวจข้อความที่เกี่ยวข้องทั้งสามภาษาก่อนเผยแพร่
+  en_file: เปิดไฟล์ภาษาอังกฤษ
+  zh_file: เปิดไฟล์ภาษาจีนตัวย่อ
+  image_heading: เปลี่ยนรูป
+  image_notes:
+    - 'เปิดช่องรูปในหมวดที่ต้องการแล้วเลือกภาพจากคลัง หรืออัปโหลดไฟล์ JPG, PNG หรือ WebP รูปที่บันทึกใน <code>brewtanist/assets</code> เป็นไฟล์สาธารณะ ใช้ภาพที่ร้านมีสิทธิ์เผยแพร่'
+    - 'เวลาแทนรูปเดิม ให้อัปโหลดโดยใช้ชื่อไฟล์ใหม่ เลือกจุดครอปที่กึ่งกลาง บน ล่าง ซ้าย หรือขวา ภาพถุงกาแฟแสดงเต็มภาพ ส่วนตำแหน่งรูปหลักด้านซ้ายหรือขวาใช้กับหน้าจอคอมพิวเตอร์'
+    - 'เปลี่ยนลำดับรูปหรือการ์ดได้ในรายการ ใช้สวิตช์ <strong>แสดง</strong> เมื่อต้องการซ่อนรูปที่ยังใช้อยู่ในส่วนอื่น'
+  publish_heading: ตรวจหลังบันทึก
+  publish_text: 'เปิด GitHub Actions แล้วดูงาน <strong>pages build and deployment</strong> ของการแก้ล่าสุด เมื่องานสำเร็จ ให้เปิดหน้าเว็บบนมือถือและคอมพิวเตอร์ แล้วลองสลับภาษา'
+  actions: ดูสถานะการเผยแพร่บน GitHub Actions
+  history: ดูประวัติการแก้ไข
+  recover: หากเผยแพร่ไม่สำเร็จ ให้เปิดงานที่ล้มเหลวเพื่อดูรายละเอียด หากต้องการคืนข้อมูลเดิม ให้เปิดประวัติไฟล์บน GitHub แล้วนำค่าที่ต้องการกลับมาบันทึก
+  docs: คู่มือเริ่มต้นของ Pages CMS
+en:
+  tag: en
+  home_url: /en/
+  language: Choose language
+  title: Website editing guide
+  heading: Edit the website’s text and photos
+  intro: The shop team uses Pages CMS to update Thai copy, product photos and café details. After a save, GitHub Pages builds and publishes the updated website.
+  open_editor: Open Pages CMS
+  open_site: View the website
+  setup_heading: Getting started
+  steps:
+    - 'Open Pages CMS, choose <strong>Sign in with GitHub</strong> and sign in as <code>pumplcrs-hub</code> or with another account that can edit the shop’s repository.'
+    - 'When asked to install the Pages CMS GitHub App, choose <strong>Only select repositories</strong> under the <code>brewtanist</code> organization and select <code>brewtanist.github.io</code>.'
+    - 'Open <code>brewtanist/brewtanist.github.io</code>, select the <strong>main</strong> branch and choose the section you want to edit.'
+    - 'Check your text and photos, then choose <strong>Save</strong>. Saving to main publishes your changes to the live website.'
+  menu_heading: Choose a section in the editor
+  section: CMS section
+  fields: What you can change
+  menus:
+    - ["Homepage and story", "Headline, introduction, main photo, buttons, the shop’s story and the photo next to its contact details."]
+    - ["Coffee and bakery", "Names, descriptions, photos and order of menu cards."]
+    - ["Products and 3D images", "Coffee names, tasting notes, roast levels, bag artwork and background colours for each blend."]
+    - ["Roastery", "Roasting steps and a photo of the roastery."]
+    - ["Gallery", "Photos, captions, display order and visibility."]
+    - ["Frequently asked questions", "Additional questions and answers. The address and opening hours come from the café details."]
+    - ["Café details, links and SEO", "Address, opening hours, phone number, payment methods, links and search descriptions."]
+    - ["Shopee products", "Product cards, categories, photos, details and the item IDs used in Shopee links."]
+  translation_heading: Customer-facing translations
+  translation_note: Edit Thai copy in Pages CMS and update the website’s language files for English and Simplified Chinese. When café details change, review the related text in all three languages before publishing.
+  en_file: Open the English file
+  zh_file: Open the Simplified Chinese file
+  image_heading: Change a photo
+  image_notes:
+    - 'Open the image field in the relevant section. Pick an existing image or upload a JPG, PNG or WebP. Files saved in <code>brewtanist/assets</code> are public. Use photos the shop has permission to publish.'
+    - 'When replacing an image, upload it under a new filename. Set the crop focus to center, top, bottom, left or right. Coffee bag renders show the full bag. The left or right placement of the homepage photo applies on desktop.'
+    - 'Drag photos or cards to change their order. Use the visibility switch to hide an image that is still used elsewhere.'
+  publish_heading: Check the published site
+  publish_text: 'Open GitHub Actions and find <strong>pages build and deployment</strong> for your latest change. Once it succeeds, open the site on mobile and desktop and try switching languages.'
+  actions: View deployment status in GitHub Actions
+  history: View change history
+  recover: If deployment fails, open the failed job to read the error. To restore earlier content, check the file’s history on GitHub and save the values you want to restore.
+  docs: Pages CMS quick-start guide
+zh:
+  tag: zh-Hans
+  home_url: /zh/
+  language: 选择语言
+  title: 网站编辑指南
+  heading: 编辑网站文字和图片
+  intro: 门店团队可以使用 Pages CMS 更新泰语文案、商品图片和门店信息。保存后，GitHub Pages 会重新构建并发布网站。
+  open_editor: 打开 Pages CMS
+  open_site: 查看网站
+  setup_heading: 首次使用
+  steps:
+    - '打开 Pages CMS，选择 <strong>Sign in with GitHub</strong>，使用 <code>pumplcrs-hub</code> 或其他有权编辑门店代码库的账号登录。'
+    - '系统提示安装 Pages CMS GitHub App 时，在 <code>brewtanist</code> 组织下选择 <strong>Only select repositories</strong>，然后选中 <code>brewtanist.github.io</code>。'
+    - '打开 <code>brewtanist/brewtanist.github.io</code>，选择 <strong>main</strong> 分支，再打开需要编辑的栏目。'
+    - '核对文字和图片，点击 <strong>Save</strong>。保存到 main 分支后，改动将发布到线上网站。'
+  menu_heading: 选择要编辑的栏目
+  section: CMS 栏目
+  fields: 可编辑内容
+  menus:
+    - [首页与门店故事, 首页标题、简介、主图、按钮、门店故事和联系方式旁的图片。]
+    - [咖啡与烘焙点心, 菜单卡片的名称、说明、图片和顺序。]
+    - [商品与三维图片, 各款拼配咖啡的名称、风味、烘焙程度、咖啡袋图片及背景色。]
+    - [烘焙工坊, 咖啡烘焙步骤和工坊照片。]
+    - [相册, 照片、说明、顺序，以及是否显示。]
+    - [常见问题, 补充的问题与解答。地址和营业时间取自门店信息。]
+    - [门店信息、链接与搜索设置, 地址、营业时间、电话、付款方式、链接及供搜索引擎使用的介绍。]
+    - [Shopee 商品, 商品卡片、分类、图片、详情，以及用于生成 Shopee 链接的商品编号。]
+  translation_heading: 编辑面向顾客的多语言内容
+  translation_note: 在 Pages CMS 中编辑泰语文案，在网站的语言文件中更新英语和简体中文译文。修改门店信息后，请在发布前核对三个语言版本中的相关内容。
+  en_file: 打开英语文件
+  zh_file: 打开简体中文文件
+  image_heading: 更换图片
+  image_notes:
+    - '打开相应栏目的图片字段，从图库选择图片，或上传 JPG、PNG、WebP 文件。保存在 <code>brewtanist/assets</code> 中的图片会公开显示，请使用门店有权发布的图片。'
+    - '替换图片时，请使用新的文件名上传。裁切焦点可以设在中间、上方、下方、左侧或右侧。咖啡袋效果图会完整显示。首页主图居左或居右的设置适用于桌面端。'
+    - '拖动照片或卡片可以调整顺序。如果一张图片仍在其他位置使用，可以关闭显示开关，将它从当前栏目隐藏。'
+  publish_heading: 保存后检查网站
+  publish_text: '打开 GitHub Actions，找到最近一次改动对应的 <strong>pages build and deployment</strong>。任务成功后，用手机和电脑打开网站，逐一检查各语言版本。'
+  actions: 在 GitHub Actions 中查看发布状态
+  history: 查看修改记录
+  recover: 如果发布失败，请打开失败的任务查看错误信息。要恢复以前的内容，可以在 GitHub 的文件历史记录中找到旧版本，再将需要的内容保存回去。
+  docs: Pages CMS 快速入门指南

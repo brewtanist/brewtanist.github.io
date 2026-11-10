@@ -1,19 +1,23 @@
-{%- assign item = include.item -%}
-{%- assign house = site.data.brewtanist.products.items | where: 'id', item.houseId | first -%}
-{%- assign product_image = item.image | default: house.image -%}
-{%- assign product_alt = item.alt | default: house.alt | default: item.name -%}
+{%- assign current_product = include.item -%}
+{%- assign card_copy = content_data.marketplace.items | where: 'id', current_product.id | first | default: current_product -%}
+{%- assign house = site.data.brewtanist.products.items | where: 'id', current_product.houseId | first -%}
+{%- assign product_image = current_product.image | default: house.image -%}
+{%- assign translated_house = content_data.products.items | where: 'id', house.id | first -%}
+{%- assign product_alt = card_copy.alt | default: translated_house.alt | default: house.alt | default: card_copy.name -%}
 {%- assign card_srcset = site.data.shop_thumbnails[product_image] -%}
-{%- capture product_url -%}https://shopee.co.th/product/{{ site.data.brewtanist.marketplace.shopId }}/{{ item.shopeeItemId }}{%- endcapture -%}
-{%- capture category_label -%}{%- case item.category -%}{%- when 'house' -%}House Blend{%- when 'single-origin' -%}Single Origin{%- when 'capsules' -%}กาแฟแคปซูล{%- when 'drip' -%}Drip Bag{%- when 'gifts' -%}Gift Set{%- else -%}ของใช้ & อุปกรณ์{%- endcase -%}{%- endcapture -%}
-<article class="shop-card" data-shop-card data-category="{{ item.category | escape }}" data-search="{{ item.name | escape }} {{ category_label | escape }} {{ item.description | escape }} {{ item.details | join: ' ' | escape }}" id="shop-{{ item.id | escape }}">
-  <a class="shop-image{% if product_image == nil or product_image == '' %} shop-image-missing{% endif %}" href="{{ product_url | escape }}" target="_blank" rel="noopener noreferrer" aria-label="ดู {{ item.name | escape }} ใน Shopee (เปิดแท็บใหม่)">
-    {% if product_image and product_image != '' %}{% if card_srcset %}<picture><source type="image/webp" srcset="{{ card_srcset | escape }}" sizes="(max-width: 350px) calc(100vw - 40px), (max-width: 800px) 45vw, (max-width: 1100px) 30vw, (max-width: 1400px) 22vw, 300px">{% endif %}<img src="{{ product_image | escape }}" alt="{{ product_alt | escape }}" width="800" height="800" loading="lazy" decoding="async">{% if card_srcset %}</picture>{% endif %}{% else %}<span class="shop-image-note"><span>The Brewtanist</span><strong>{{ category_label }}</strong><small>ดูรูปสินค้าที่ Shopee</small></span>{% endif %}
+{%- capture product_url -%}https://shopee.co.th/product/{{ site.data.brewtanist.marketplace.shopId }}/{{ current_product.shopeeItemId }}{%- endcapture -%}
+{%- assign category_label = ui[current_product.category] -%}
+{%- if current_product.category == 'goods' -%}{%- assign category_label = ui.goods_full -%}{%- endif -%}
+{%- if current_product.category == 'capsules' -%}{%- assign category_label = ui.capsules_label -%}{%- endif -%}
+<article class="shop-card" data-shop-card data-category="{{ current_product.category | escape }}" data-search="{{ card_copy.name | escape }} {{ category_label | escape }} {{ card_copy.description | escape }} {{ card_copy.details | join: ' ' | escape }}" id="shop-{{ current_product.id | escape }}">
+  <a class="shop-image{% if product_image == nil or product_image == '' %} shop-image-missing{% endif %}" href="{{ product_url | escape }}" target="_blank" rel="noopener noreferrer" aria-label="{{ ui.product_shopee | replace: '%name%', card_copy.name | escape }}">
+    {% if product_image and product_image != '' %}{% if card_srcset %}<picture><source type="image/webp" srcset="{{ card_srcset | escape }}" sizes="(max-width: 350px) calc(100vw - 40px), (max-width: 800px) 45vw, (max-width: 1100px) 30vw, (max-width: 1400px) 22vw, 300px">{% endif %}<img src="{{ product_image | escape }}" alt="{{ product_alt | escape }}" width="800" height="800" loading="lazy" decoding="async">{% if card_srcset %}</picture>{% endif %}{% else %}<span class="shop-image-note"><span>The Brewtanist</span><strong>{{ category_label }}</strong><small>{{ ui.fallback_photo | escape }}</small></span>{% endif %}
   </a>
   <div class="shop-card-body">
     <span class="shop-category">{{ category_label }}</span>
-    <h3>{{ item.name | escape }}</h3>
-    <p>{{ item.description | escape }}</p>
-    {% if item.details.size > 0 %}<details class="shop-details"><summary>รายละเอียด</summary><ul>{% for detail in item.details %}<li>{{ detail | escape }}</li>{% endfor %}</ul></details>{% endif %}
-    <a class="shop-buy" href="{{ product_url | escape }}" target="_blank" rel="noopener noreferrer" aria-label="ดูราคาและสั่ง {{ item.name | escape }} ใน Shopee (เปิดแท็บใหม่)"><span>ดูที่ Shopee</span><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+    <h3>{{ card_copy.name | escape }}</h3>
+    <p>{{ card_copy.description | escape }}</p>
+    {% if card_copy.details.size > 0 %}<details class="shop-details"><summary>{{ ui.details | escape }}</summary><ul>{% for detail in card_copy.details %}<li>{{ detail | escape }}</li>{% endfor %}</ul></details>{% endif %}
+    <a class="shop-buy" href="{{ product_url | escape }}" target="_blank" rel="noopener noreferrer" aria-label="{{ ui.order_shopee | replace: '%name%', card_copy.name | escape }}"><span>{{ ui.view_shopee | escape }}</span><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
   </div>
 </article>

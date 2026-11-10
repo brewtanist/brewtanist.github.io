@@ -1,6 +1,8 @@
 User-agent: *
 Allow: /
 Disallow: /admin/
+Disallow: /en/admin/
+Disallow: /zh/admin/
 Disallow: /brewtanist/admin/
 
 Sitemap: https://brewtanist.github.io/sitemap.xml

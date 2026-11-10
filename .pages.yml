@@ -130,6 +130,10 @@ content:
     type: object
     list: true
     fields:
+    - name: id
+      label: รหัสเชื่อมคำแปล (คงเดิมเมื่อแก้ไขรายการ)
+      type: string
+      required: true
     - name: visible
       label: แสดงการ์ดนี้
       type: boolean
@@ -311,6 +315,10 @@ content:
     type: object
     list: true
     fields:
+    - name: id
+      label: รหัสเชื่อมคำแปล (คงเดิมเมื่อแก้ไขรายการ)
+      type: string
+      required: true
     - name: title
       label: ชื่อขั้นตอน
       type: string
@@ -338,6 +346,10 @@ content:
     type: object
     list: true
     fields:
+    - name: id
+      label: รหัสเชื่อมคำแปล (คงเดิมเมื่อแก้ไขรายการ)
+      type: string
+      required: true
     - name: visible
       label: แสดงรูปนี้
       type: boolean
@@ -379,6 +391,10 @@ content:
     type: object
     list: true
     fields:
+    - name: id
+      label: รหัสเชื่อมคำแปล (คงเดิมเมื่อแก้ไขรายการ)
+      type: string
+      required: true
     - name: question
       label: คำถาม
       type: string

@@ -1,0 +1,70 @@
+{%- assign lang = page.lang | default: 'th' -%}
+{%- assign locale = site.data.languages[lang] -%}
+{%- assign ui = site.data.ui[lang] -%}
+{%- assign content_data = site.data.brewtanist -%}
+{%- if lang != 'th' -%}{%- assign content_data = site.data.translations[lang] -%}{%- endif -%}
+{%- assign home_path = locale.prefix | append: '/' -%}
+{%- assign shop_path = locale.prefix | append: '/shop/' -%}
+{%- assign s = content_data.settings -%}
+{%- assign m = content_data.marketplace -%}
+{%- assign products = site.data.brewtanist.marketplace.items | where: 'visible', true -%}
+<!doctype html>
+<html lang="{{ locale.tag }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ ui.shop_title | escape }}</title>
+  <meta name="description" content="{{ m.intro | escape }}">
+  <meta name="theme-color" content="#f8f6ef">
+  {% include language-links.html %}
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="{{ locale.og }}">
+  <meta property="og:site_name" content="The Brewtanist">
+  <meta property="og:title" content="{{ m.title | newline_to_br | replace: '<br />', ' ' | strip_newlines | strip | escape }} | The Brewtanist">
+  <meta property="og:description" content="{{ m.intro | escape }}">
+  <meta property="og:url" content="{{ page.url | absolute_url | escape }}">
+  <meta property="og:image" content="{{ site.data.brewtanist.settings.social_image | absolute_url | escape }}">
+  <meta name="twitter:card" content="summary_large_image">
+  {% if lang == 'th' or lang == 'en' %}<link rel="preload" as="font" type="font/woff2" href="/brewtanist/fonts/baijamjuree-600-{% if lang == 'th' %}thai{% else %}latin{% endif %}.woff2" crossorigin>{% endif %}
+  <link rel="stylesheet" href="/brewtanist/site.css?v=20261110-speed">
+  <link rel="stylesheet" href="/brewtanist/refinement.css?v=20261110-languages">
+  <link rel="stylesheet" href="/brewtanist/shop.css?v=20261110-speed">
+  <script defer src="/brewtanist/site.js?v=20261110-languages"></script>
+  <script defer src="/brewtanist/refinement.js?v=20261110-languages"></script>
+  <script defer src="/brewtanist/shop.js?v=20261110-languages"></script>
+</head>
+<body class="site-refined shop-page" data-home="{{ home_path }}" data-shop="{{ shop_path }}">
+  <a class="skip" href="#main">{{ ui.skip | escape }}</a>
+  {% if s.notice != '' %}<div class="announcement">{{ s.notice | escape }}</div>{% endif %}
+  <header class="nav"><div class="wrap nav-inner">
+    <a class="wordmark" href="{{ home_path }}" aria-label="The Brewtanist {{ ui.home | escape }}">{{ s.brand | escape }}<small>{{ s.descriptor | escape }}</small></a>
+    <nav class="nav-links" aria-label="{{ ui.main_nav | escape }}"><a href="{{ home_path }}">{{ ui.home | escape }}</a><a href="{{ shop_path }}" aria-current="page">{{ ui.shop | escape }}</a>{% if site.data.brewtanist.coffee.visible != false %}<a href="{{ home_path }}#coffee">{{ ui.cafe_menu | escape }}</a>{% endif %}{% if site.data.brewtanist.gallery.visible != false %}<a href="{{ home_path }}#gallery">{{ ui.gallery | escape }}</a>{% endif %}<a class="btn" href="{{ home_path }}#visit">{{ ui.directions | escape }}</a></nav>
+    {% include language-menu.html %}
+    <details class="mobile-nav"><summary>{{ ui.menu | escape }} <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M3 8h18M3 16h18"/></svg></summary><nav aria-label="{{ ui.mobile_nav | escape }}"><a href="{{ home_path }}">{{ ui.home | escape }}</a><a href="{{ shop_path }}" aria-current="page">{{ ui.shop | escape }}</a>{% if site.data.brewtanist.coffee.visible != false %}<a href="{{ home_path }}#coffee">{{ ui.cafe_menu | escape }}</a>{% endif %}{% if site.data.brewtanist.gallery.visible != false %}<a href="{{ home_path }}#gallery">{{ ui.gallery | escape }}</a>{% endif %}<a href="{{ home_path }}#visit">{{ ui.contact | escape }}</a></nav></details>
+  </div></header>
+  <main id="main">
+    <section class="shop-hero" aria-labelledby="shop-heading"><div class="wrap shop-hero-grid">
+      <div class="shop-hero-copy"><h1 id="shop-heading">{{ m.title | escape | newline_to_br }}</h1><p>{{ m.intro | escape }}</p><a class="btn" href="#catalog">{{ ui.browse | escape }}</a></div>
+      <figure class="shop-hero-photo">
+        {% include cafe-photo.html src="/brewtanist/assets/brewtanist-products.jpg" alt=ui.shelf_alt width="735" height="410" subject="coffee" sizes="(max-width: 400px) calc(100vw - 40px), (max-width: 800px) 90vw, (max-width: 1400px) 50vw, 690px" %}
+      </figure>
+    </div></section>
+    <section class="shop-catalog" id="catalog" aria-labelledby="catalog-heading"><div class="wrap">
+      <div class="shop-catalog-heading"><div><h2 id="catalog-heading">{{ ui.catalog_title | escape }}</h2><p>{{ ui.catalog_intro | escape }}</p></div><a class="shop-store-link" href="{% include brewtanist-url.html url=site.data.brewtanist.settings.shopee %}" target="_blank" rel="noopener noreferrer">{{ ui.store_link | escape }} <span aria-hidden="true">↗</span></a></div>
+      <div class="shop-controls" data-shop-controls hidden>
+        <div class="shop-filters" role="group" aria-label="{{ ui.categories | escape }}">
+          {% assign categories = 'all,house,single-origin,capsules,drip,gifts,goods' | split: ',' %}
+          {% for category in categories %}{% assign category_count = products | where: 'category', category | size %}{% if category == 'all' %}{% assign category_count = products.size %}{% endif %}<button type="button" class="shop-filter" data-filter="{{ category }}" aria-pressed="{% if category == 'all' %}true{% else %}false{% endif %}">{{ ui[category] | escape }}<span>{{ category_count }}</span></button>{% endfor %}
+        </div>
+        <div class="shop-search-row"><label class="shop-search"><svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4.5 4.5"/></svg><span class="sr-only">{{ ui.search | escape }}</span><input type="search" id="shop-search" placeholder="{{ ui.search | escape }}" autocomplete="off" maxlength="120"></label><p class="shop-result-count" data-result-count data-all="{{ ui.count_all | escape }}" data-one="{{ ui.count_one | escape }}" data-filtered="{{ ui.count_filtered | escape }}" role="status" aria-live="polite" aria-atomic="true">{{ ui.count_all | replace: '%count%', products.size | escape }}</p><button type="button" class="shop-reset" data-shop-reset hidden>{{ ui.clear | escape }}</button></div>
+      </div>
+      <noscript><p class="shop-noscript">{{ ui.noscript | escape }}</p></noscript>
+      <div class="shop-grid" data-shop-grid>{% for item in products %}{% include shop-card.html item=item %}{% endfor %}</div>
+      <div class="shop-empty" data-shop-empty hidden><h3>{{ ui.no_matches | escape }}</h3><p>{{ ui.try_again | escape }}</p><button type="button" class="btn outline" data-shop-clear>{{ ui.view_all | escape }}</button></div>
+      <p class="shop-price-note">{{ m.notice | escape }}</p>
+    </div></section>
+    <section class="shop-help"><div class="wrap shop-help-inner"><div><h2>{{ ui.help_title | escape }}</h2><p>{{ ui.help_text | escape }}</p></div><div class="buttons"><a class="btn" href="{% include brewtanist-url.html url=site.data.brewtanist.settings.facebook %}" target="_blank" rel="noopener noreferrer">{{ ui.ask | escape }}</a><a class="text-link" href="{{ home_path }}#visit">{{ ui.visit_cafe | escape }}</a></div></div></section>
+  </main>
+  <footer class="footer"><div class="wrap"><div class="footer-top"><div><a class="footer-title" href="{{ home_path }}">The Brewtanist.</a><p>{{ s.descriptor | escape }}</p></div><div class="footer-social"><a class="text-link" href="{{ home_path }}">{{ ui.back | escape }}</a><a class="text-link" href="{{ home_path }}#visit">{{ ui.directions | escape }}</a><a class="text-link" href="{% include brewtanist-url.html url=site.data.brewtanist.settings.instagram %}" target="_blank" rel="noopener noreferrer">Instagram ↗</a></div></div><div class="footer-bottom"><span>© {{ site.time | date: '%Y' }} {{ s.brand | escape }}</span><span>{{ s.location_note | escape }}</span></div></div></footer>
+</body>
+</html>
