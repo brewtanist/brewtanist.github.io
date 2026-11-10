@@ -67,6 +67,7 @@
       {% if site.data.brewtanist.home.story_visible != false %}<a href="#story">{{ ui.story | escape }}</a>{% endif %}
       {% if site.data.brewtanist.coffee.visible != false %}<a href="#coffee">{{ ui.cafe_menu | escape }}</a>{% endif %}
       {% if site.data.brewtanist.products.visible != false %}{% if catalogue_ready %}<details class="coffee-menu"><summary>{{ ui.coffee_home | escape }}</summary><div><a href="{% include brewtanist-url.html url=site.data.brewtanist.settings.catalogue_url %}">{{ ui.all_coffee | escape }}</a><a href="{% include brewtanist-url.html url=site.data.brewtanist.settings.catalogue_url %}/finder/">{{ ui.finder | escape }}</a></div></details>{% else %}<a href="{{ shop_path }}">{{ ui.shop | escape }}</a>{% endif %}{% endif %}
+      <a href="{{ locale.prefix }}/oem/">{{ ui.oem_label | escape }}</a>
       {% if site.data.brewtanist.gallery.visible != false %}<a href="#gallery">{{ ui.gallery | escape }}</a>{% endif %}
       <a class="btn" href="#visit">{{ ui.directions | escape }}</a>
     </nav>
@@ -77,6 +78,7 @@
       {% if site.data.brewtanist.coffee.visible != false %}<a href="#coffee">{{ ui.cafe_menu | escape }}</a>{% endif %}
       {% if site.data.brewtanist.products.visible != false %}{% if catalogue_ready %}<details class="coffee-menu"><summary>{{ ui.coffee_home | escape }}</summary><div><a href="{% include brewtanist-url.html url=site.data.brewtanist.settings.catalogue_url %}">{{ ui.all_coffee | escape }}</a><a href="{% include brewtanist-url.html url=site.data.brewtanist.settings.catalogue_url %}/finder/">{{ ui.finder | escape }}</a></div></details>{% else %}<a href="{{ shop_path }}">{{ ui.shop | escape }}</a>{% endif %}{% endif %}
       {% if site.data.brewtanist.roastery.visible != false %}<a href="#roastery">{{ ui.roastery | escape }}</a>{% endif %}
+      <a href="{{ locale.prefix }}/oem/">{{ ui.oem_label | escape }}</a>
       {% if site.data.brewtanist.gallery.visible != false %}<a href="#gallery">{{ ui.gallery | escape }}</a>{% endif %}
       <a href="#visit">{{ ui.contact | escape }}</a>
     </nav></details>
@@ -131,7 +133,7 @@
   {% endif %}
   {% if site.data.brewtanist.roastery.visible != false %}
   <section class="section roastery" id="roastery" aria-labelledby="roastery-heading"><div class="wrap">
-    <div class="roastery-grid"><div><h2 id="roastery-heading">{{ r.title | escape | newline_to_br }}</h2><p class="intro">{{ r.description | escape }}</p></div><div class="process">{% for entry in site.data.brewtanist.roastery.steps %}{% assign step = r.steps | where: 'id', entry.id | first | default: entry %}<article class="process-step"><span>{{ forloop.index | prepend: '0' }}</span><div><h3>{{ step.title | escape }}</h3><p>{{ step.text | escape }}</p></div></article>{% endfor %}</div></div>
+    <div class="roastery-grid"><div><h2 id="roastery-heading">{{ r.title | escape | newline_to_br }}</h2><p class="intro">{{ r.description | escape }}</p><p>{{ ui.oem_intro | escape }}</p><a class="btn" href="{{ locale.prefix }}/oem/">{{ ui.oem_label | escape }}</a></div><div class="process">{% for entry in site.data.brewtanist.roastery.steps %}{% assign step = r.steps | where: 'id', entry.id | first | default: entry %}<article class="process-step"><span>{{ forloop.index | prepend: '0' }}</span><div><h3>{{ step.title | escape }}</h3><p>{{ step.text | escape }}</p></div></article>{% endfor %}</div></div>
     {% if site.data.brewtanist.roastery.image and site.data.brewtanist.roastery.image != '' %}<figure class="roastery-photo"><img class="focus-{{ site.data.brewtanist.roastery.position | default: 'center' | escape }}" src="{{ site.data.brewtanist.roastery.image | escape }}" width="1600" height="900" alt="{{ r.alt | escape }}" loading="lazy" decoding="async"><figcaption>{{ r.caption | escape }}</figcaption></figure>{% endif %}
   </div></section>
   {% endif %}

@@ -1,0 +1,134 @@
+{%- assign lang = page.lang | default: 'th' -%}
+{%- assign locale = site.data.languages[lang] -%}
+{%- assign ui = site.data.ui[lang] -%}
+{%- assign tx = site.data.oem_form[lang] -%}
+{%- assign shop = site.data.brewtanist.settings -%}
+{%- assign brand_text = shop -%}
+{%- if lang != 'th' -%}{%- assign brand_text = site.data.translations[lang].settings -%}{%- endif -%}
+{%- assign channel = site.data.oem_intake -%}
+{%- assign chat = channel.chat | default: shop.facebook -%}
+{%- assign home_path = locale.prefix | append: '/' -%}
+{%- assign shop_path = locale.prefix | append: '/shop/' -%}
+<!doctype html>
+<html lang="{{ locale.tag }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#f8f6ef">
+  <title>{{ tx.title | escape }} | The Brewtanist</title>
+  <meta name="description" content="{{ tx.intro | escape }}">
+  {% include language-links.html %}
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="{{ tx.title | escape }} | The Brewtanist">
+  <meta property="og:description" content="{{ tx.intro | escape }}">
+  <meta property="og:url" content="{{ page.url | absolute_url }}">
+  <meta property="og:locale" content="{{ locale.og }}">
+  <meta property="og:image" content="{{ shop.social_image | absolute_url | escape }}">
+  <link rel="stylesheet" href="/brewtanist/site.css?v=20261110-speed">
+  <link rel="stylesheet" href="/brewtanist/refinement.css?v=20261110-languages">
+  <link rel="stylesheet" href="/brewtanist/oem.css?v=1">
+  <script defer src="/brewtanist/site.js?v=20261110-languages"></script>
+  <script defer src="/brewtanist/oem.js?v=1"></script>
+</head>
+<body class="site-refined oem-page" data-home="{{ home_path }}" data-shop="{{ shop_path }}">
+  <a class="skip" href="#main">{{ ui.skip | escape }}</a>
+  <header class="nav"><div class="wrap nav-inner">
+    <a class="wordmark" href="{{ home_path }}">{{ shop.brand | escape }}<small>{{ brand_text.descriptor | escape }}</small></a>
+    <nav class="nav-links" aria-label="{{ ui.main_nav | escape }}">
+      <a href="{{ home_path }}">{{ ui.home | escape }}</a>
+      <a href="{{ shop_path }}">{{ ui.shop | escape }}</a>
+      <a href="{{ page.url | escape }}" aria-current="page">{{ tx.nav | escape }}</a>
+      <a class="btn" href="{{ home_path }}#visit">{{ ui.directions | escape }}</a>
+    </nav>
+    {% include language-menu.html %}
+    <details class="mobile-nav"><summary>{{ ui.menu | escape }} <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M3 8h18M3 16h18"/></svg></summary><nav aria-label="{{ ui.mobile_nav | escape }}">
+      <a href="{{ home_path }}">{{ ui.home | escape }}</a><a href="{{ shop_path }}">{{ ui.shop | escape }}</a>
+      <a href="{{ page.url | escape }}" aria-current="page">{{ tx.nav | escape }}</a>
+      <a href="{{ home_path }}#visit">{{ ui.contact | escape }}</a>
+    </nav></details>
+  </div></header>
+  <main id="main" class="wrap oem-wrap" data-language="{{ lang }}" data-endpoint="{{ channel.endpoint | escape }}" data-email="{{ channel.email | escape }}">
+    <div class="oem-hero"><div>
+      <h1>{{ tx.title | escape }}</h1>
+      <p>{{ tx.intro | escape }}</p>
+    </div><figure>{% include cafe-photo.html src="/brewtanist/assets/brewtanist-products.jpg" alt=ui.shelf_alt width="735" height="410" sizes="(max-width: 760px) 1px, (max-width: 1300px) 30vw, 360px" %}</figure></div>
+    <div class="oem-grid">
+      <div>
+        <noscript><p>{{ tx.noscript | escape }}</p><p><a href="tel:{{ shop.phone | remove: ' ' | escape }}">{{ shop.phone | escape }}</a> · <a href="{% include brewtanist-url.html url=chat %}">{{ tx.chat | escape }}</a></p></noscript>
+        <form id="oem-form" method="post" hidden>
+          <p class="oem-required">{{ tx.required_help | escape }}</p>
+          <fieldset class="oem-section">
+            <legend>{{ tx.products | escape }}</legend>
+            <fieldset class="oem-type">
+              <legend>{{ tx.type | escape }} <span aria-hidden="true">*</span></legend>
+              <div>{% assign types = 'beans,capsules,both' | split: ',' %}{% for key in types %}<label>
+                <input name="productType" type="radio" value="{{ key }}" required{% if key == 'beans' %} checked{% endif %}><span>{{ tx[key] | escape }}</span>
+              </label>{% endfor %}</div>
+            </fieldset>
+            <fieldset id="oem-beans" class="oem-spec"><legend>{{ tx.beans_label | escape }}</legend>
+              <div class="oem-fields">
+                <label>{{ tx.bean_qty | escape }} <span aria-hidden="true">*</span><input name="beanQuantity" type="number" min="0.01" step="0.01" inputmode="decimal" required></label>
+                <label>{{ tx.grams | escape }}<input name="packGrams" type="number" min="1" step="1" inputmode="numeric"></label>
+                <label>{{ tx.roast | escape }}<select name="roast">{% assign choices = 'discuss,light,medium,dark' | split: ',' %}{% for key in choices %}<option value="{{ key }}">{{ tx[key] | escape }}</option>{% endfor %}</select></label>
+                <label>{{ tx.grind | escape }}<select name="grind">{% assign choices = 'discuss,whole,ground' | split: ',' %}{% for key in choices %}<option value="{{ key }}">{{ tx[key] | escape }}</option>{% endfor %}</select></label>
+              </div>
+            </fieldset>
+            <fieldset id="oem-capsules" class="oem-spec" hidden disabled><legend>{{ tx.capsules_label | escape }}</legend>
+              <div class="oem-fields">
+                <label>{{ tx.capsule_qty | escape }} <span aria-hidden="true">*</span><input name="capsuleQuantity" type="number" min="1" step="1" inputmode="numeric" required></label>
+                <label>{{ tx.per_box | escape }}<input name="perBox" type="number" min="1" step="1" inputmode="numeric"></label>
+                <label class="oem-wide">{{ tx.system | escape }}<input name="system" maxlength="120" aria-describedby="system-hint"><small id="system-hint">{{ tx.system_hint | escape }}</small></label>
+              </div>
+            </fieldset>
+          </fieldset>
+          <fieldset class="oem-section"><legend>{{ tx.project | escape }}</legend>
+            <div class="oem-fields">
+              <label class="oem-wide">{{ tx.flavour | escape }}<input name="flavour" maxlength="300" aria-describedby="flavour-hint"><small id="flavour-hint">{{ tx.flavour_hint | escape }}</small></label>
+              <label class="oem-wide">{{ tx.packaging | escape }}<input name="packaging" maxlength="300" aria-describedby="packaging-hint"><small id="packaging-hint">{{ tx.packaging_hint | escape }}</small></label>
+              <label>{{ tx.frequency | escape }}<select name="frequency"><option value="discuss">{{ tx.undecided | escape }}</option>{% assign choices = 'once,monthly,other' | split: ',' %}{% for key in choices %}<option value="{{ key }}">{{ tx[key] | escape }}</option>{% endfor %}</select></label>
+              <label>{{ tx.date | escape }}<input name="targetDate" type="date"></label>
+              <label>{{ tx.destination | escape }}<input name="destination" maxlength="140" aria-describedby="destination-hint"><small id="destination-hint">{{ tx.destination_hint | escape }}</small></label>
+              <label>{{ tx.budget | escape }}<input name="budget" maxlength="140" aria-describedby="budget-hint"><small id="budget-hint">{{ tx.budget_hint | escape }}</small></label>
+              <label class="oem-wide">{{ tx.notes | escape }}<textarea name="notes" rows="3" maxlength="1000"></textarea></label>
+            </div>
+          </fieldset>
+          <fieldset class="oem-section"><legend>{{ tx.contact | escape }}</legend>
+            <p id="oem-contact-help">{{ tx.contact_help | escape }}</p>
+            <div class="oem-fields">
+              <label>{{ tx.name | escape }} <span aria-hidden="true">*</span><input name="name" autocomplete="name" required maxlength="100"></label>
+              <label>{{ tx.company | escape }}<input name="company" autocomplete="organization" maxlength="160"></label>
+              <label>{{ tx.email | escape }}<input name="email" type="email" autocomplete="email" maxlength="254" aria-describedby="oem-contact-help"></label>
+              <label>{{ tx.phone | escape }}<input name="phone" type="tel" autocomplete="tel" maxlength="40" aria-describedby="oem-contact-help"></label>
+            </div>
+          </fieldset>
+          <p class="oem-privacy">{{ tx.privacy | escape }}</p>
+          <button class="btn" type="submit">{{ tx.review | escape }} <span aria-hidden="true">→</span></button>
+        </form>
+        <section id="oem-review" class="oem-review" hidden aria-labelledby="oem-review-title">
+          <h2 id="oem-review-title" tabindex="-1">{{ tx.result | escape }}</h2>
+          <p id="oem-next" aria-live="polite"></p>
+          <div class="oem-reference"><span>{{ tx.reference | escape }}</span><strong id="oem-ref"></strong></div>
+          <label class="sr-only" for="oem-summary">{{ tx.summary | escape }}</label>
+          <textarea id="oem-summary" class="oem-summary" rows="12" readonly></textarea>
+          <div class="oem-actions"><button id="oem-submit" type="button" class="btn" hidden>{{ tx.send | escape }}</button>
+            <a id="oem-email" class="btn" hidden>{{ tx.email_label | escape }}</a>
+            <button id="oem-edit" type="button" class="oem-link">{{ tx.edit | escape }}</button></div>
+          <p id="oem-email-help" hidden>{{ tx.email_attach | escape }}</p>
+          <p id="oem-status" role="status" aria-live="polite"></p>
+          <div class="oem-exports"><button id="oem-copy" class="oem-link" type="button">{{ tx.copy | escape }}</button>
+            <button id="oem-download" class="oem-link" type="button">{{ tx.download | escape }}</button>
+            <a class="oem-link" href="{% include brewtanist-url.html url=chat %}" target="_blank" rel="noopener noreferrer">{{ tx.chat | escape }}</a></div>
+        </section>
+      </div>
+      <aside>
+        <section><h2>{{ tx.how | escape }}</h2><p>{{ tx.how_body | escape }}</p></section>
+        <section><h2>{{ tx.talk | escape }}</h2><p>{{ tx.talk_body | escape }}</p>
+          <a class="oem-phone" href="tel:{{ shop.phone | remove: ' ' | escape }}">{{ shop.phone | escape }}</a>
+          {% if channel.email %}<a class="oem-contact-email" href="mailto:{{ channel.email | escape }}">{{ channel.email | escape }}</a>{% endif %}
+        </section>
+      </aside>
+    </div>
+  </main>
+  <footer class="footer"><div class="wrap"><div class="footer-bottom"><a href="{{ home_path }}">{{ shop.brand | escape }}</a><a href="{{ shop_path }}">{{ ui.shop | escape }}</a></div></div></footer>
+  <script id="oem-text" type="application/json">{{ tx | jsonify | replace: '</', '<\/' }}</script>
+</body></html>

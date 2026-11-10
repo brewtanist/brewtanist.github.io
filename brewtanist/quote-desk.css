@@ -1,0 +1,66 @@
+.quote-page { margin:0; background:#f8f6ef; color:#253b2e; font:16px/1.6 'Bai Jamjuree',system-ui,sans-serif; }
+.quote-page * { box-sizing:border-box; }
+.quote-shell { width:min(100% - 36px,970px); margin:0 auto 80px; }
+.quote-head { display:flex; align-items:center; justify-content:space-between; gap:14px; padding:18px 0; border-bottom:1px solid #cbd2c3; flex-wrap:wrap; }
+.quote-head .wordmark { font:600 clamp(20px,3vw,30px)/1.2 'MuseoModerno',sans-serif; text-decoration:none; color:inherit; }
+.quote-head .wordmark small { display:block; font:500 14px/1.6 'Bai Jamjuree',system-ui,sans-serif; }
+.quote-language { display:flex; gap:10px; }
+.quote-language a { color:inherit; display:inline-grid; align-items:center; padding:4px; min-height:44px; }
+.quote-language [aria-current] { text-decoration:underline; text-underline-offset:4px; font-weight:700; }
+.quote-page h1 { font-weight:600; font-family:inherit; font-size:clamp(32px,5vw,55px); margin:40px 0 12px; line-height:1.2; }
+.quote-page h2 { font-family:inherit; font-size:clamp(21px,3vw,28px); margin:0 0 12px; }
+.quote-intro { max-width:75ch; }
+.quote-page .muted,.import-row span { color:#4d6051; font-size:.94rem; }
+.quote-page button,.quote-page input,.quote-page select,.quote-page textarea { font:inherit; }
+.quote-page button { padding:9px 15px; border:1px solid #526653; background:#fcfbf7; color:#253b2e; border-radius:5px; min-height:44px; cursor:pointer; }
+.quote-page button:hover:not(:disabled) { background:#e6ebdf; }
+.quote-page button:disabled { opacity:.55; cursor:default; }
+.quote-page button.primary { background:#253b2e; color:white; }
+.quote-page button.primary:hover { background:#364c3d; }
+.quote-page :focus-visible { outline:3px solid #6b8656; outline-offset:3px; }
+.import-row,.actions { display:flex; align-items:center; gap:14px; flex-wrap:wrap; }
+.import-row { padding:12px 0 20px; }
+.sheet { padding:24px 0; border-top:1px solid #cbd2c3; }
+.fields,.line-fields { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,190px),1fr)); gap:14px 18px; }
+.quote-page label { display:grid; align-content:start; gap:5px; min-width:0; }
+.quote-page label>span { font-weight:600; }
+.quote-page :is(input:not([type=file]),textarea,select) { width:100%; min-height:44px; min-width:0; border:1px solid #9da99b; border-radius:4px; padding:8px 10px; background:#fffef9; color:#243b2e; }
+.quote-page input[readonly] { background:#efefea; }
+.quote-page textarea { resize:vertical; }
+.quote-line { margin:12px 0; padding:15px; border:1px solid #cbd2c3; border-radius:6px; background:#fffdf7; }
+.quote-line .description { margin:10px 0; }
+.line-foot { display:flex; align-items:center; justify-content:space-between; gap:10px; margin-top:12px; }
+.line-foot output,.totals dd { font-variant-numeric:tabular-nums; }
+.line-foot button { font-size:.9rem; }
+.totals,.source { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:5px 18px; }
+.totals { margin:20px 0; max-width:500px; }
+.totals dt:last-of-type,.totals dd:last-child { font-weight:bold; border-top:1px solid #8b9b88; padding-top:5px; }
+.totals dd { margin:0; text-align:end; }
+.source { grid-template-columns:minmax(90px,1fr) minmax(0,3fr); }
+.source dd { margin:0; white-space:pre-wrap; overflow-wrap:anywhere; }
+.quote-page details { margin-top:18px; } .quote-page summary { cursor:pointer; }
+.revision-panel { margin-top:24px; }
+#history li { margin:10px 0; } #history button { margin-inline-start:8px; }
+#messages:not(:empty), #import-message:not(:empty) { padding:10px 0; font-weight:600; }
+.quote-page [hidden],#document { display:none!important; }
+@page { size:A4; margin:16mm; }
+@media print {
+  .quote-page { background:#fff; color:#152019; font:11pt/1.45 'Bai Jamjuree',system-ui,sans-serif; }
+  #desk { display:none!important; }
+  #document { display:block!important; width:100%; }
+  #document h1 { font-size:25pt; margin:0 0 12pt; }
+  #document h2 { font-size:12pt; margin:10pt 0 2pt; }
+  #document p { margin:3pt 0; }
+  #document header { border-bottom:1.5pt solid #253b2e; padding-bottom:10pt; }
+  #document .doc-meta { display:flex; flex-wrap:wrap; gap:3pt 18pt; }
+  #document table { width:100%; border-collapse:collapse; margin:14pt 0 5pt; }
+  #document th,#document td { border-bottom:.5pt solid #a6b09f; text-align:start; padding:6pt 3pt; vertical-align:top; }
+  #document thead { display:table-header-group; }
+  #document tbody tr,#document .doc-money,#document .doc-contact { break-inside:avoid; }
+  #document th:last-child,#document td:last-child { text-align:end; }
+  #document .doc-money { width:min(100%,85mm); margin-inline-start:auto; }
+  #document .doc-copy { white-space:pre-wrap; overflow-wrap:anywhere; }
+  #document .empty { margin:20mm 0; }
+}
+
+.quote-inbox { color:#253b2e; font-weight:600; padding:9px 0; text-underline-offset:.2em; }

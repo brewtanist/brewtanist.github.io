@@ -37,6 +37,8 @@
     <p class="lede">{{ guide.intro | escape }}</p>
     <div class="buttons">
       <a class="btn" href="https://app.pagescms.org/" target="_blank" rel="noopener noreferrer">{{ guide.open_editor | escape }}</a>
+      <a class="btn outline" href="https://brewtanist-oem-requests.pumplcrs.chatgpt.site/staff/?lang={{ lang }}" target="_blank" rel="noreferrer">{{ site.data.quote_desk[lang].inbox | escape }}</a>
+      <a class="btn outline" href="{{ site.data.languages[lang].prefix }}/admin/quotes/">{{ site.data.quote_desk[lang].title | escape }}</a>
       <a class="btn outline" href="{{ guide.home_url }}">{{ guide.open_site | escape }}</a>
     </div>
     <section class="admin-card"><h2>{{ guide.setup_heading | escape }}</h2>

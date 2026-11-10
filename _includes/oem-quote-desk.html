@@ -1,0 +1,90 @@
+{%- assign lang = page.lang -%}
+{%- assign l = site.data.quote_desk[lang] -%}
+{%- assign site_lang = site.data.languages[lang] -%}
+<!doctype html>
+<html lang="{{ site_lang.tag }}">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow"><meta name="referrer" content="no-referrer">
+  <title>{{ l.title | escape }} | Brewtanist</title>
+  <link rel="stylesheet" href="/brewtanist/site.css?v=20261110-speed">
+  <link rel="stylesheet" href="/brewtanist/quote-desk.css?v=1">
+  <script type="module" src="/brewtanist/quote-desk.mjs?v=1"></script>
+</head>
+<body class="quote-page" data-lang="{{ lang }}">
+  <div id="desk" class="quote-shell">
+    <header class="quote-head">
+      <a class="wordmark" id="guide-link" href="{{ site_lang.prefix }}/admin/">The Brewtanist<small data-t="guide">{{ l.guide }}</small></a>
+      <nav class="quote-language" aria-label="{{ l.language }}" id="ui-locales">
+        {% for pair in site.data.languages %}{% assign variant = pair[1] %}
+        <a href="{{ variant.prefix }}/admin/quotes/" lang="{{ variant.tag }}" data-lang="{{ pair[0] }}"{% if pair[0] == lang %} aria-current="page"{% endif %}>{{ variant.name }}</a>{% endfor %}
+      </nav>
+    </header>
+    <main>
+      <h1 data-t="title">{{ l.title }}</h1>
+      <p class="quote-intro" data-t="intro">{{ l.intro }}</p>
+      <noscript><p>{{ l.noscript }}</p></noscript>
+      <div id="quote-app" hidden>
+        <div class="import-row">
+          <a id="private-inbox" class="quote-inbox" href="https://brewtanist-oem-requests.pumplcrs.chatgpt.site/staff/?lang={{ lang }}" rel="noreferrer" target="_blank" data-t="inbox">{{ l.inbox }}</a>
+          <button id="open-file" type="button" data-t="open">{{ l.open }}</button>
+          <input id="file" type="file" hidden accept=".json,application/json">
+          <span data-t="local">{{ l.local }}</span>
+        </div>
+        <div id="import-message" role="status" aria-live="polite"></div>
+        <form id="offer" autocomplete="off">
+          <section class="sheet">
+            <h2 data-t="customer">{{ l.customer }}</h2>
+            <div class="fields">
+            {% assign identifiers = 'name,company,email,phone,rfq' | split: ',' %}{% for key in identifiers %}
+              <label><span data-t="{{ key }}">{{ l[key] }}</span><input name="{{ key }}" maxlength="300" {% if key == 'email' %}type="email"{% elsif key == 'phone' %}type="tel"{% else %}type="text"{% endif %}></label>
+            {% endfor %}
+            </div>
+            <details id="source-panel" hidden><summary data-t="source">{{ l.source }}</summary><dl id="source-list" class="source"></dl></details>
+          </section>
+          <section class="sheet">
+            <h2 data-t="offer">{{ l.offer }}</h2>
+            <div class="fields">
+              <label><span data-t="number">{{ l.number }}</span><input name="number" maxlength="80" required></label>
+              <label><span data-t="revision">{{ l.revision }}</span><input name="revision" readonly></label>
+              <label><span data-t="issued">{{ l.issued }}</span><input name="issued" type="date" required></label>
+              <label><span data-t="valid">{{ l.valid }}</span><input name="valid" type="date"></label>
+              <label><span data-t="doclang">{{ l.doclang }}</span><select name="doclang"><option value="th">ไทย</option><option value="en">English</option><option value="zh">简体中文</option></select></label>
+            </div>
+            <p class="muted" data-t="docHint">{{ l.docHint }}</p>
+          </section>
+          <section class="sheet">
+            <h2 data-t="lines">{{ l.lines }}</h2>
+            <p class="muted" data-t="itemsHint">{{ l.itemsHint }}</p>
+            <div id="lines"></div><button type="button" id="add" data-t="add">{{ l.add }}</button>
+          </section>
+          <section class="sheet">
+            <h2 data-t="pricing">{{ l.pricing }}</h2>
+            <div class="fields">
+              <label><span data-t="discount">{{ l.discount }}</span><input name="discount" type="number" min="0" max="9999999999.99" step=".01" inputmode="decimal"></label>
+              <label><span data-t="taxRate">{{ l.taxRate }}</span><input name="taxRate" type="number" min="0" max="100" step=".01" inputmode="decimal"></label>
+            </div>
+            <dl id="totals" class="totals"></dl>
+            <label><span data-t="terms">{{ l.terms }}</span><textarea name="terms" maxlength="4000" rows="3"></textarea></label>
+          </section>
+          <div id="messages" role="status" aria-live="polite"></div>
+          <div class="actions">
+            <button class="primary" type="button" id="print" data-t="print">{{ l.print }}</button>
+            <button type="button" id="save" data-t="save">{{ l.save }}</button>
+            <button type="button" id="compose" data-t="compose">{{ l.compose }}</button>
+          </div>
+          <p class="muted" data-t="sendHint">{{ l.sendHint }}</p>
+          <section class="sheet revision-panel">
+            <h2 data-t="revisions">{{ l.revisions }}</h2><p class="muted" data-t="revisionHint">{{ l.revisionHint }}</p>
+            <button type="button" id="new-revision" data-t="newRev">{{ l.newRev }}</button>
+            <ol id="history"></ol>
+          </section>
+        </form>
+      </div>
+    </main>
+  </div>
+  <article id="document" aria-label="{{ l.quotation }}"></article>
+  <script type="application/json" id="quote-labels">{{ site.data.quote_desk | jsonify | replace: '</', '<\/' }}</script>
+  <script type="application/json" id="quote-seller">{"brand":{{ site.data.brewtanist.settings.brand | jsonify | replace: '</', '<\/' }},"phone":{{ site.data.brewtanist.settings.phone | jsonify | replace: '</', '<\/' }},"address":{"th":{{ site.data.brewtanist.settings.address | jsonify | replace: '</', '<\/' }},"en":{{ site.data.translations.en.settings.address | jsonify | replace: '</', '<\/' }},"zh":{{ site.data.translations.zh.settings.address | jsonify | replace: '</', '<\/' }}}}</script>
+</body>
+</html>
