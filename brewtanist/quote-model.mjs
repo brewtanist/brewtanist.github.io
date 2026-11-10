@@ -8,6 +8,10 @@ const shared = (obj, keys, max) => keys.every(key => readText(obj?.[key], max));
 const langOK = value => LANGUAGES.includes(value);
 const calendar = /^\d{4}-\d{2}-\d{2}$/;
 const validDate = value => calendar.test(value) && !Number.isNaN(Date.parse(value)) && new Date(value).toISOString().slice(0,10) === value;
+const thaiDate = new Intl.DateTimeFormat('th-TH', {day:'numeric', month:'long', year:'numeric', timeZone:'UTC'});
+export function displayDate(value,lang) {
+  return lang==='th' && validDate(value) ? thaiDate.format(new Date(value)) : value;
+}
 export function dateToday() {
   const d = new Date();
   return [d.getFullYear(), ...[d.getMonth()+1, d.getDate()].map(n => String(n).padStart(2,'0'))].join('-');
@@ -100,6 +104,10 @@ export function requestFile(rfq, labels) {
 }
 // The first saved quotations stored generated descriptions as ordinary text.
 const previousSpecs = {
+  th: {
+    packSpec:'ขนาดถุง (กรัม) {n}', boxSpec:'จำนวนแคปซูลต่อกล่อง {n}',
+    light:'คั่วอ่อน', medium:'คั่วกลาง', dark:'คั่วเข้ม', whole:'เต็มเมล็ด', ground:'บด'
+  },
   en: {
     packSpec:'Bag size (g) {n}', boxSpec:'Capsules per box {n}',
     light:'Light roast', medium:'Medium roast', dark:'Dark roast', whole:'Whole bean', ground:'Ground'

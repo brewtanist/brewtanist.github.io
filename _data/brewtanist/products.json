@@ -1,18 +1,18 @@
 {
   "visible": true,
-  "title": "เมล็ดกาแฟ\nประจำร้าน",
-  "description": "เอสเปรสโซที่บาร์มีสามเบลนด์ให้เลือก ตั้งแต่รสเข้มแบบช็อกโกแลต กลิ่นหวานแบบวานิลลา ไปจนถึงกลิ่นดอกไม้กับผลไม้",
-  "note": "นอกจากเบลนด์ประจำร้าน เรายังมีเมล็ด Single Origin กาแฟดริปแบบซอง และแคปซูล ดูรายการที่มีขายได้ใน Shopee หรือถามที่ร้าน",
+  "title": "เบลนด์ประจำร้าน",
+  "description": "ถ้าชอบกาแฟเข้ม ลอง Mr. Plantman ถ้าชอบกลิ่นหวานแบบวานิลลา ลอง Mr. Ozmo ส่วน Ms. Lazybug จะหอมดอกไม้และผลไม้",
+  "note": "เรายังมีกาแฟแหล่งปลูกเดียว กาแฟดริปแบบซอง และกาแฟแคปซูล ถามที่บาร์ได้ว่าวันนี้มีอะไรบ้าง หรือดูสินค้าใน Shopee",
   "button": "ดูสินค้าใน Shopee",
   "items": [
     {
       "visible": true,
       "name": "Mr. Plantman",
-      "profile": "Espresso blend · Medium–Dark",
-      "notes": "Dark chocolate · Caramel · Nutty",
-      "description": "รสเข้ม นึกถึงดาร์กช็อกโกแลต คาราเมล และถั่ว จะชงเป็นกาแฟดำหรือดื่มกับนมก็ได้",
+      "profile": "เบลนด์เอสเปรสโซ · คั่วกลางค่อนเข้ม",
+      "notes": "ดาร์กช็อกโกแลต · คาราเมล · ถั่ว",
+      "description": "ชงเป็นกาแฟดำจะได้รสเข้มแบบดาร์กช็อกโกแลต ถ้าชอบกาแฟนม เบลนด์นี้ก็เข้ากับนมได้ดี",
       "image": "/brewtanist/assets/plantman-3d.webp",
-      "alt": "ภาพ 3D ถุงเมล็ดกาแฟ Mr. Plantman ของ Brewtanist",
+      "alt": "ภาพถุงเมล็ดกาแฟ Mr. Plantman สีทอง",
       "theme": "plantman",
       "id": "plantman",
       "price": "",
@@ -32,11 +32,11 @@
     {
       "visible": true,
       "name": "Mr. Ozmo",
-      "profile": "Espresso blend · Medium–Dark",
-      "notes": "Vanilla · Rum-Raisin · Milk Chocolate",
-      "description": "กลิ่นคล้ายวานิลลากับลูกเกดแช่รัม รสเข้มและหอมหวานแบบช็อกโกแลตนม",
+      "profile": "เบลนด์เอสเปรสโซ · คั่วกลางค่อนเข้ม",
+      "notes": "วานิลลา · ลูกเกดแช่รัม · ช็อกโกแลตนม",
+      "description": "หอมวานิลลากับลูกเกดแช่รัม พอจิบจะได้รสหวานนุ่มคล้ายช็อกโกแลตนม",
       "image": "/brewtanist/assets/ozmo-3d.webp",
-      "alt": "ภาพ 3D ถุงเมล็ดกาแฟ Mr. Ozmo ของ Brewtanist",
+      "alt": "ภาพถุงเมล็ดกาแฟ Mr. Ozmo",
       "theme": "ozmo",
       "id": "ozmo",
       "price": "",
@@ -54,11 +54,11 @@
     {
       "visible": true,
       "name": "Ms. Lazybug",
-      "profile": "Espresso blend · Light–Medium",
-      "notes": "Floral · Fruity · Tea-like",
-      "description": "หอมดอกไม้กับผลไม้ กลิ่นรสคล้ายชา เหมาะกับคนที่ชอบกาแฟดำรสสดชื่น",
+      "profile": "เบลนด์เอสเปรสโซ · คั่วอ่อนถึงกลาง",
+      "notes": "ดอกไม้ · ผลไม้ · ชา",
+      "description": "หอมดอกไม้ มีรสผลไม้ ดื่มแล้วทิ้งกลิ่นคล้ายชา ถ้าชอบกาแฟดำที่ดื่มแล้วสดชื่น ลองเบลนด์นี้ได้เลย",
       "image": "/brewtanist/assets/lazybug-3d.webp",
-      "alt": "ภาพ 3D ถุงเมล็ดกาแฟ Ms. Lazybug ของ Brewtanist",
+      "alt": "ภาพถุงเมล็ดกาแฟ Ms. Lazybug สีชมพู",
       "theme": "lazybug",
       "id": "lazybug",
       "price": "",
@@ -75,6 +75,6 @@
       "verified": false
     }
   ],
-  "finder_title": "เบลนด์ไหนเข้ากับกาแฟที่ชอบ",
-  "finder_text": "ตอบ 3 คำถามเกี่ยวกับกาแฟที่ดื่ม แล้วดูว่าเบลนด์ไหนน่าลอง"
+  "finder_title": "ลองเบลนด์ไหนดี",
+  "finder_text": "ตอบ 3 ข้อเกี่ยวกับวิธีชงและรสที่ชอบ แล้วเราจะช่วยเลือกเบลนด์ให้"
 }

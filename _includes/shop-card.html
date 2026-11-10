@@ -9,7 +9,13 @@
 {%- assign category_label = ui[current_product.category] -%}
 {%- if current_product.category == 'goods' -%}{%- assign category_label = ui.goods_full -%}{%- endif -%}
 {%- if current_product.category == 'capsules' -%}{%- assign category_label = ui.capsules_label -%}{%- endif -%}
-<article class="shop-card" data-shop-card data-category="{{ current_product.category | escape }}" data-search="{{ card_copy.name | escape }} {{ category_label | escape }} {{ card_copy.description | escape }} {{ card_copy.details | join: ' ' | escape }}" id="shop-{{ current_product.id | escape }}">
+{%- capture search_aliases -%}
+  {%- if lang == 'th' -%}
+    {%- assign english_copy = site.data.translations.en.marketplace.items | where: 'id', current_product.id | first -%}
+    {{ site.data.ui.en[current_product.category] }} {{ english_copy.name }} {{ english_copy.description }} {{ english_copy.details | join: ' ' }}
+  {%- endif -%}
+{%- endcapture -%}
+<article class="shop-card" data-shop-card data-category="{{ current_product.category | escape }}" data-search="{{ card_copy.name | escape }} {{ category_label | escape }} {{ card_copy.description | escape }} {{ card_copy.details | join: ' ' | escape }}{% if search_aliases != empty %} {{ search_aliases | strip | escape }}{% endif %}" id="shop-{{ current_product.id | escape }}">
   <a class="shop-image{% if product_image == nil or product_image == '' %} shop-image-missing{% endif %}" href="{{ product_url | escape }}" target="_blank" rel="noopener noreferrer" aria-label="{{ ui.product_shopee | replace: '%name%', card_copy.name | escape }}">
     {% if product_image and product_image != '' %}{% if card_srcset %}<picture><source type="image/webp" srcset="{{ card_srcset | escape }}" sizes="(max-width: 350px) calc(100vw - 40px), (max-width: 800px) 45vw, (max-width: 1100px) 30vw, (max-width: 1400px) 22vw, 300px">{% endif %}<img src="{{ product_image | escape }}" alt="{{ product_alt | escape }}" width="800" height="800" loading="lazy" decoding="async">{% if card_srcset %}</picture>{% endif %}{% else %}<span class="shop-image-note"><span>The Brewtanist</span><strong>{{ category_label }}</strong><small>{{ ui.fallback_photo | escape }}</small></span>{% endif %}
   </a>

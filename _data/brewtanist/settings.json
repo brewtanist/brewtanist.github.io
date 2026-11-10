@@ -1,7 +1,7 @@
 {
   "brand": "The Brewtanist",
-  "descriptor": "Cafe & Coffee Roaster",
-  "notice": "Specialty Coffee · Route 304 · Prachinburi",
+  "descriptor": "ร้านกาแฟและโรงคั่ว",
+  "notice": "กาแฟสเปเชียลตีบนถนน 304 ปราจีนบุรี",
   "phone": "063 412 7098",
   "phone_link": "tel:+66634127098",
   "address": "78 หมู่ 4 ต.กรอกสมบูรณ์ อ.ศรีมหาโพธิ จ.ปราจีนบุรี 25140",
@@ -18,14 +18,14 @@
     "Saturday",
     "Sunday"
   ],
-  "payment": "เงินสด · PromptPay · QR",
+  "payment": "เงินสด พร้อมเพย์ หรือสแกนคิวอาร์โค้ด",
   "maps": "https://maps.google.com/maps?cid=7406394049590662743",
   "facebook": "https://www.facebook.com/Brewtanist",
   "instagram": "https://www.instagram.com/brewtanist/",
   "tiktok": "https://www.tiktok.com/@brewtanist",
   "shopee": "https://shopee.co.th/brewtanist",
-  "seo_title": "The Brewtanist | คาเฟ่และโรงคั่วกาแฟ ถนน 304 ปราจีนบุรี",
-  "seo_description": "คาเฟ่และโรงคั่วกาแฟในปั๊มเชลล์คลองรั้ง ถนน 304 อ.ศรีมหาโพธิ จ.ปราจีนบุรี แวะดื่มเอสเปรสโซ กาแฟดริป หรือมัทฉะกับเบเกอรี่ และเลือกเมล็ดกาแฟกลับบ้าน",
+  "seo_title": "The Brewtanist | ร้านกาแฟและโรงคั่วบนถนน 304 ปราจีนบุรี",
+  "seo_description": "แวะดื่มกาแฟที่ The Brewtanist ในปั๊มเชลล์คลองรั้ง ถนน 304 อ.ศรีมหาโพธิ ปราจีนบุรี เราคั่วเมล็ดสำหรับเอสเปรสโซและกาแฟดริปเอง ที่บาร์ยังมีมัทฉะกับขนมที่เราอบ และเมล็ดกาแฟให้เลือกกลับบ้าน",
   "social_image": "/brewtanist/assets/brewtanist-storefront-cover.jpg",
   "catalogue_url": ""
 }

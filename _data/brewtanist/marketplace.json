@@ -6,8 +6,8 @@
   "sourceStatus": "public_listing_and_product_images_not_live_inventory",
   "sourceNote": "Eighteen identified Shopee listings from the Brewtanist public shop. Seller images and selected label facts were rechecked on 9 November 2026. Product artwork from the owner has individual verification dates in catalogue/shopee-sources.json. Search/storefront snapshots are not live stock or pricing. Unverified images remain empty; no other product image is substituted. Prices, stock, promotions, review totals and exact compatible capsule machine models are not asserted.",
   "title": "กาแฟสำหรับ\nชงที่บ้าน",
-  "intro": "มีทั้งเมล็ดกาแฟที่เราคั่ว แคปซูล และกาแฟดริปแบบซอง เลือกตามวิธีชงที่บ้าน หรือค้นหาจากกลิ่นรสที่ชอบ",
-  "notice": "ดูราคาล่าสุด ตัวเลือก จำนวนต่อชุด และสินค้าที่มีขายใน Shopee ก่อนสั่งซื้อ",
+  "intro": "เลือกเมล็ดกาแฟคั่วไปชงเองที่บ้าน ทั้งเบลนด์ประจำร้านและกาแฟแหล่งปลูกเดียว ถ้าชอบชงง่าย ๆ เรามีกาแฟแคปซูลกับกาแฟดริปแบบซองให้เลือกด้วย",
+  "notice": "ก่อนสั่งซื้อ ดูราคาปัจจุบัน ขนาดบรรจุ และสินค้าที่มีได้ใน Shopee",
   "items": [
     {
       "id": "plantman",
@@ -16,7 +16,7 @@
       "category": "house",
       "shopeeItemId": "22577642568",
       "visible": true,
-      "description": "House Blend โทนดาร์กช็อกโกแลต คาราเมล และถั่ว",
+      "description": "รสเข้มแบบดาร์กช็อกโกแลต มีกลิ่นคาราเมลกับถั่ว ดื่มเป็นกาแฟดำก็ได้ ชงใส่นมก็ดี",
       "details": [],
       "image": "/brewtanist/assets/shop/22577642568-plantman.jpg",
       "alt": "ถุงเมล็ดกาแฟ Mr. Plantman สีทองของ Brewtanist"
@@ -28,7 +28,7 @@
       "category": "house",
       "shopeeItemId": "23057400242",
       "visible": true,
-      "description": "House Blend โทนวานิลลา รัมเรซิน และมิลก์ช็อกโกแลต",
+      "description": "หอมวานิลลากับลูกเกดแช่รัม พอจิบจะได้รสหวานนุ่มคล้ายช็อกโกแลตนม",
       "details": [],
       "image": "/brewtanist/assets/shop/23057400242-ozmo.jpg",
       "alt": "ถุงเมล็ดกาแฟ Mr. Ozmo ของ Brewtanist บนพื้นสีม่วง"
@@ -40,7 +40,7 @@
       "category": "house",
       "shopeeItemId": "18883253578",
       "visible": true,
-      "description": "House Blend โทนดอกไม้ ผลไม้ และชา",
+      "description": "หอมดอกไม้ มีรสผลไม้ ทิ้งกลิ่นคล้ายชาหลังดื่ม ลองชงเป็นกาแฟดำถ้าชอบรสสดชื่น",
       "details": [],
       "image": "/brewtanist/assets/shop/18883253578-lazybug.webp",
       "alt": "ถุงเมล็ดกาแฟ Ms. Lazybug บนพื้นสีชมพู พร้อมตรา Signature Ethiopia Blend"
@@ -52,14 +52,14 @@
       "category": "single-origin",
       "shopeeItemId": "48914111971",
       "visible": true,
-      "description": "เกอิชาจากปานามา ให้กลิ่นรสของกุหลาบ ฝรั่งชมพู และแยมบลูเบอร์รี",
+      "description": "เกอิชาจากปานามา หอมกุหลาบ มีรสผลไม้คล้ายฝรั่งชมพูกับแยมบลูเบอร์รี",
       "details": [
-        "ประเทศ: Panama",
-        "Process: Washed",
-        "ขนาดในภาพ: 100 กรัม",
-        "พันธุ์: Geisha",
-        "โปรไฟล์: Filter",
-        "กลิ่นรส: Rose · Pink Guava · Blueberry Jam"
+        "ปลูกในปานามา",
+        "แปรรูปแบบเปียก (Washed)",
+        "ถุงในภาพขนาด 100 กรัม",
+        "สายพันธุ์เกอิชา (Geisha)",
+        "คั่วสำหรับชงกาแฟดริป",
+        "กลิ่นรสกุหลาบ ฝรั่งชมพู และแยมบลูเบอร์รี"
       ],
       "image": "/brewtanist/assets/shop/48914111971-panama-magma-red-1680.jpg",
       "alt": "เมล็ดกาแฟ Panama Magma Red 1680 ขนาด 100 กรัมของ Brewtanist"
@@ -71,13 +71,13 @@
       "category": "single-origin",
       "shopeeItemId": "57412137497",
       "visible": true,
-      "description": "กาแฟเอธิโอเปียแบบ Natural โทนสับปะรด มิกซ์เบอร์รี และส้ม",
+      "description": "กาแฟเอธิโอเปียตากทั้งผล กลิ่นรสชวนให้นึกถึงสับปะรด เบอร์รีหลายชนิด และส้ม",
       "details": [
-        "ประเทศ: Ethiopia",
-        "Process: Natural",
-        "ขนาดในภาพ: 100 กรัม",
-        "พันธุ์: Heirloom",
-        "กลิ่นรส: Pineapple · Mixed Berries · Sunkist Orange"
+        "ปลูกในเอธิโอเปีย",
+        "ตากทั้งผล (Natural)",
+        "ถุงในภาพขนาด 100 กรัม",
+        "สายพันธุ์พื้นเมือง (Heirloom)",
+        "กลิ่นรสสับปะรด เบอร์รีรวม และส้มซันคิสต์"
       ],
       "image": "/brewtanist/assets/shop/57412137497-ethiopia-doora.jpg",
       "alt": "เมล็ดกาแฟ Ethiopia Doora ขนาด 100 กรัมของ Brewtanist"
@@ -89,13 +89,13 @@
       "category": "single-origin",
       "shopeeItemId": "48456951501",
       "visible": true,
-      "description": "กาแฟเอธิโอเปียแบบ Natural โทนส้ม สตรอว์เบอร์รี และชากระเจี๊ยบ",
+      "description": "กาแฟเอธิโอเปียตากทั้งผล คั่วสำหรับชงดริป มีรสคล้ายส้มเขียวหวาน สตรอว์เบอร์รี และชากระเจี๊ยบ",
       "details": [
-        "ประเทศ: Ethiopia",
-        "Process: Natural",
-        "ขนาดในภาพ: 100 กรัม",
-        "โปรไฟล์: Filter",
-        "กลิ่นรส: Tangerine · Strawberry · Hibiscus Tea"
+        "ปลูกในเอธิโอเปีย",
+        "ตากทั้งผล (Natural)",
+        "ถุงในภาพขนาด 100 กรัม",
+        "คั่วสำหรับชงกาแฟดริป",
+        "กลิ่นรสส้มเขียวหวาน สตรอว์เบอร์รี และชากระเจี๊ยบ"
       ],
       "image": "/brewtanist/assets/shop/48456951501-ethiopia-nensenbo-mewa.jpg",
       "alt": "เมล็ดกาแฟ Ethiopia Nensenbo Mewa ขนาด 100 กรัมของ Brewtanist"
@@ -107,13 +107,13 @@
       "category": "single-origin",
       "shopeeItemId": "23157401400",
       "visible": true,
-      "description": "กาแฟฮอนดูรัสสำหรับชงฟิลเตอร์ ให้กลิ่นรสของวานิลลา น้ำผึ้ง วิสกี้ และองุ่น",
+      "description": "กาแฟฮอนดูรัส หอมวานิลลากับน้ำผึ้ง มีกลิ่นรสคล้ายวิสกี้และองุ่น คั่วสำหรับชงดริป",
       "details": [
-        "ประเทศ: Honduras",
-        "ขนาดในภาพ: 100 กรัม",
-        "Process: Whisky-aged",
-        "โปรไฟล์: Filter",
-        "กลิ่นรส: Vanilla · Honey-like · Whisky · Grape"
+        "ปลูกในฮอนดูรัส",
+        "ถุงในภาพขนาด 100 กรัม",
+        "แปรรูปด้วยการบ่มวิสกี้ (Whisky-aged)",
+        "คั่วสำหรับชงกาแฟดริป",
+        "กลิ่นรสวานิลลา น้ำผึ้ง วิสกี้ และองุ่น"
       ],
       "image": "/brewtanist/assets/shop/23157401400-honduras-finca-moka-whisky.jpg",
       "alt": "เมล็ดกาแฟ Honduras Finca Moka Whisky ขนาด 100 กรัมของ Brewtanist"
@@ -125,10 +125,10 @@
       "category": "single-origin",
       "shopeeItemId": "55764092003",
       "visible": true,
-      "description": "เมล็ดกาแฟไทย Ban Huay Khanum แปรรูปแบบ Red Honey",
+      "description": "กาแฟไทยจาก Ban Huay Khanum ใช้วิธีแปรรูปแบบเรดฮันนี โดยตากเมล็ดทั้งที่ยังมีเมือกกาแฟติดอยู่",
       "details": [
-        "ประเทศ: Thailand",
-        "Process: Red Honey"
+        "ปลูกในไทย",
+        "แปรรูปแบบเรดฮันนี (Red Honey)"
       ],
       "image": "",
       "alt": ""
@@ -140,14 +140,14 @@
       "category": "single-origin",
       "shopeeItemId": "56861276592",
       "visible": true,
-      "description": "เมล็ดกาแฟ Geisha จากกัวเตมาลา แปรรูปแบบ Washed",
+      "description": "เกอิชาจากกัวเตมาลา หอมมะลิกับเบอร์กามอต มีรสผลไม้คล้ายแอปริคอตและเลมอน",
       "details": [
-        "ประเทศ: Guatemala",
-        "พันธุ์: Geisha",
-        "Process: Washed",
-        "ขนาดในภาพ: 100 กรัม",
-        "โปรไฟล์: Filter",
-        "กลิ่นรส: Jasmine · Bergamot · Apricot · Lemon"
+        "ปลูกในกัวเตมาลา",
+        "สายพันธุ์เกอิชา (Geisha)",
+        "แปรรูปแบบเปียก (Washed)",
+        "ถุงในภาพขนาด 100 กรัม",
+        "คั่วสำหรับชงกาแฟดริป",
+        "กลิ่นรสมะลิ เบอร์กามอต แอปริคอต และเลมอน"
       ],
       "image": "/brewtanist/assets/shop/56861276592-guatemala-agua-tibia-geisha.jpg",
       "alt": "เมล็ดกาแฟ Guatemala Finca Agua Tibia Geisha ขนาด 100 กรัมของ Brewtanist"
@@ -159,15 +159,15 @@
       "category": "single-origin",
       "shopeeItemId": "57318533393",
       "visible": true,
-      "description": "กาแฟโคลอมเบียโทนส้ม มะม่วง และเฮเซลนัต แปรรูปแบบ Anaerobic Washed",
+      "description": "กาแฟจากริซารัลดาในโคลอมเบีย คั่วสำหรับชงดริป ได้รสคล้ายส้มเขียวหวาน มะม่วง และเฮเซลนัต",
       "details": [
-        "ประเทศ: Colombia",
-        "แหล่งปลูก: Risaralda",
-        "ขนาดในภาพ: 100 กรัม",
-        "พันธุ์: Wush Wush",
-        "Process: Anaerobic Washed",
-        "โปรไฟล์: Filter",
-        "กลิ่นรส: Tangerine · Mango · Hazelnut"
+        "ปลูกในโคลอมเบีย",
+        "ปลูกในเขตริซารัลดา (Risaralda)",
+        "ถุงในภาพขนาด 100 กรัม",
+        "สายพันธุ์วุชวุช (Wush Wush)",
+        "แปรรูปแบบเปียกโดยหมักในสภาพไร้ออกซิเจน (Anaerobic Washed)",
+        "คั่วสำหรับชงกาแฟดริป",
+        "กลิ่นรสส้มเขียวหวาน มะม่วง และเฮเซลนัต"
       ],
       "image": "/brewtanist/assets/shop/57318533393-colombia-risaralda-wush-wush.jpg",
       "alt": "เมล็ดกาแฟ Colombia Risaralda Wush Wush ขนาด 100 กรัมของ Brewtanist"
@@ -175,45 +175,45 @@
     {
       "id": "capsule-plantman",
       "houseId": "",
-      "name": "Mr. Plantman · กาแฟแคปซูล",
+      "name": "กาแฟแคปซูล Mr. Plantman",
       "category": "capsules",
       "shopeeItemId": "18083267431",
       "visible": true,
-      "description": "Mr. Plantman ในแบบแคปซูล กล่องละ 10 แคปซูล ดูรุ่นเครื่องที่รองรับใน Shopee",
+      "description": "ถ้าชอบรสเข้มแบบดาร์กช็อกโกแลต ลอง Mr. Plantman แบบแคปซูล มี 10 แคปซูลต่อกล่อง",
       "details": [
-        "จำนวนต่อกล่อง: 10 แคปซูล",
-        "ใช้กับเครื่อง Nespresso บางรุ่น ตรวจรุ่นเครื่องกับร้านก่อนซื้อ"
+        "กล่องละ 10 แคปซูล",
+        "ใช้ได้กับเครื่อง Nespresso บางรุ่น บอกรุ่นเครื่องให้เราช่วยเช็กใน Shopee ก่อนสั่งซื้อได้"
       ],
       "image": "/brewtanist/assets/shop/18083267431-capsule-plantman.jpg",
-      "alt": "กล่องแคปซูลกาแฟ Mr. Plantman สีน้ำตาล มีรูปตัวการ์ตูนประจำเบลนด์"
+      "alt": "กล่องกาแฟแคปซูล Mr. Plantman สีน้ำตาล มีรูปตัวการ์ตูนประจำเบลนด์"
     },
     {
       "id": "capsule-ozmo",
       "houseId": "",
-      "name": "Mr. Ozmo · กาแฟแคปซูล",
+      "name": "กาแฟแคปซูล Mr. Ozmo",
       "category": "capsules",
       "shopeeItemId": "24575852120",
       "visible": true,
-      "description": "Mr. Ozmo ในแบบแคปซูล กล่องละ 10 แคปซูล ดูรุ่นเครื่องที่รองรับใน Shopee",
+      "description": "Mr. Ozmo แบบแคปซูล หอมวานิลลากับช็อกโกแลตนม หนึ่งกล่องมี 10 แคปซูล",
       "details": [
-        "จำนวนต่อกล่อง: 10 แคปซูล",
-        "ใช้กับเครื่อง Nespresso บางรุ่น ตรวจรุ่นเครื่องกับร้านก่อนซื้อ"
+        "กล่องละ 10 แคปซูล",
+        "ใช้ได้กับเครื่อง Nespresso บางรุ่น บอกรุ่นเครื่องให้เราช่วยเช็กใน Shopee ก่อนสั่งซื้อได้"
       ],
       "image": "/brewtanist/assets/shop/24575852120-capsule-ozmo.jpg",
-      "alt": "กล่องแคปซูลกาแฟ Mr. Ozmo สีม่วง มีรูปตัวการ์ตูนประจำเบลนด์"
+      "alt": "กล่องกาแฟแคปซูล Mr. Ozmo สีม่วง มีรูปตัวการ์ตูนประจำเบลนด์"
     },
     {
       "id": "capsule-lazybug",
       "houseId": "",
-      "name": "Ms. Lazybug · กาแฟแคปซูล",
+      "name": "กาแฟแคปซูล Ms. Lazybug",
       "category": "capsules",
       "shopeeItemId": "21492186875",
       "visible": true,
-      "description": "กาแฟแคปซูลโทนดอกไม้ ผลไม้ และชา ดูตัวเลือกและรุ่นเครื่องที่รองรับใน Shopee",
+      "description": "Ms. Lazybug แบบแคปซูล หอมดอกไม้ มีรสผลไม้และกลิ่นคล้ายชาหลังดื่ม",
       "details": [
-        "ใช้กับเครื่อง Nespresso บางรุ่น ตรวจรุ่นเครื่องกับร้านก่อนซื้อ",
-        "ระดับคั่วตามภาพ: Light–Medium",
-        "กลิ่นรส: Floral · Fruity · Tea-like"
+        "ใช้ได้กับเครื่อง Nespresso บางรุ่น บอกรุ่นเครื่องให้เราช่วยเช็กใน Shopee ก่อนสั่งซื้อได้",
+        "บนกล่องระบุว่าคั่วอ่อนถึงกลาง",
+        "กลิ่นรสดอกไม้ ผลไม้ และชา"
       ],
       "image": "/brewtanist/assets/shop/21492186875-capsule-lazybug.jpg",
       "alt": "กล่องกาแฟแคปซูล Ms. Lazybug สีชมพูของ Brewtanist"
@@ -221,13 +221,13 @@
     {
       "id": "drip-bag",
       "houseId": "",
-      "name": "Brewtanist Drip Bag",
+      "name": "กาแฟดริปแบบซอง Brewtanist",
       "category": "drip",
       "shopeeItemId": "28957447043",
       "visible": true,
-      "description": "กาแฟบดบรรจุซองพร้อมชง เลือกกลิ่นรสที่ชอบไว้ชงที่บ้านหรือพกไปทำงาน",
+      "description": "แค่เกี่ยวซองกับขอบแก้วแล้วค่อย ๆ เติมน้ำร้อน ก็ชงกาแฟได้ทีละแก้วที่บ้านหรือที่ทำงาน",
       "details": [
-        "ประเภท: กาแฟบดบรรจุซองพร้อมชง"
+        "กาแฟบดแบ่งเป็นซองพร้อมชง"
       ],
       "image": "/brewtanist/assets/shop/28957447043-drip-bag.jpg",
       "alt": "ซองกาแฟดริป Brewtanist หลายแบบพร้อมฉลากกลิ่นรส"
@@ -235,15 +235,15 @@
     {
       "id": "gift-house-blends",
       "houseId": "",
-      "name": "House Blend Gift Set",
+      "name": "ชุดของขวัญเมล็ดกาแฟ 3 เบลนด์",
       "category": "gifts",
       "shopeeItemId": "47502787333",
       "visible": true,
-      "description": "ชุดเมล็ดกาแฟประจำร้าน ครบทั้ง Mr. Plantman, Mr. Ozmo และ Ms. Lazybug",
+      "description": "ชิมเบลนด์ประจำร้านได้ครบทั้งสามตัว มี Mr. Plantman, Mr. Ozmo และ Ms. Lazybug อย่างละถุง",
       "details": [
-        "ในชุดมี 3 ถุง: Mr. Plantman, Ms. Lazybug, Mr. Ozmo",
-        "ชื่อรายการเดิม: Holiday Special Set",
-        "ตัวเลือกขนาดถุงในรายการ: 100 / 200 กรัม"
+        "ในชุดมี 3 ถุง เบลนด์ละถุง",
+        "เดิมใช้ชื่อ Holiday Special Set",
+        "เลือกขนาดถุงได้ใน Shopee มีทั้ง 100 และ 200 กรัม"
       ],
       "image": "/brewtanist/assets/shop/47502787333-gift-house-blends.jpg",
       "alt": "ชุดของขวัญเมล็ดกาแฟ Brewtanist รวม Mr. Plantman, Ms. Lazybug และ Mr. Ozmo"
@@ -251,14 +251,14 @@
     {
       "id": "gift-capsules",
       "houseId": "",
-      "name": "Capsule Gift Set",
+      "name": "ชุดของขวัญกาแฟแคปซูล",
       "category": "gifts",
       "shopeeItemId": "48352804708",
       "visible": true,
-      "description": "ชุดแคปซูลสำหรับชงที่บ้านหรือซื้อเป็นของฝาก มี Mr. Plantman, Mr. Ozmo และ Ms. Lazybug อย่างละกล่อง",
+      "description": "ของฝากสำหรับคนมีเครื่องชงกาแฟแคปซูล ในชุดมี Mr. Plantman, Mr. Ozmo และ Ms. Lazybug อย่างละกล่อง",
       "details": [
-        "ในชุดมี 3 กล่อง: Mr. Plantman, Ms. Lazybug, Mr. Ozmo",
-        "ชื่อรายการเดิม: Holiday Set"
+        "ในชุดมี 3 กล่อง เบลนด์ละกล่อง",
+        "เดิมใช้ชื่อ Holiday Set"
       ],
       "image": "/brewtanist/assets/shop/48352804708-gift-capsules.jpg",
       "alt": "ชุดของขวัญกาแฟแคปซูล Brewtanist รวม 3 กล่อง"
@@ -266,14 +266,14 @@
     {
       "id": "clever-dripper-small",
       "houseId": "",
-      "name": "Clever Dripper · S",
+      "name": "Clever Dripper ขนาด S",
       "category": "goods",
       "shopeeItemId": "28309910876",
       "visible": true,
-      "description": "Clever Dripper ไซส์ S ความจุ 240 มล. พร้อมกระดาษกรองตามชุดที่ร้านระบุ",
+      "description": "ดริปเปอร์จากไต้หวัน ขนาด 240 มล. มีกระดาษกรองมาให้ในกล่อง ดูรายละเอียดกระดาษกรองได้ใน Shopee",
       "details": [
-        "ขนาด: S / 240 มล.",
-        "ประเทศ: ไต้หวัน"
+        "ขนาด S จุ 240 มล.",
+        "จากไต้หวัน"
       ],
       "image": "/brewtanist/assets/shop/28309910876-clever-dripper-small.jpg",
       "alt": "Clever Dripper พร้อมกล่อง ฝา ฐานรอง และกระดาษกรอง"
@@ -281,13 +281,13 @@
     {
       "id": "everyday-bucket-bag",
       "houseId": "",
-      "name": "Everyday Bucket Bag",
+      "name": "กระเป๋าผ้า Everyday Bucket Bag",
       "category": "goods",
       "shopeeItemId": "26035855146",
       "visible": true,
-      "description": "กระเป๋าผ้าแคนวาส Brewtanist ผ้า 14 ออนซ์ ขนาด 13 × 15 × 5 นิ้ว",
+      "description": "กระเป๋าผ้าแคนวาสของ Brewtanist ใช้ผ้าหนา 14 ออนซ์ ขนาด 13 × 15 × 5 นิ้ว",
       "details": [
-        "ขนาด: 13 × 15 × 5 นิ้ว",
+        "ขนาด 13 × 15 × 5 นิ้ว",
         "ผ้าแคนวาส 14 ออนซ์"
       ],
       "image": "",

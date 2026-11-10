@@ -1,4 +1,4 @@
-import {TYPES,UNITS,MAX_LINES,makeLine,newOffer,extendedLine,calculate,currency,validateForIssue,revise,importData,isRFQ,documentDescription,unitName} from './quote-model.mjs?v=3';
+import {TYPES,UNITS,MAX_LINES,makeLine,newOffer,extendedLine,calculate,currency,validateForIssue,revise,importData,isRFQ,documentDescription,unitName,displayDate} from './quote-model.mjs?v=4';
 
 const get=id=>document.getElementById(id);
 const allLabels=JSON.parse(get('quote-labels').textContent);
@@ -95,7 +95,10 @@ function drawSource() {
   for(const key of projectKeys) {
     const value=request.project[key];if(!value)continue;
     const frequencyLabel = value === 'discuss' ? 'undecided' : value;
-    tableValue(list,tr(key),key==='frequency'&&['undecided','once','monthly','other'].includes(frequencyLabel)?tr(frequencyLabel):value);
+    let description=value;
+    if(key==='targetDate')description=displayDate(value,language);
+    if(key==='frequency' && ['undecided','once','monthly','other'].includes(frequencyLabel))description=tr(frequencyLabel);
+    tableValue(list,tr(key),description);
   }
   const b=request.products.beans, c=request.products.capsules;
   if(b) {
@@ -114,7 +117,7 @@ function drawHistory() {
   if(!file.history.length){hist.append(node('li',tr('emptyHistory')));return;}
   for(const q of [...file.history].reverse()) {
     const value=amountWithUnit(calculate(q).total,language);
-    const li=node('li',q.number+' · '+tr('revisionText').replace('{n}',q.revision)+' · '+q.issued+' · '+value+' ');
+    const li=node('li',q.number+' · '+tr('revisionText').replace('{n}',q.revision)+' · '+displayDate(q.issued,language)+' · '+value+' ');
     li.append(button(tr('prior'),()=>printOffer(q)));hist.append(li);
   }
 }
@@ -167,7 +170,7 @@ function prepareDocument(q) {
   doc.replaceChildren();doc.lang=langs[q.doclang];doc.setAttribute('aria-label',t.quotation);
   const head=node('header');head.append(node('h1',t.quotation));
   const meta=node('div',null,'doc-meta');
-  for(const [key,value] of [['number',q.number],['revision',q.revision],['issued',q.issued],['valid',q.valid],['rfq',q.rfq]]) {
+  for(const [key,value] of [['number',q.number],['revision',q.revision],['issued',displayDate(q.issued,q.doclang)],['valid',displayDate(q.valid,q.doclang)],['rfq',q.rfq]]) {
     if(value)meta.append(node('span',key==='revision'?t.revisionText.replace('{n}',value):t[key]+' '+value));
   }
   head.append(meta);doc.append(head);

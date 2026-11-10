@@ -70,7 +70,7 @@
     };
   }
   function formatBrief(rfq) {
-    const heading = root.dataset.language === "en" ? copy.short_name : copy.title;
+    const heading = chinese ? copy.title : copy.short_name;
     const lines = [heading, copy.reference + fieldSeparator + rfq.reference];
     const line = (label, text) => { if (text !== null && text !== undefined && text !== "") lines.push(label + fieldSeparator + text); };
     const beans = rfq.products.beans;
@@ -84,15 +84,18 @@
     const capsules = rfq.products.capsules;
     if (capsules) {
       lines.push("", copy.capsules);
-      line(copy.quantity, quantityWithUnit(capsules.quantityUnits, copy.units));
+      line(copy.capsule_amount || copy.quantity, quantityWithUnit(capsules.quantityUnits, copy.units));
       line(copy.system, capsules.system);
       line(copy.per_box, capsules.perBox);
     }
     lines.push("", copy.project);
     const p = rfq.project;
+    const targetDate = root.dataset.language === "th" && p.targetDate
+      ? new Date(p.targetDate).toLocaleDateString("th-TH", {day: "numeric", month: "long", year: "numeric", timeZone: "UTC"})
+      : p.targetDate;
     line(copy.flavour, p.flavour); line(copy.packaging, p.packaging);
     line(copy.frequency, p.frequency === "discuss" ? copy.undecided : copy[p.frequency]);
-    line(copy.destination, p.destination); line(copy.date, p.targetDate);
+    line(copy.destination, p.destination); line(copy.date, targetDate);
     line(copy.budget, p.budget); line(copy.notes, p.notes);
     lines.push("", copy.contact);
     for (const [key, text] of Object.entries(rfq.contact)) line(copy[key], text);

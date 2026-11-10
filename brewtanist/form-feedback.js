@@ -14,6 +14,14 @@
   }
 
   const copy = {
+    th: {
+      date: 'ตรวจวันที่อีกครั้ง', number: 'กรอกเป็นตัวเลข', choose: 'เลือกหนึ่งตัวเลือก',
+      required: 'กรอกข้อมูลช่องนี้ก่อน', email: 'ตรวจอีเมลอีกครั้ง เช่น name@example.com',
+      fromDate: n => `เลือกวันที่ ${n} หรือหลังจากนั้น`,
+      minimum: n => `กรอกตัวเลขตั้งแต่ ${n} ขึ้นไป`, maximum: n => `กรอกตัวเลขไม่เกิน ${n}`,
+      whole: 'กรอกเป็นจำนวนเต็ม', precision: n => `ใส่ทศนิยมได้ไม่เกิน ${n} ตำแหน่ง`,
+      format: 'ตรวจรูปแบบข้อมูลช่องนี้อีกครั้ง'
+    },
     en: {
       date: 'Enter a valid date.', number: 'Enter a number.', choose: 'Choose an option.',
       required: 'Fill in this field.', email: 'Enter a valid email address.',
@@ -59,7 +67,7 @@
     clear();
     field = event.target;
     message = document.createElement('small');
-    message.id = (lang === 'en' ? 'en' : 'zh') + '-field-feedback';
+    message.id = lang.split('-')[0] + '-field-feedback';
     message.setAttribute('role', 'alert');
     message.textContent = description(field, labels);
     field.insertAdjacentElement('afterend', message);

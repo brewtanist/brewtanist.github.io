@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import {calculate,currency,revise,makeLine,newOffer,importData,requestFile,documentDescription,extendedLine,unitName} from '../brewtanist/quote-model.mjs';
+import {calculate,currency,revise,makeLine,newOffer,importData,requestFile,documentDescription,extendedLine,unitName,displayDate} from '../brewtanist/quote-model.mjs';
 
 const quote=newOffer('th');
 Object.assign(quote,{name:'Sample',discount:'3.10',taxRate:'7',lines:[
@@ -13,6 +13,10 @@ assert.equal(totals.subtotal,26668n);
 assert.equal(totals.discount,310n);
 assert.equal(totals.tax,1845n);
 assert.equal(currency(totals.total,'en'),'282.03');
+assert.equal(displayDate('2026-11-10','th'),'10 พฤศจิกายน 2569');
+assert.equal(displayDate('2026-11-10','en'),'2026-11-10');
+assert.equal(displayDate('','th'),'');
+assert.equal(displayDate('2026-02-30','th'),'2026-02-30');
 assert.equal(calculate({...quote,discount:'266.68'}).total,0n);
 assert.equal(extendedLine({...makeLine(),qty:'.5',price:'1.'}),50n);
 assert.throws(()=>calculate({...quote,discount:'266.69'}));
@@ -53,7 +57,7 @@ assert.equal(documentDescription(firstEnglishBeans,request,'zh',labels),'每袋 
 assert.equal(documentDescription(firstEnglishCapsules,request,'zh',labels),'Example · 每盒 10 粒');
 const editedEnglish={...firstEnglishBeans,description:'Bag size (g) 250 · Medium roast · Whole bean · seasonal blend'};
 assert.equal(documentDescription(editedEnglish,request,'zh',labels),editedEnglish.description);
-assert.equal(documentDescription(received.current.lines[0],request,'th',labels),'ขนาดถุง (กรัม) 250 · คั่วกลาง · เต็มเมล็ด');
+assert.equal(documentDescription(received.current.lines[0],request,'th',labels),'ถุงละ 250 กรัม · คั่วกลาง · แบบเมล็ด');
 assert.equal(documentDescription(received.current.lines[0],request,'zh',labels),'每袋 250 克 · 中度烘焙 · 整豆');
 assert.equal(documentDescription(received.current.lines[1],request,'zh',labels),'Example · 每盒 10 粒');
 assert.equal(documentDescription({...received.current.lines[0],description:'Custom'},request,'th',labels),'Custom');
@@ -67,5 +71,21 @@ assert.equal(documentDescription(oldChineseBeans,zhRequest,'en',labels),sourceLi
 assert.equal(documentDescription(oldChineseCapsules,zhRequest,'en',labels),sourceLines[1].description);
 const staffEdited={...oldChineseBeans,description:oldChineseBeans.description+'（仅限首单）'};
 assert.equal(documentDescription(staffEdited,zhRequest,'en',labels),staffEdited.description);
+const thRequest={...request,language:'th'};
+const thQuote=requestFile(thRequest,labels);
+assert.equal(thQuote.current.lines[0].description,'ถุงละ 250 กรัม · คั่วกลาง · แบบเมล็ด');
+assert.equal(thQuote.current.lines[1].description,'Example · กล่องละ 10 แคปซูล');
+const oldThaiBeans={...thQuote.current.lines[0],description:'ขนาดถุง (กรัม) 250 · คั่วกลาง · เต็มเมล็ด',price:'100'};
+const oldThaiCapsules={...thQuote.current.lines[1],description:'Example · จำนวนแคปซูลต่อกล่อง 10',price:'8'};
+thQuote.current.lines=[oldThaiBeans,oldThaiCapsules];
+revise(thQuote);
+thQuote.current.lines[0].description='ถุงวาล์วติดฉลากของลูกค้า';
+const importedThai=importData(JSON.parse(JSON.stringify(thQuote)),labels);
+const [oldBeans,oldCapsules]=importedThai.history[0].lines;
+assert.equal(documentDescription(oldBeans,thRequest,'th',labels),oldThaiBeans.description);
+assert.equal(documentDescription(oldBeans,thRequest,'en',labels),sourceLines[0].description);
+assert.equal(documentDescription(oldCapsules,thRequest,'zh',labels),'Example · 每盒 10 粒');
+assert.equal(documentDescription(importedThai.current.lines[0],thRequest,'en',labels),'ถุงวาล์วติดฉลากของลูกค้า');
+assert.deepEqual(importedThai,thQuote);
 assert.throws(()=>importData({kind:'unknown'},labels));
 console.log('Quote math, version history and request import checks passed.');
