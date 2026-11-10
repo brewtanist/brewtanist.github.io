@@ -47,7 +47,8 @@ jobs:
             b=pw.chromium.launch();p=b.new_page();errors=[];p.on('pageerror',lambda e:errors.append(str(e)))
             p.goto((Path.cwd()/'catalogue/review/index.html').as_uri(),wait_until='networkidle')
             frame=p.frame_locator('#frame');expect(frame.locator('.market-card')).to_have_count(len(visible))
-            frame.locator('a[href="/item/capsule-ozmo/"]').first.click();expect(p.frame_locator('#frame').locator('h1')).to_have_text('Mr. Ozmo · กาแฟแคปซูล')
+            ozmo=next(item for item in visible if item['id']=='capsule-ozmo')
+            frame.locator('a[href="/item/capsule-ozmo/"]').first.click();expect(p.frame_locator('#frame').locator('h1')).to_have_text(ozmo['name'])
             assert not errors,errors;b.close()
           print('Portable catalogue review navigation passed.')
           PY
