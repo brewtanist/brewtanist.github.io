@@ -2,7 +2,7 @@ name: Brewtanist design refinement checks
 on:
   push:
     branches: ['design/brewtanist-refinement-20261109', 'feature/shopee-storefront-20261109', 'main']
-    paths: ['_data/brewtanist/**', '_includes/**', 'brewtanist/**', 'catalogue/**', 'shop/**', 'tools/refine_site.py', 'tools/test_refinement.py', '.github/workflows/design-refinement.yml', 'index.html', '.pages.yml', '_config.yml', 'render.yaml']
+    paths: ['_data/**', '_includes/**', 'brewtanist/**', 'catalogue/**', 'shop/**', 'oem/**', 'admin/**', 'en/**', 'zh/**', 'tools/refine_site.py', 'tools/test_refinement.py', 'tools/test_language_journey.py', '.github/workflows/design-refinement.yml', 'index.html', '.pages.yml', '_config.yml', 'render.yaml']
 permissions:
   contents: read
 concurrency:
@@ -18,7 +18,7 @@ jobs:
           fetch-depth: 0
       - name: Install browser engines and test tools
         run: |
-          python3 -m pip install 'PyYAML==6.0.2' 'playwright==1.56.0'
+          python3 -m pip install 'PyYAML==6.0.2' 'playwright==1.56.0' 'pypdf==6.10.0'
           python3 -m playwright install --with-deps chromium webkit
       - name: Install design layer in temporary test workspace
         run: python3 tools/refine_site.py
@@ -32,6 +32,8 @@ jobs:
           destination: ./_site
       - name: Check mobile and desktop on Chromium and WebKit
         run: python3 tools/test_refinement.py
+      - name: Switch languages from storefront through quotation PDF
+        run: python3 tools/test_language_journey.py --build _site
       - name: Build portable catalogue review
         run: python3 catalogue/make_review.py
       - name: Check portable review navigation

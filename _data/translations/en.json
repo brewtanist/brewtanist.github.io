@@ -23,7 +23,7 @@
     "story_alt": "The coffee bar and espresso machine inside Brewtanist",
     "story_caption": "Our coffee bar",
     "visit_title": "Visit the café",
-    "visit_text": "Park at the Shell station and walk over to the café. There’s seating on both floors and Wi-Fi if you’re bringing your laptop. You can pick out a bag of beans at the bar before you go.",
+    "visit_text": "Park at the Shell station and walk over to the café. There’s seating on both floors and WiFi if you’re bringing your laptop. You can pick out a bag of beans at the bar before you go.",
     "visit_alt": "The front of Brewtanist café at the Khlong Rang Shell station"
   },
   "coffee": {
@@ -209,7 +209,7 @@
         "details": [
           "Grown in Panama",
           "Process · Washed",
-          "100 g bag pictured",
+          "100 g bag pictured",
           "Variety · Geisha",
           "Roasted for filter coffee",
           "Tasting notes · Rose · Pink guava · Blueberry jam"
@@ -223,7 +223,7 @@
         "details": [
           "Grown in Ethiopia",
           "Process · Natural",
-          "100 g bag pictured",
+          "100 g bag pictured",
           "Variety · Heirloom",
           "Tasting notes · Pineapple · Mixed berries · Sunkist orange"
         ],
@@ -236,7 +236,7 @@
         "details": [
           "Grown in Ethiopia",
           "Process · Natural",
-          "100 g bag pictured",
+          "100 g bag pictured",
           "Roasted for filter coffee",
           "Tasting notes · Tangerine · Strawberry · Hibiscus tea"
         ],
@@ -248,7 +248,7 @@
         "description": "Roasted for filter coffee, this whisky-aged Honduran coffee has notes of vanilla, honey, whisky and grape.",
         "details": [
           "Grown in Honduras",
-          "100 g bag pictured",
+          "100 g bag pictured",
           "Process · Whisky-aged",
           "Roasted for filter coffee",
           "Tasting notes · Vanilla · Honey · Whisky · Grape"
@@ -273,7 +273,7 @@
           "Grown in Guatemala",
           "Variety · Geisha",
           "Process · Washed",
-          "100 g bag pictured",
+          "100 g bag pictured",
           "Roasted for filter coffee",
           "Tasting notes · Jasmine · Bergamot · Apricot · Lemon"
         ],
@@ -286,7 +286,7 @@
         "details": [
           "Grown in Colombia",
           "Growing region · Risaralda",
-          "100 g bag pictured",
+          "100 g bag pictured",
           "Variety · Wush Wush",
           "Process · Anaerobic washed",
           "Roasted for filter coffee",
@@ -297,9 +297,9 @@
       {
         "id": "capsule-plantman",
         "name": "Mr. Plantman coffee capsules",
-        "description": "A box of 10 coffee capsules with the dark chocolate and caramel notes of Mr. Plantman.",
+        "description": "A box of 10 coffee capsules with the dark chocolate and caramel notes of Mr. Plantman.",
         "details": [
-          "Box of 10 capsules",
+          "Box of 10 capsules",
           "Fits selected Nespresso machines. Check your model with us on Shopee before ordering."
         ],
         "alt": "Brown box of Mr. Plantman coffee capsules with the illustrated character on the front"
@@ -307,9 +307,9 @@
       {
         "id": "capsule-ozmo",
         "name": "Mr. Ozmo coffee capsules",
-        "description": "Our house blend with vanilla and milk chocolate notes, in a box of 10 coffee capsules.",
+        "description": "Our house blend with vanilla and milk chocolate notes, in a box of 10 coffee capsules.",
         "details": [
-          "Box of 10 capsules",
+          "Box of 10 capsules",
           "Fits selected Nespresso machines. Check your model with us on Shopee before ordering."
         ],
         "alt": "Purple box of Mr. Ozmo coffee capsules with the illustrated character on the front"
@@ -341,7 +341,7 @@
         "details": [
           "One bag each of Mr. Plantman, Ms. Lazybug and Mr. Ozmo",
           "Previously listed as Holiday Special Set",
-          "The listing offers 100 g or 200 g bags"
+          "The listing offers 100 g or 200 g bags"
         ],
         "alt": "Brewtanist coffee gift set with Mr. Plantman, Ms. Lazybug and Mr. Ozmo beans"
       },
@@ -358,9 +358,9 @@
       {
         "id": "clever-dripper-small",
         "name": "Clever Dripper · S",
-        "description": "The small Clever Dripper holds 240 ml and comes with paper filters. Check the Shopee listing for the filter specifications.",
+        "description": "The small Clever Dripper holds 240 ml and comes with paper filters. Check the Shopee listing for the filter specifications.",
         "details": [
-          "Size S · 240 ml capacity",
+          "Size S · 240 ml capacity",
           "Country of origin · Taiwan"
         ],
         "alt": "Clever Dripper with its box, lid, stand and paper filters"
@@ -368,10 +368,10 @@
       {
         "id": "everyday-bucket-bag",
         "name": "Everyday Bucket Bag",
-        "description": "A Brewtanist bucket bag made from 14 oz canvas. It measures 13 × 15 × 5 inches.",
+        "description": "A Brewtanist bucket bag made from 14 oz canvas. It measures 13 × 15 × 5 inches.",
         "details": [
-          "13 × 15 × 5 inches",
-          "14 oz canvas"
+          "13 × 15 × 5 inches",
+          "14 oz canvas"
         ],
         "alt": ""
       }

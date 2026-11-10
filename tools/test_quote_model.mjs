@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import {calculate,currency,revise,makeLine,newOffer,importData,requestFile,documentDescription,extendedLine,unitName,displayDate} from '../brewtanist/quote-model.mjs';
+import {calculate,currency,revise,makeLine,newOffer,importData,requestFile,documentDescription,extendedLine,unitName,displayDate,changeLineType} from '../brewtanist/quote-model.mjs';
 
 const quote=newOffer('th');
 Object.assign(quote,{name:'Sample',discount:'3.10',taxRate:'7',lines:[
@@ -87,5 +87,16 @@ assert.equal(documentDescription(oldBeans,thRequest,'en',labels),sourceLines[0].
 assert.equal(documentDescription(oldCapsules,thRequest,'zh',labels),'Example · 每盒 10 粒');
 assert.equal(documentDescription(importedThai.current.lines[0],thRequest,'en',labels),'ถุงวาล์วติดฉลากของลูกค้า');
 assert.deepEqual(importedThai,thQuote);
+// A change of product must not quote capsules using a bean bag specification or a price per kg.
+const changed={...oldThaiBeans,price:'123.45'};
+changeLineType(changed,'capsules',thRequest,labels);
+assert.deepEqual(changed,{...thQuote.history[0].lines[1],description:'Example · กล่องละ 10 แคปซูล',price:''});
+assert.equal(documentDescription(changed,thRequest,'en',labels),'Example · 10 capsules per box');
+changed.description='Customer supplied labels';
+changeLineType(changed,'custom',thRequest,labels);
+assert.deepEqual(changed,{...makeLine('custom'),description:'Customer supplied labels'});
+const edited={...firstEnglishBeans,description:'Ship to both cafés',price:'25.00'};
+changeLineType(edited,'beans',request,labels);
+assert.equal(edited.price,'25.00');
 assert.throws(()=>importData({kind:'unknown'},labels));
 console.log('Quote math, version history and request import checks passed.');

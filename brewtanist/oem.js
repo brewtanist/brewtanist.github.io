@@ -22,9 +22,10 @@
   const optionalNumber = name => value(name) === "" ? null : Number(value(name));
   const draftKey = "brewtanist-oem-language-transfer-v1";
   let request;
-  let fingerprint;
   let confirmed = false;
   let pending = false;
+  let attempted = false;
+  let deliveryMessage = "";
 
   function localDate() {
     const now = new Date();
@@ -63,7 +64,6 @@
     }
     const strings = keys => Object.fromEntries(keys.map(k => [k, value(k)]));
     return {
-      language: root.dataset.language,
       contact: strings(["name", "company", "email", "phone"]),
       products,
       project: strings(["flavour", "packaging", "frequency", "destination", "targetDate", "budget", "notes"])
@@ -121,19 +121,25 @@
   }
   function startReview() {
     const fields = getValues();
-    const signature = JSON.stringify(fields);
-    if (!request || signature !== fingerprint) {
-      request = {kind: "brewtanist-oem-rfq", schemaVersion: 1, reference: reference(), createdAt: new Date().toISOString(), ...fields};
-      fingerprint = signature;
+    const matches = request && ["contact", "products", "project"].every(key =>
+      JSON.stringify(request[key]) === JSON.stringify(fields[key]));
+    if (!matches) {
+      request = {kind: "brewtanist-oem-rfq", schemaVersion: 1, reference: reference(), createdAt: new Date().toISOString(), language: root.dataset.language, ...fields};
       confirmed = false;
+      attempted = false;
+      deliveryMessage = "";
+    } else if (!attempted) {
+      // Once submitted, retries must carry the original payload, including its language.
+      request.language = root.dataset.language;
     }
     summary.value = formatBrief(request);
     document.getElementById("oem-ref").textContent = request.reference;
     document.getElementById("oem-next").textContent = confirmed ? copy.success : root.dataset.endpoint ? copy.review_online : root.dataset.email ? copy.manual_email : copy.manual;
     title.textContent = confirmed ? copy.sent_title : copy.result;
     send.hidden = !root.dataset.endpoint || confirmed;
-    status.textContent = "";
-    configureEmail();
+    edit.hidden = confirmed;
+    status.textContent = confirmed ? "" : copy[deliveryMessage] || "";
+    configureEmail(Boolean(deliveryMessage));
     form.hidden = true;
     review.hidden = false;
     title.focus();
@@ -148,13 +154,12 @@
     first.scrollIntoView({block: "center"});
   }
   function rememberLanguageTransition(link) {
-    if (!link || !link.href || pending || confirmed) return;
     const target = new URL(link.href);
-    if (target.origin !== location.origin || target.pathname === location.pathname) return;
     // Transient handoff only when the visitor explicitly switches this form's language.
     const fields = [...form.querySelectorAll("input,select,textarea")].filter(el => el.type !== "radio" || el.checked);
     const values = Object.fromEntries(fields.map(el => [el.name, el.value]));
-    try { sessionStorage.setItem(draftKey, JSON.stringify({at: Date.now(), path: target.pathname, values})); } catch { /* Storage may be disabled. */ }
+    const draft = {at: Date.now(), path: target.pathname, values, request, inReview: !review.hidden, confirmed, attempted, deliveryMessage};
+    try { sessionStorage.setItem(draftKey, JSON.stringify(draft)); } catch { /* Storage may be disabled. */ }
   }
   function restoreLanguageTransition() {
     try {
@@ -169,6 +174,11 @@
         if (elem.type === "radio") elem.checked = elem.value === text;
         else elem.value = text;
       }
+      request = prior.request;
+      confirmed = prior.confirmed === true;
+      attempted = prior.attempted === true;
+      deliveryMessage = prior.deliveryMessage || "";
+      return prior.inReview && request;
     } catch { /* Use the blank form if storage or the draft is unavailable. */ }
   }
 
@@ -186,7 +196,15 @@
   form.addEventListener("change", event => { if (event.target.name === "productType") selectProducts(); });
   edit.addEventListener("click", resumeForm);
   document.querySelector("[data-language-menu]")?.addEventListener("click", event => {
-    if (!event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey) rememberLanguageTransition(event.target.closest("a"));
+    const link = event.target.closest("a");
+    if (!link || link.origin !== location.origin || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    if (pending || link.pathname === location.pathname) {
+      event.preventDefault();
+      event.currentTarget.open = false;
+      event.currentTarget.querySelector("summary").focus();
+      return;
+    }
+    rememberLanguageTransition(link);
   });
   document.getElementById("oem-copy").addEventListener("click", async () => {
     try {
@@ -206,7 +224,7 @@
   });
   send.addEventListener("click", async () => {
     if (!request || pending || confirmed || !root.dataset.endpoint) return;
-    pending = true; send.disabled = true; edit.disabled = true;
+    pending = true; attempted = true; send.disabled = true; edit.disabled = true;
     status.textContent = copy.pending;
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), 20000);
@@ -218,24 +236,28 @@
       if (!response.ok) {
         if (response.status === 409) {
           request.reference = reference();
+          attempted = false;
           startReview();
         }
-        const reason = {409: copy.ref_conflict, 413: copy.too_large, 422: copy.invalid_request, 429: copy.rate_limit};
-        const problem = new Error("Intake unavailable");
-        problem.display = reason[response.status];
-        throw problem;
+        const reason = {409: "ref_conflict", 413: "too_large", 422: "invalid_request", 429: "rate_limit"};
+        throw Object.assign(new Error("Intake unavailable"), {displayKey: reason[response.status]});
       }
       const receipt = await response.json();
       if (receipt.ok !== true || receipt.reference !== request.reference) throw Error("Receipt could not be verified");
-      confirmed = true; send.hidden = true; edit.hidden = true; configureEmail();
+      confirmed = true; deliveryMessage = ""; send.hidden = true; edit.hidden = true; configureEmail();
       title.textContent = copy.sent_title; title.focus();
       document.getElementById("oem-next").textContent = copy.success;
       status.textContent = "";
-    } catch (error) { configureEmail(true); status.textContent = error.display || copy.failed; }
+    } catch (error) {
+      deliveryMessage = error.displayKey || "failed";
+      configureEmail(true);
+      status.textContent = copy[deliveryMessage];
+    }
     finally { clearTimeout(timer); pending = false; send.disabled = false; edit.disabled = false; }
   });
   input("targetDate").min = localDate();
-  restoreLanguageTransition();
+  const resumeReview = restoreLanguageTransition();
   selectProducts();
-  form.hidden = false;
+  if (resumeReview) startReview();
+  else form.hidden = false;
 })();

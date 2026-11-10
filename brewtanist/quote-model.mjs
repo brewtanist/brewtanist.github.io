@@ -128,14 +128,28 @@ function requestDescription(product,type,t) {
   ] : [product.system, product.perBox && t.boxSpec.replace('{n}',product.perBox).replace('{unit}',unitName('capsule',product.perBox,t))];
   return parts.filter(Boolean).join(' · ');
 }
+function isRequestDescription(line,request,labels) {
+  const product=request?.products[line.type];
+  if(!product)return false;
+  return [labels[request.language],previousSpecs[request.language]].some(t=>
+    t && line.description===requestDescription(product,line.type,t));
+}
+export function changeLineType(line,type,request,labels) {
+  if(type===line.type)return;
+  const useRequestSpecs=!line.description || isRequestDescription(line,request,labels);
+  const product=request?.products[type];
+  const next=makeLine(type);
+  if(product)next.qty=String(type==='beans'?product.quantityKg:product.quantityUnits);
+  else if(next.unit===line.unit)next.qty=line.qty;
+  next.description=useRequestSpecs
+    ? (product?requestDescription(product,type,labels[request.language]):'')
+    : line.description;
+  Object.assign(line,next);
+}
 export function documentDescription(line,request,lang,labels) {
   const product=request?.products[line.type];
   if(!product || lang===request.language) return line.description;
-  const original=requestDescription(product,line.type,labels[request.language]);
-  const previous=previousSpecs[request.language];
-  const wasGenerated=line.description===original || (previous &&
-    line.description===requestDescription(product,line.type,previous));
-  return wasGenerated ? requestDescription(product,line.type,labels[lang]) : line.description;
+  return isRequestDescription(line,request,labels) ? requestDescription(product,line.type,labels[lang]) : line.description;
 }
 function assertOfferShape(q) {
   if (!q || !langOK(q.doclang) || !Number.isInteger(q.revision) || q.revision<1 || q.revision>MAX_REVISIONS+1 ||

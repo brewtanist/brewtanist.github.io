@@ -90,6 +90,7 @@
 .shop-catalog .shop-grid, .home-shop-grid { row-gap: 36px; }
 .shop-card-body > .shop-category { font: 500 13px/1.5 var(--body); margin-bottom: 4px; }
 .shop-card .shop-details summary, .shop-buy { font-size: 15px; }
+.shop-nowrap { white-space: nowrap; }
 .shop-help { border-top: 1px solid var(--line); }
 @media (max-width: 800px) {
   .shop-hero { padding-block: 26px 36px; }

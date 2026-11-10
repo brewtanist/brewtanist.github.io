@@ -1,4 +1,4 @@
-import {TYPES,UNITS,MAX_LINES,makeLine,newOffer,extendedLine,calculate,currency,validateForIssue,revise,importData,isRFQ,documentDescription,unitName,displayDate} from './quote-model.mjs?v=4';
+import {TYPES,UNITS,MAX_LINES,makeLine,newOffer,extendedLine,calculate,currency,validateForIssue,revise,importData,isRFQ,documentDescription,unitName,displayDate,changeLineType} from './quote-model.mjs?v=5';
 
 const get=id=>document.getElementById(id);
 const allLabels=JSON.parse(get('quote-labels').textContent);
@@ -68,12 +68,18 @@ function drawLines() {
     const edit=key=>value=>{line[key]=value;dirty=true;note();showTotals();};
     const row=node('section',null,'quote-line');
     const top=node('div',null,'line-fields');
-    let unitSelect;
+    const unitSelect=makeSelect(UNITS,line.unit,edit('unit'));
+    const showUnitNames=()=>{
+      for(const option of unitSelect.options)option.textContent=unitName(option.value,line.qty,allLabels[language]);
+    };
+    showUnitNames();
     const typeSelect=makeSelect(TYPES,line.type,value=>{
-      line.type=value;line.unit=makeLine(value).unit;unitSelect.value=line.unit;dirty=true;note();showTotals();
+      changeLineType(line,value,file.request,allLabels);
+      unitSelect.value=line.unit;qty.value=line.qty;price.value=line.price;
+      desc.value=documentDescription(line,file.request,language,allLabels);
+      dirty=true;note();showUnitNames();showTotals();
     });
-    unitSelect=makeSelect(UNITS,line.unit,edit('unit'));
-    const qty=makeInput(line.qty,edit('qty'),{type:'number',step:'.001',min:'.001',max:'999999999.999',inputMode:'decimal',required:true});
+    const qty=makeInput(line.qty,value=>{edit('qty')(value);showUnitNames();},{type:'number',step:'.001',min:'.001',max:'999999999.999',inputMode:'decimal',required:true});
     const price=makeInput(line.price,edit('price'),{type:'number',step:'.01',min:'0',max:'9999999999.99',inputMode:'decimal',required:true});
     top.append(labeled(tr('type'),typeSelect),labeled(tr('qty'),qty),labeled(tr('unit'),unitSelect),labeled(tr('unitPrice'),price));
     const desc=makeInput(documentDescription(line,file.request,language,allLabels),edit('description'),{maxLength:1000});

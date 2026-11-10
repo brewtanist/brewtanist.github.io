@@ -23,7 +23,7 @@
     "story_alt": "Brewtanist 店内的咖啡吧台和意式咖啡机",
     "story_caption": "我们的咖啡吧台",
     "visit_title": "来店里坐坐",
-    "visit_text": "把车停在加油站，走几步就到店里。上下两层都有座位，店里也有 Wi-Fi，歇脚或带电脑来工作都方便。想带咖啡豆回家，临走前可以在吧台挑一袋。",
+    "visit_text": "把车停在加油站，走几步就到店里。上下两层都有座位，店里也有 WiFi，歇脚或带电脑来工作都方便。想带咖啡豆回家，临走前可以在吧台挑一袋。",
     "visit_alt": "Khlong Rang 壳牌加油站内的 Brewtanist 咖啡馆正面"
   },
   "coffee": {
@@ -209,7 +209,7 @@
         "details": [
           "产地：巴拿马",
           "处理法：水洗",
-          "图中包装：每袋 100 克",
+          "图中包装：每袋 100 克",
           "品种：瑰夏",
           "建议冲法：手冲",
           "风味：玫瑰、红心番石榴、蓝莓果酱"
@@ -223,7 +223,7 @@
         "details": [
           "产地：埃塞俄比亚",
           "处理法：日晒",
-          "图中包装：每袋 100 克",
+          "图中包装：每袋 100 克",
           "品种：当地传统品种（Heirloom）",
           "风味：菠萝、混合莓果、新奇士橙"
         ],
@@ -236,7 +236,7 @@
         "details": [
           "产地：埃塞俄比亚",
           "处理法：日晒",
-          "图中包装：每袋 100 克",
+          "图中包装：每袋 100 克",
           "建议冲法：手冲",
           "风味：橘子、草莓、洛神花茶"
         ],
@@ -248,7 +248,7 @@
         "description": "适合手冲，杯里能喝到香草、蜂蜜、威士忌和葡萄的风味。",
         "details": [
           "产地：洪都拉斯",
-          "图中包装：每袋 100 克",
+          "图中包装：每袋 100 克",
           "处理法：威士忌陈化",
           "建议冲法：手冲",
           "风味：香草、蜂蜜、威士忌、葡萄"
@@ -273,7 +273,7 @@
           "产地：危地马拉",
           "品种：瑰夏",
           "处理法：水洗",
-          "图中包装：每袋 100 克",
+          "图中包装：每袋 100 克",
           "建议冲法：手冲",
           "风味：茉莉花、佛手柑、杏、柠檬"
         ],
@@ -286,7 +286,7 @@
         "details": [
           "产地：哥伦比亚",
           "产区：Risaralda",
-          "图中包装：每袋 100 克",
+          "图中包装：每袋 100 克",
           "品种：Wush Wush",
           "处理法：厌氧水洗",
           "建议冲法：手冲",
@@ -297,9 +297,9 @@
       {
         "id": "capsule-plantman",
         "name": "Mr. Plantman 咖啡胶囊",
-        "description": "把 Mr. Plantman 做成了咖啡胶囊，每盒 10 粒。适用机型请看 Shopee 商品页。",
+        "description": "把 Mr. Plantman 做成了咖啡胶囊，每盒 10 粒。适用机型请看 Shopee 商品页。",
         "details": [
-          "每盒 10 粒",
+          "每盒 10 粒",
           "适用于部分 Nespresso 机型，下单前请向我们确认型号。"
         ],
         "alt": "棕色 Mr. Plantman 咖啡胶囊盒，印着这款拼配的卡通形象"
@@ -307,9 +307,9 @@
       {
         "id": "capsule-ozmo",
         "name": "Mr. Ozmo 咖啡胶囊",
-        "description": "喜欢 Mr. Ozmo 的话，也可以选择咖啡胶囊，每盒 10 粒。适用机型请看 Shopee 商品页。",
+        "description": "喜欢 Mr. Ozmo 的话，也可以选择咖啡胶囊，每盒 10 粒。适用机型请看 Shopee 商品页。",
         "details": [
-          "每盒 10 粒",
+          "每盒 10 粒",
           "适用于部分 Nespresso 机型，下单前请向我们确认型号。"
         ],
         "alt": "紫色 Mr. Ozmo 咖啡胶囊盒，印着这款拼配的卡通形象"
@@ -339,9 +339,9 @@
         "name": "招牌拼配咖啡豆礼盒",
         "description": "三款招牌拼配各一袋，一次就能尝到 Mr. Plantman、Mr. Ozmo 和 Ms. Lazybug。",
         "details": [
-          "内含 3 袋：Mr. Plantman、Ms. Lazybug、Mr. Ozmo",
+          "内含 3 袋：Mr. Plantman、Ms. Lazybug、Mr. Ozmo",
           "商品曾用名：Holiday Special Set",
-          "可选规格：每袋 100 克或 200 克"
+          "可选规格：每袋 100 克或 200 克"
         ],
         "alt": "Brewtanist 咖啡豆礼盒，内含 Mr. Plantman、Ms. Lazybug 和 Mr. Ozmo"
       },
@@ -350,7 +350,7 @@
         "name": "咖啡胶囊礼盒",
         "description": "三款招牌拼配的咖啡胶囊各一盒，可以自己慢慢喝，也适合送人。",
         "details": [
-          "内含 3 盒：Mr. Plantman、Ms. Lazybug、Mr. Ozmo",
+          "内含 3 盒：Mr. Plantman、Ms. Lazybug、Mr. Ozmo",
           "商品曾用名：Holiday Set"
         ],
         "alt": "Brewtanist 咖啡胶囊礼盒，内含三盒胶囊"
@@ -358,9 +358,9 @@
       {
         "id": "clever-dripper-small",
         "name": "Clever Dripper 聪明杯 · 小号",
-        "description": "小号聪明杯，容量 240 毫升，随附滤纸。滤纸规格请看 Shopee 商品页。",
+        "description": "小号聪明杯，容量 240 毫升，随附滤纸。滤纸规格请看 Shopee 商品页。",
         "details": [
-          "小号（S），容量 240 毫升",
+          "小号（S），容量 240 毫升",
           "产地：台湾"
         ],
         "alt": "Clever Dripper 聪明杯及其包装盒、杯盖、底座和滤纸"
@@ -368,10 +368,10 @@
       {
         "id": "everyday-bucket-bag",
         "name": "Everyday Bucket Bag 帆布水桶包",
-        "description": "用 14 盎司帆布做的 Brewtanist 水桶包，尺寸为 13 × 15 × 5 英寸。",
+        "description": "用 14 盎司帆布做的 Brewtanist 水桶包，尺寸为 13 × 15 × 5 英寸。",
         "details": [
-          "尺寸：13 × 15 × 5 英寸",
-          "面料：14 盎司帆布"
+          "尺寸：13 × 15 × 5 英寸",
+          "面料：14 盎司帆布"
         ],
         "alt": ""
       }

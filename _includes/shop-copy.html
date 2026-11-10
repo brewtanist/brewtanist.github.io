@@ -1,0 +1,14 @@
+{%- assign shop_text = include.text | escape -%}
+{%- assign unbroken_terms = site.data.brewtanist.products.items | map: 'name' -%}
+{%- if lang == 'zh' -%}
+  {%- assign measurement_units = '毫升|英寸|盎司' | split: '|' -%}
+  {%- assign unbroken_terms = unbroken_terms | concat: measurement_units -%}
+{%- endif -%}
+{%- for term in unbroken_terms -%}
+  {%- assign safe_term = term | escape -%}
+  {%- if safe_term != empty and shop_text contains safe_term -%}
+    {%- capture unbroken_text -%}<span class="shop-nowrap">{{ safe_term }}</span>{%- endcapture -%}
+    {%- assign shop_text = shop_text | replace: safe_term, unbroken_text -%}
+  {%- endif -%}
+{%- endfor -%}
+{{- shop_text -}}
