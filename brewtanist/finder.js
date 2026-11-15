@@ -89,6 +89,7 @@
     }
     form.hidden = true;
     result.hidden = false;
+    window.BrewtanistAnalytics?.track('finder_complete', {coffee_type: format});
     title.focus({preventScroll: true});
     result.scrollIntoView({block: 'nearest', behavior: 'auto'});
   }
