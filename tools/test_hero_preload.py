@@ -106,9 +106,11 @@ def browser_check(build: Path):
             for engine, sizes in (("chromium", (390, 1440)), ("webkit", (390,))):
                 browser = getattr(playwright, engine).launch()
                 for width in sizes:
-                    page = browser.new_page(viewport={"width":width,"height":850})
                     for prefix in LOCALES:
                         for suffix, class_name, basename in HEROES:
+                            # Fresh browser context per route: avoid cached requests
+                            # hiding real preload behaviour between locales.
+                            page = browser.new_page(viewport={"width":width,"height":850})
                             route = prefix + suffix
                             images_requested = []
                             handler = lambda request: images_requested.append(urlsplit(request.url).path) if request.resource_type == "image" else None
@@ -124,9 +126,8 @@ def browser_check(build: Path):
                             duplicates = [path for path in images_requested
                                           if basename in path and path != src]
                             require(not duplicates, engine + " " + route + ": redundant hero downloads: " + repr(duplicates))
-                            page.remove_listener("request", handler)
+                            page.close()
                     checks.append(engine + " " + str(width) + "px: six pages load one responsive hero each")
-                    page.close()
                 browser.close()
     finally:
         server.shutdown()
