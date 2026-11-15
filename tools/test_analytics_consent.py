@@ -74,7 +74,7 @@ def run(build: Path, enabled: bool):
             assert page.locator("script[src^='https://www.googletagmanager.com/gtag/js?id=']").count() == 1
 
             page.evaluate("""() => {
-                document.addEventListener('click', e => e.preventDefault(), true);
+                document.querySelector('.shop-buy').addEventListener('click', e => e.preventDefault(), {once:true});
                 document.querySelector('.shop-buy').dispatchEvent(new MouseEvent('click',{bubbles:true,cancelable:true}));
             }""")
             page.locator('[data-finder-form] [name="format"][value="beans"]').check()
@@ -93,9 +93,16 @@ def run(build: Path, enabled: bool):
             checks.append("Consent: only after opt-in, safe page URL and safe Shop/Finder event parameters")
 
             def fake_oem(route):
+                headers = {"Access-Control-Allow-Origin": "*",
+                           "Access-Control-Allow-Methods": "POST, OPTIONS",
+                           "Access-Control-Allow-Headers": "content-type"}
+                if route.request.method == "OPTIONS":
+                    route.fulfill(status=204, headers=headers)
+                    return
                 body = json.loads(route.request.post_data)
                 assert body["contact"]["email"] == "qa@example.invalid"
-                route.fulfill(status=200, content_type="application/json", body=json.dumps({"ok": True, "reference": body["reference"]}))
+                route.fulfill(status=200, headers=headers, content_type="application/json",
+                              body=json.dumps({"ok": True, "reference": body["reference"]}))
             page.route("**/api/requests", fake_oem)
             page.goto(origin + "/oem/", wait_until="load")
             page.locator('[name="beanQuantity"]').fill("2.5")
