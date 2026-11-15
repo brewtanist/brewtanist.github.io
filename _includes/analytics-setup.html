@@ -1,0 +1,8 @@
+{%- assign analytics_language = include.lang | default: page.lang | default: 'th' -%}
+{%- assign analytics_config = site.data.brewtanist.analytics -%}
+<script type="application/json" id="brewtanist-analytics-config">{
+  "enabled": {{ analytics_config.enabled | jsonify }},
+  "measurementId": {{ analytics_config.measurement_id | jsonify }},
+  "copy": {{ site.data.ui[analytics_language].analytics | jsonify | replace: '</', '<\/' }}
+}</script>
+<script defer src="/brewtanist/analytics.js?v=20261115-1"></script>
