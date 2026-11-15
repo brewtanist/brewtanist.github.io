@@ -17,6 +17,7 @@ on:
       - '_config.yml'
       - 'sitemap.xml'
       - 'tools/test_storefront.py'
+      - 'tools/test_shop_finder.py'
       - 'tools/test_quote_model.mjs'
       - '.github/workflows/storefront-check.yml'
   pull_request:
@@ -28,6 +29,8 @@ on:
       - 'en/**'
       - 'zh/**'
       - 'tools/test_storefront.py'
+      - 'tools/test_shop_finder.py'
+      - 'brewtanist/**'
       - 'tools/verify_languages.py'
       - '.github/workflows/storefront-check.yml'
 
@@ -41,7 +44,7 @@ concurrency:
 jobs:
   check-storefront:
     runs-on: ubuntu-24.04
-    timeout-minutes: 6
+    timeout-minutes: 12
     steps:
       - name: Check out the exact source revision
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
@@ -80,6 +83,12 @@ jobs:
           PY
       - name: Check quote totals and negotiation revisions
         run: node --test tools/test_quote_model.mjs
+      - name: Install Coffee Finder browser test tools
+        run: |
+          python3 -m pip install playwright==1.56.0
+          python3 -m playwright install --with-deps chromium webkit
+      - name: Check Coffee Finder in Thai, English and Chinese
+        run: python3 tools/test_shop_finder.py _site --report "$RUNNER_TEMP/brewtanist-finder-report.json"
       - name: Hide optional homepage sections in the test checkout
         run: |
           python3 - <<'PY'
@@ -103,5 +112,8 @@ jobs:
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
           name: brewtanist-storefront-validation
-          path: ${{ runner.temp }}/brewtanist-storefront-report.json
+          path: |
+            ${{ runner.temp }}/brewtanist-storefront-report.json
+            ${{ runner.temp }}/brewtanist-finder-report.json
+            qa/finder-mobile.png
           retention-days: 30
