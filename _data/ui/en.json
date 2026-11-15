@@ -77,5 +77,32 @@
   "close_photo": "Close photo",
   "previous_photo": "Previous photo",
   "next_photo": "Next photo",
-  "open_photo": "Enlarge photo · %alt%"
+  "open_photo": "Enlarge photo · %alt%",
+  "finder_form": {
+    "format_question": "1. What kind of coffee do you want?",
+    "format_beans": "Roasted coffee beans",
+    "format_capsules": "Coffee capsules",
+    "format_drip": "Drip bags",
+    "taste_question": "2. Which flavours do you enjoy?",
+    "taste_chocolate": "Chocolate / Nuts",
+    "taste_sweet": "Vanilla / Smooth sweetness",
+    "taste_fruity": "Floral / Fruity",
+    "unsure": "Not sure yet",
+    "drink_question": "3. How do you usually drink coffee?",
+    "drink_black": "Black coffee",
+    "drink_milk": "With milk",
+    "submit": "See coffees to explore",
+    "restart": "Start again",
+    "result_title": "Blends close to your preferences",
+    "result_lead": "Read the tasting notes for the blends matching your answers before choosing a product.",
+    "all_title": "Explore all three house blends",
+    "all_lead": "Not sure what you prefer? Compare their tasting notes, or ask the barista at the café.",
+    "category_capsules": "Explore coffee capsules",
+    "category_drip": "Explore drip bags",
+    "category_lead": "Check details and availability on Shopee before buying. For capsules, check machine compatibility too.",
+    "category_link": "Browse this category",
+    "view_shopee": "View details on Shopee",
+    "static_help": "Browse coffees by the format you use at home.",
+    "disclaimer": "These suggestions use the tasting notes saved by the café. They do not guarantee the flavour in your cup or current stock."
+  }
 }
