@@ -72,11 +72,11 @@ jobs:
                       "- **Live** Shopee prices, inventory, listing status and checkout are not checked by this workflow.",
                   ]
                   for product_id in report.get("photo_pending_ids", []):
-                      lines.append(f"  - Needs approved photo: \`{product_id}\`")
+                      lines.append(f"  - Needs approved photo: `{product_id}`")
               else:
                   lines.append(f"- Storefront validation: {report.get('result', 'not run')}")
               with open(os.environ["GITHUB_STEP_SUMMARY"], "a", encoding="utf-8") as target:
-                  target.write("\\n".join(lines) + "\\n")
+                  target.write("\n".join(lines) + "\n")
           PY
       - name: Check quote totals and negotiation revisions
         run: node --test tools/test_quote_model.mjs
