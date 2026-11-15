@@ -67,7 +67,10 @@ def check(build: Path) -> dict:
                         page.set_viewport_size({"width": width, "height": 900})
                         assert page.evaluate("document.documentElement.scrollWidth <= innerWidth + 1"), (engine, lang, width)
                     if engine == "chromium" and lang == "th":
+                        page.set_viewport_size({"width": 390, "height": 844})
                         page.screenshot(path=str(build.parent / "qa" / "finder-mobile.png"), full_page=True)
+                        page.set_viewport_size({"width": 1440, "height": 900})
+                        page.screenshot(path=str(build.parent / "qa" / "finder-desktop.png"), full_page=True)
                     reset()
                     choose("beans", "fruity", "black")
                     expect(result.locator(".finder-match h4").first).to_have_text("Ms. Lazybug")
