@@ -116,4 +116,5 @@ jobs:
             ${{ runner.temp }}/brewtanist-storefront-report.json
             ${{ runner.temp }}/brewtanist-finder-report.json
             qa/finder-mobile.png
+            qa/finder-desktop.png
           retention-days: 30
