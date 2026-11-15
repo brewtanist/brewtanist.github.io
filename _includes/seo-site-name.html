@@ -1,0 +1,15 @@
+{%- comment -%}
+One site name for the brand's canonical host. This include is called ONLY by the
+Thai root homepage; /en/ and /zh/ are language subdirectories of the same site.
+{%- endcomment -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": {{ site.url | append: '/#website' | jsonify }},
+  "url": {{ site.url | append: '/' | jsonify }},
+  "name": {{ site.data.brewtanist.settings.brand | jsonify | replace: '</', '<\/' }},
+  "alternateName": "Brewtanist",
+  "publisher": {"@id": {{ site.url | append: '/#business' | jsonify }}}
+}
+</script>
