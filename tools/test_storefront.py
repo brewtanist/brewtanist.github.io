@@ -165,6 +165,26 @@ def check(build):
     require(compact(pages["/"].select(tag="h1")[0].text()) == compact(home["hero_title"]),
             "Homepage hero differs from current saved CMS copy")
     checks.append("Rendered pages: complete Liquid output, saved hero copy, one H1, canonical/OG URLs and valid JSON-LD")
+    home_schemas = [
+        json.loads(script.text())
+        for script in pages["/"].select(tag="script")
+        if script.attrs.get("type") == "application/ld+json"
+    ]
+    cafes = [schema for schema in home_schemas if schema.get("@type") == "CafeOrCoffeeShop"]
+    require(len(cafes) == 1, "Homepage must identify one cafe business")
+    cafe = cafes[0]
+    require(cafe.get("@id") == ORIGIN + "/#business", "Incorrect stable business ID")
+    require(cafe.get("url") == ORIGIN + "/", "Business canonical URL must be the brand homepage")
+    require(settings["shopee"] in cafe.get("sameAs", []), "Shop's official Shopee link is missing from sameAs")
+    require(cafe.get("telephone") == settings["phone"], "Structured telephone differs from store settings")
+    require(cafe.get("hasMap") == settings["maps"], "Structured map differs from store settings")
+    opening = cafe.get("openingHoursSpecification", [])
+    require(len(opening) == 1 and opening[0].get("opens") == settings["opens"]
+            and opening[0].get("closes") == settings["closes"]
+            and opening[0].get("dayOfWeek") == settings["days"],
+            "Structured opening hours differ from saved hours")
+    checks.append("LocalBusiness identity, official store, phone, map and opening hours use saved business data")
+
 
     shop = pages["/shop/"]
     for nodes, key in ((shop.select(tag="h1"), "title"),

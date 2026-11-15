@@ -104,5 +104,12 @@
     "view_shopee": "在 Shopee 查看详情",
     "static_help": "可以先按咖啡类型浏览商品。",
     "disclaimer": "推荐仅根据咖啡馆保存的风味描述，不保证实际冲煮风味或当前库存。"
+  },
+  "analytics": {
+    "label": "网站统计同意设置",
+    "message": "是否允许使用 Google Analytics 统计页面浏览和链接点击？我们不会发送姓名、电话或表单内容。",
+    "accept": "同意统计",
+    "decline": "不同意",
+    "manage": "统计设置"
   }
 }

@@ -18,6 +18,7 @@ on:
       - 'sitemap.xml'
       - 'tools/test_storefront.py'
       - 'tools/test_shop_finder.py'
+      - 'tools/test_analytics_consent.py'
       - 'tools/test_quote_model.mjs'
       - '.github/workflows/storefront-check.yml'
   pull_request:
@@ -30,6 +31,7 @@ on:
       - 'zh/**'
       - 'tools/test_storefront.py'
       - 'tools/test_shop_finder.py'
+      - 'tools/test_analytics_consent.py'
       - 'brewtanist/**'
       - 'tools/verify_languages.py'
       - '.github/workflows/storefront-check.yml'
@@ -89,6 +91,34 @@ jobs:
           python3 -m playwright install --with-deps chromium webkit
       - name: Check Coffee Finder in Thai, English and Chinese
         run: python3 tools/test_shop_finder.py _site --report "$RUNNER_TEMP/brewtanist-finder-report.json"
+      - name: Confirm tracking is off in the published configuration
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          config = json.loads(Path('_data/brewtanist/analytics.json').read_text())
+          assert config == {'enabled': False, 'measurement_id': ''}, 'Do not activate tracking without owner approval and an ID'
+          PY
+          node --check brewtanist/analytics.js
+          python3 tools/test_analytics_consent.py _site
+      - name: Enable a fictional GA4 ID in a temporary test checkout only
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          config = Path('_data/brewtanist/analytics.json')
+          config.write_text(json.dumps({'enabled': True, 'measurement_id': 'G-TEST123456'}) + '\n')
+          PY
+      - name: Build isolated opt-in consent test pages
+        uses: actions/jekyll-build-pages@44a6e6beabd48582f863aeeb6cb2151cc1716697
+        with:
+          source: ./
+          destination: ./_site-analytics-preview
+      - name: Verify no tracking before consent and safe events after
+        run: python3 tools/test_analytics_consent.py _site-analytics-preview --enabled
+      - name: Restore published analytics configuration
+        if: always()
+        run: git show HEAD:_data/brewtanist/analytics.json > _data/brewtanist/analytics.json
       - name: Hide optional homepage sections in the test checkout
         run: |
           python3 - <<'PY'

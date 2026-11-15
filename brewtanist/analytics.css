@@ -1,0 +1,27 @@
+/* Visible only after a valid owner-supplied GA4 ID and explicit enablement. */
+.brew-analytics-banner {
+  position:fixed; z-index:99; inset:auto 16px 16px;
+  max-width:600px; margin-inline:auto; padding:19px 22px;
+  background:#fffdf8; color:#213a31;
+  border:1px solid #cad4c8; border-radius:10px;
+  box-shadow:0 14px 36px #203a3025;
+  font-family:'Bai Jamjuree',sans-serif;
+}
+.brew-analytics-banner[hidden]{display:none!important}
+.brew-analytics-banner p{font:400 14px/1.8 'Bai Jamjuree',sans-serif; margin:0 0 13px; color:#364b40}
+.brew-analytics-actions{display:flex; flex-wrap:wrap; gap:10px}
+.brew-analytics-actions button{
+  cursor:pointer; flex:1 0 130px; padding:9px 15px;
+  min-height:44px; background:transparent; border:1px solid #49624f; border-radius:6px;
+  font:600 14px/1.5 'Bai Jamjuree',sans-serif; color:#243c32
+}
+.brew-analytics-actions .brew-analytics-accept{background:#243c32;color:#fffdf8}
+.brew-analytics-manage{
+  cursor:pointer; background:transparent; border:0; border-bottom:1px solid currentColor;
+  min-height:44px; padding:8px 0; margin:0; font:400 12px/1.7 'Bai Jamjuree',sans-serif;
+  color:inherit
+}
+.brew-analytics-actions button:focus-visible,.brew-analytics-manage:focus-visible{
+  outline:2px solid #345e48; outline-offset:3px
+}
+@media(max-width:520px){.brew-analytics-banner{inset:auto 10px 10px;padding:16px}}

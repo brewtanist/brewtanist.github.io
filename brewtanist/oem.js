@@ -245,6 +245,7 @@
       const receipt = await response.json();
       if (receipt.ok !== true || receipt.reference !== request.reference) throw Error("Receipt could not be verified");
       confirmed = true; deliveryMessage = ""; send.hidden = true; edit.hidden = true; configureEmail();
+      window.BrewtanistAnalytics?.track("generate_lead", {lead_source: "oem_form"});
       title.textContent = copy.sent_title; title.focus();
       document.getElementById("oem-next").textContent = copy.success;
       status.textContent = "";
