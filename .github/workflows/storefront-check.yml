@@ -19,6 +19,17 @@ on:
       - 'tools/test_storefront.py'
       - 'tools/test_quote_model.mjs'
       - '.github/workflows/storefront-check.yml'
+  pull_request:
+    paths:
+      - '_data/**'
+      - '_includes/**'
+      - 'index.html'
+      - 'shop/**'
+      - 'en/**'
+      - 'zh/**'
+      - 'tools/test_storefront.py'
+      - 'tools/verify_languages.py'
+      - '.github/workflows/storefront-check.yml'
 
 permissions:
   contents: read
@@ -41,6 +52,32 @@ jobs:
           destination: ./_site
       - name: Verify rendered products, Shopee links, assets and navigation
         run: python3 tools/test_storefront.py _site --report "$RUNNER_TEMP/brewtanist-storefront-report.json"
+      - name: Write Shop photo gaps and source-date summary
+        if: always()
+        run: |
+          python3 - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+          report_path = Path(os.environ["RUNNER_TEMP"]) / "brewtanist-storefront-report.json"
+          if report_path.is_file():
+              report = json.loads(report_path.read_text(encoding="utf-8"))
+              lines = ["## Brewtanist Shop review", ""]
+              if report.get("result") == "PASS":
+                  lines += [
+                      f"- Visible products: {report['visible_products']}",
+                      f"- Products with local photos: {report['product_images']}",
+                      f"- Missing product photos: {report['image_fallbacks']}",
+                      f"- Shopee listing snapshot: {report.get('catalogue_snapshot_date') or 'not recorded'}",
+                      "- **Live** Shopee prices, inventory, listing status and checkout are not checked by this workflow.",
+                  ]
+                  for product_id in report.get("photo_pending_ids", []):
+                      lines.append(f"  - Needs approved photo: \`{product_id}\`")
+              else:
+                  lines.append(f"- Storefront validation: {report.get('result', 'not run')}")
+              with open(os.environ["GITHUB_STEP_SUMMARY"], "a", encoding="utf-8") as target:
+                  target.write("\\n".join(lines) + "\\n")
+          PY
       - name: Check quote totals and negotiation revisions
         run: node --test tools/test_quote_model.mjs
       - name: Hide optional homepage sections in the test checkout
