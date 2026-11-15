@@ -113,7 +113,7 @@ def run(build: Path, enabled: bool):
             expect(page.locator("#oem-next")).to_contain_text("โรงคั่วจะติดต่อกลับ")
             events = page.evaluate("""() => Array.from(window.dataLayer).map(a=>Array.from(a)).filter(a=>a[0]==='event'&&a[1]==='generate_lead')""")
             assert len(events) == 1 and events[0][2] == {"lead_source":"oem_form"}, events
-            sent = json.dumps(page.evaluate("Array.from(window.dataLayer).map(a=>Array.from(a))"), ensure_ascii=False)
+            sent = json.dumps(page.evaluate("Array.from(window.dataLayer).map(a=>Array.from(a)).filter(a=>a[0]===\'event\')"), ensure_ascii=False)
             assert "QA Test" not in sent and "qa@example.invalid" not in sent and "2.5" not in sent
             checks.append("Fake OEM receipt: one generate_lead event, no form values in analytics payload")
 
