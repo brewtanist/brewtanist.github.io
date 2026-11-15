@@ -19,6 +19,7 @@
   <title>{{ tx.title | escape }} | The Brewtanist</title>
   <meta name="description" content="{{ tx.intro | escape }}">
   {% include language-links.html %}
+  {% include seo-breadcrumb.html lang=lang current_name=tx.nav %}
   <meta property="og:type" content="website">
   <meta property="og:title" content="{{ tx.title | escape }} | The Brewtanist">
   <meta property="og:description" content="{{ tx.intro | escape }}">
