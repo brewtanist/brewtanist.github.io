@@ -104,5 +104,12 @@
     "view_shopee": "View details on Shopee",
     "static_help": "Browse coffees by the format you use at home.",
     "disclaimer": "These suggestions use the tasting notes saved by the café. They do not guarantee the flavour in your cup or current stock."
+  },
+  "analytics": {
+    "label": "Website analytics consent",
+    "message": "Allow Google Analytics to measure page visits and link clicks? We do not send names, phone numbers or form messages.",
+    "accept": "Allow analytics",
+    "decline": "No thanks",
+    "manage": "Analytics settings"
   }
 }
