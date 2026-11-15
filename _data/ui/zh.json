@@ -77,5 +77,32 @@
   "close_photo": "关闭图片",
   "previous_photo": "上一张",
   "next_photo": "下一张",
-  "open_photo": "查看图片：%alt%"
+  "open_photo": "查看图片：%alt%",
+  "finder_form": {
+    "format_question": "1. 想买哪一种咖啡？",
+    "format_beans": "烘焙咖啡豆",
+    "format_capsules": "咖啡胶囊",
+    "format_drip": "挂耳咖啡",
+    "taste_question": "2. 喜欢哪种风味？",
+    "taste_chocolate": "巧克力 / 坚果",
+    "taste_sweet": "香草 / 柔和甜感",
+    "taste_fruity": "花香 / 果香",
+    "unsure": "还不确定",
+    "drink_question": "3. 平时怎么喝咖啡？",
+    "drink_black": "黑咖啡",
+    "drink_milk": "加奶咖啡",
+    "submit": "看看可以尝试的咖啡",
+    "restart": "重新选择",
+    "result_title": "与你偏好相近的拼配",
+    "result_lead": "根据你的选择看看相符的风味描述，购买前请确认商品详情。",
+    "all_title": "先看看三款店内拼配",
+    "all_lead": "还没想好？可以先比较三款咖啡的风味，也可以到店询问咖啡师。",
+    "category_capsules": "查看咖啡胶囊",
+    "category_drip": "查看挂耳咖啡",
+    "category_lead": "购买前请在 Shopee 确认商品详情和库存；胶囊咖啡还需要核对咖啡机兼容性。",
+    "category_link": "查看此分类",
+    "view_shopee": "在 Shopee 查看详情",
+    "static_help": "可以先按咖啡类型浏览商品。",
+    "disclaimer": "推荐仅根据咖啡馆保存的风味描述，不保证实际冲煮风味或当前库存。"
+  }
 }

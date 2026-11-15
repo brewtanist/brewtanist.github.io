@@ -1,0 +1,31 @@
+/* Coffee Finder: scoped to the original GitHub Pages storefront. */
+.finder-section { padding: clamp(42px,5vw,76px) 0; background: #e9ede3; border-top: 1px solid var(--line); scroll-margin-top: 95px; }
+.finder-layout { display: grid; grid-template-columns: minmax(0,.75fr) minmax(0,1.25fr); gap: clamp(28px,5vw,78px); align-items: start; }
+.finder-eyebrow { display:block; font: 600 11px/1.6 'Lexend','Bai Jamjuree',sans-serif; letter-spacing: .1em; margin: 0 0 14px; color:#4a6555; }
+.finder-intro h2 { font: 600 clamp(28px,3.2vw,42px)/1.25 'Bai Jamjuree',sans-serif; letter-spacing: -.035em; margin: 0 0 16px; }
+.finder-intro>p { font: 400 16px/1.85 'Bai Jamjuree',sans-serif; margin:0 0 15px; color:var(--muted); }
+.finder-intro .finder-disclaimer { font-size: 13px; line-height: 1.85; padding: 14px 0 0; border-top:1px solid #cbd4c5; }
+.finder-panel { background: var(--paper); padding: clamp(20px,3vw,34px); border:1px solid #d5ded1; border-radius:10px; }
+.finder-panel [data-finder-static] p { margin: 0 0 15px; }
+.finder-static-links { display: flex; flex-wrap: wrap; gap: 10px; }
+.finder-static-links a { border:1px solid #879b85; padding:10px 14px; border-radius:6px; color: var(--ink); font-size:14px; min-height:44px; }
+.finder-question { border:0; padding:0 0 23px; margin:0 0 22px; border-bottom:1px solid #d7dfd4; min-width:0; }
+.finder-question legend { font: 600 17px/1.55 'Bai Jamjuree',sans-serif; margin:0 0 13px; padding:0; }
+.finder-choices { display:flex; flex-wrap:wrap; gap:10px; }
+.finder-choices label { position:relative; display:flex; align-items:center; min-height:46px; cursor:pointer; background:#fff; border:1px solid #cbd6c8; border-radius:7px; padding:9px 14px; font:500 14px/1.45 'Bai Jamjuree',sans-serif; }
+.finder-choices label:has(input:checked) { border-color:#244b39; background:#e6eee2; }
+.finder-choices input { width:16px; height:16px; flex:0 0 auto; accent-color:#244b39; margin:0 9px 0 0; }
+.finder-choices label:focus-within { outline:2px solid #244b39; outline-offset:2px; }
+.finder-submit { margin-top: 3px; width:100%; min-height:48px; }
+.finder-result h3 { font:600 25px/1.35 'Bai Jamjuree',sans-serif; margin:0 0 8px; }
+.finder-result>p { font-size:14px; line-height:1.8; margin:0 0 14px; color:var(--muted); }
+.finder-result-items { display:grid; grid-template-columns:1fr; gap:12px; }
+.finder-match { min-width:0; border:1px solid #d6dfd3; background:#fff; padding:17px; border-radius:7px; }
+.finder-match h4 { font:600 19px/1.4 'Lexend','Bai Jamjuree',sans-serif; margin:0 0 5px; }
+.finder-match p { margin:4px 0 10px; font:400 14px/1.7 'Bai Jamjuree',sans-serif; color:var(--muted); }
+.finder-match .finder-match-notes { color:#385344; font-weight:500; }
+.finder-result-link { display:inline-flex; align-items:center; min-height:44px; padding:8px 0; color:#244b39; font-weight:600; font-size:14px; text-decoration:underline; text-underline-offset:4px; }
+.finder-restart { margin-top:15px; min-height:44px; border:1px solid #a9b8a5; border-radius:6px; color:var(--ink); background:transparent; padding:8px 15px; cursor:pointer; }
+@media(max-width:800px) { .finder-layout { grid-template-columns:1fr; gap:22px; } .finder-panel {padding:22px;} .finder-section { scroll-margin-top:85px; } }
+@media(max-width:400px) { .finder-panel {padding:17px;} .finder-choices {gap:8px;} .finder-choices label{width:100%;} .finder-intro h2 {font-size:29px;} }
+@media(prefers-reduced-motion:reduce) { .finder-section {scroll-behavior:auto;} }
