@@ -123,7 +123,17 @@ def check(build):
     require(all(str(item.get("shopeeItemId", "")).isdigit() for item in items), "Invalid Shopee item ID")
     visible = {item["id"]: item for item in items if item["visible"] is True}
     categories = Counter(item["category"] for item in visible.values())
-    report.update(visible_products=len(visible), category_counts=dict(sorted(categories.items())))
+    photo_pending_ids = sorted(
+        item_id for item_id, item in visible.items()
+        if not (item.get("image") or houses.get(item.get("houseId"), {}).get("image"))
+    )
+    report.update(
+        visible_products=len(visible),
+        category_counts=dict(sorted(categories.items())),
+        photo_pending_ids=photo_pending_ids,
+        catalogue_snapshot_date=marketplace.get("retrievedOn", ""),
+        catalogue_source_status=marketplace.get("sourceStatus", ""),
+    )
     cache = {}
 
     def page_at(path):
@@ -213,6 +223,7 @@ def check(build):
     featured = pages["/"].select(attribute="data-shop-card")
     for card in featured:
         check_card(card)
+    require(fallback_count == len(photo_pending_ids), "Shop photo gaps differ from saved product data")
     report.update(product_images=image_count, image_fallbacks=fallback_count, homepage_featured_products=len(featured))
     checks.append("Product IDs, categories, copy, configured images/fallbacks and exact Shopee SKU links match saved data")
 
