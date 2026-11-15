@@ -38,7 +38,11 @@ def verify_languages(build, root, parse):
             if section == "/":
                 heading = main.select(tag="h1")[0]
                 assert ''.join(heading.text().split()) == ''.join(text['home']['hero_title'].split()), route
-                profile = next(json.loads(el.text()) for el in page.select(tag="script") if el.attrs.get("type")=="application/ld+json")
+                schemas = [json.loads(el.text()) for el in page.select(tag="script")
+                           if el.attrs.get("type") == "application/ld+json"]
+                cafes = [schema for schema in schemas if schema.get("@type") == "CafeOrCoffeeShop"]
+                assert len(cafes) == 1, f"Expected one café business schema on {route}"
+                profile = cafes[0]
                 hours = profile['openingHoursSpecification'][0]
                 assert (hours["opens"],hours["closes"],profile["telephone"],profile["hasMap"]) == tuple(native["settings"][k] for k in ("opens","closes","phone","maps")), route
             if section != "/shop/":

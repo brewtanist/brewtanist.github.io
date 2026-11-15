@@ -17,6 +17,7 @@ on:
       - '_config.yml'
       - 'sitemap.xml'
       - 'tools/test_storefront.py'
+      - 'tools/test_site_name_breadcrumbs.py'
       - 'tools/test_shop_finder.py'
       - 'tools/test_analytics_consent.py'
       - 'tools/test_quote_model.mjs'
@@ -30,6 +31,7 @@ on:
       - 'en/**'
       - 'zh/**'
       - 'tools/test_storefront.py'
+      - 'tools/test_site_name_breadcrumbs.py'
       - 'tools/test_shop_finder.py'
       - 'tools/test_analytics_consent.py'
       - 'brewtanist/**'
@@ -57,6 +59,8 @@ jobs:
           destination: ./_site
       - name: Verify rendered products, Shopee links, assets and navigation
         run: python3 tools/test_storefront.py _site --report "$RUNNER_TEMP/brewtanist-storefront-report.json"
+      - name: Verify brand site name and six localized breadcrumbs
+        run: python3 tools/test_site_name_breadcrumbs.py _site
       - name: Write Shop photo gaps and source-date summary
         if: always()
         run: |

@@ -1,0 +1,19 @@
+{%- comment -%}
+Breadcrumbs share the actual Home > Shop or Home > OEM navigation.
+All URLs and labels come from the current locale, with no sample or third-party URLs.
+Usage: include seo-breadcrumb.html lang=lang current_name=ui.shop
+{%- endcomment -%}
+{%- assign seo_lang = include.lang | default: 'th' -%}
+{%- assign seo_locale = site.data.languages[seo_lang] -%}
+{%- assign seo_ui = site.data.ui[seo_lang] -%}
+{%- assign seo_home = seo_locale.prefix | append: '/' -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type": "ListItem", "position": 1, "name": {{ seo_ui.home | jsonify | replace: '</', '<\/' }}, "item": {{ seo_home | absolute_url | jsonify }}},
+    {"@type": "ListItem", "position": 2, "name": {{ include.current_name | jsonify | replace: '</', '<\/' }}, "item": {{ page.url | absolute_url | jsonify }}}
+  ]
+}
+</script>
