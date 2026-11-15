@@ -17,6 +17,7 @@ on:
       - '_config.yml'
       - 'sitemap.xml'
       - 'tools/test_storefront.py'
+      - 'tools/test_hero_preload.py'
       - 'tools/test_site_name_breadcrumbs.py'
       - 'tools/test_shop_finder.py'
       - 'tools/test_analytics_consent.py'
@@ -31,6 +32,7 @@ on:
       - 'en/**'
       - 'zh/**'
       - 'tools/test_storefront.py'
+      - 'tools/test_hero_preload.py'
       - 'tools/test_site_name_breadcrumbs.py'
       - 'tools/test_shop_finder.py'
       - 'tools/test_analytics_consent.py'
@@ -59,6 +61,8 @@ jobs:
           destination: ./_site
       - name: Verify rendered products, Shopee links, assets and navigation
         run: python3 tools/test_storefront.py _site --report "$RUNNER_TEMP/brewtanist-storefront-report.json"
+      - name: Verify responsive hero preload markup and actual AVIF assets
+        run: python3 tools/test_hero_preload.py _site
       - name: Verify brand site name and six localized breadcrumbs
         run: python3 tools/test_site_name_breadcrumbs.py _site
       - name: Write Shop photo gaps and source-date summary
@@ -95,6 +99,8 @@ jobs:
           python3 -m playwright install --with-deps chromium webkit
       - name: Check Coffee Finder in Thai, English and Chinese
         run: python3 tools/test_shop_finder.py _site --report "$RUNNER_TEMP/brewtanist-finder-report.json"
+      - name: Confirm hero AVIF loads once in Chromium and WebKit
+        run: python3 tools/test_hero_preload.py _site --browser
       - name: Confirm tracking is off in the published configuration
         run: |
           python3 - <<'PY'

@@ -26,6 +26,7 @@
   <meta property="og:url" content="{{ page.url | absolute_url | escape }}">
   <meta property="og:image" content="{{ site.data.brewtanist.settings.social_image | absolute_url | escape }}">
   <meta name="twitter:card" content="summary_large_image">
+  {% include preload-hero.html src="/brewtanist/assets/brewtanist-products.jpg" sizes="(max-width: 400px) calc(100vw - 40px), (max-width: 800px) 90vw, (max-width: 1400px) 50vw, 690px" %}
   {% if lang == 'th' or lang == 'en' %}<link rel="preload" as="font" type="font/woff2" href="/brewtanist/fonts/baijamjuree-600-{% if lang == 'th' %}thai{% else %}latin{% endif %}.woff2" crossorigin>{% endif %}
   <link rel="stylesheet" href="/brewtanist/site.css?v=20261110-speed">
   <link rel="stylesheet" href="/brewtanist/refinement.css?v=20261110-languages">

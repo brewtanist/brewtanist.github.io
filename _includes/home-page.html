@@ -34,6 +34,7 @@
 <meta property="og:url" content="{{ page.url | absolute_url | escape }}">
 <meta property="og:image" content="{{ site.data.brewtanist.settings.social_image | absolute_url | escape }}">
 <meta name="twitter:card" content="summary_large_image">
+{% include preload-hero.html src=site.data.brewtanist.home.hero_image sizes="(max-width: 400px) calc(100vw - 40px), (max-width: 610px) 90vw, (max-width: 800px) 550px, (max-width: 1400px) 45vw, 630px" %}
 {% if lang == 'th' or lang == 'en' %}<link rel="preload" as="font" type="font/woff2" href="/brewtanist/fonts/baijamjuree-600-{% if lang == 'th' %}thai{% else %}latin{% endif %}.woff2" crossorigin>{% endif %}
 <link rel="stylesheet" href="/brewtanist/site.css?v=20261110-speed">
 <link rel="stylesheet" href="/brewtanist/refinement.css?v=20261110-languages">
