@@ -1,0 +1,71 @@
+{%- assign f = ui.finder_form -%}
+{%- assign finder_items = site.data.brewtanist.products.items | where: 'visible', true -%}
+<section class="finder-section" id="coffee-finder" data-coffee-finder aria-labelledby="finder-heading">
+  <div class="wrap finder-layout">
+    <div class="finder-intro">
+      <span class="finder-eyebrow">COFFEE FINDER / THE BREWTANIST</span>
+      <h2 id="finder-heading">{{ content_data.products.finder_title | escape }}</h2>
+      <p>{{ content_data.products.finder_text | escape }}</p>
+      <p class="finder-disclaimer">{{ f.disclaimer | escape }}</p>
+    </div>
+    <div class="finder-panel">
+      <div data-finder-static>
+        <p>{{ f.static_help | escape }}</p>
+        <div class="finder-static-links">
+          <a href="{{ shop_path }}?category=house#catalog">{{ ui.house | escape }}</a>
+          <a href="{{ shop_path }}?category=capsules#catalog">{{ ui.capsules | escape }}</a>
+          <a href="{{ shop_path }}?category=drip#catalog">{{ ui.drip | escape }}</a>
+        </div>
+      </div>
+      <form data-finder-form hidden>
+        <fieldset class="finder-question">
+          <legend>{{ f.format_question | escape }}</legend>
+          <div class="finder-choices">
+            <label><input type="radio" name="format" value="beans" required><span>{{ f.format_beans | escape }}</span></label>
+            <label><input type="radio" name="format" value="capsules"><span>{{ f.format_capsules | escape }}</span></label>
+            <label><input type="radio" name="format" value="drip"><span>{{ f.format_drip | escape }}</span></label>
+          </div>
+        </fieldset>
+        <fieldset class="finder-question" data-finder-bean-question>
+          <legend>{{ f.taste_question | escape }}</legend>
+          <div class="finder-choices">
+            <label><input type="radio" name="taste" value="chocolate" required><span>{{ f.taste_chocolate | escape }}</span></label>
+            <label><input type="radio" name="taste" value="sweet"><span>{{ f.taste_sweet | escape }}</span></label>
+            <label><input type="radio" name="taste" value="fruity"><span>{{ f.taste_fruity | escape }}</span></label>
+            <label><input type="radio" name="taste" value="unsure"><span>{{ f.unsure | escape }}</span></label>
+          </div>
+        </fieldset>
+        <fieldset class="finder-question" data-finder-bean-question>
+          <legend>{{ f.drink_question | escape }}</legend>
+          <div class="finder-choices">
+            <label><input type="radio" name="drink" value="black" required><span>{{ f.drink_black | escape }}</span></label>
+            <label><input type="radio" name="drink" value="milk"><span>{{ f.drink_milk | escape }}</span></label>
+            <label><input type="radio" name="drink" value="unsure"><span>{{ f.unsure | escape }}</span></label>
+          </div>
+        </fieldset>
+        <button class="btn finder-submit" type="submit">{{ f.submit | escape }}</button>
+      </form>
+      <div class="finder-result" data-finder-result role="status" aria-live="polite" hidden>
+        <h3 data-finder-result-title tabindex="-1"></h3>
+        <p data-finder-result-lead></p>
+        <div class="finder-result-items" data-finder-result-items></div>
+        <button type="button" class="finder-restart" data-finder-restart>{{ f.restart | escape }}</button>
+      </div>
+    </div>
+  </div>
+</section>
+<script type="application/json" id="coffee-finder-copy">{{ f | jsonify | replace: '</', '<\/' }}</script>
+<script type="application/json" id="coffee-finder-products">[
+{%- for entry in finder_items -%}
+  {%- assign item = content_data.products.items | where: 'id', entry.id | first | default: entry -%}
+  {
+    "id": {{ entry.id | jsonify | replace: '</', '<\/' }},
+    "name": {{ item.name | jsonify | replace: '</', '<\/' }},
+    "notes": {{ item.notes | jsonify | replace: '</', '<\/' }},
+    "description": {{ item.description | jsonify | replace: '</', '<\/' }},
+    "tasteTags": {{ entry.tasteTags | jsonify }},
+    "drinkTags": {{ entry.drinkTags | jsonify }},
+    "url": {{ entry.productUrl | jsonify | replace: '</', '<\/' }}
+  }{%- unless forloop.last -%},{%- endunless -%}
+{%- endfor -%}
+]</script>
