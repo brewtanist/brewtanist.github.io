@@ -103,3 +103,22 @@
   .shop-hero p { font-size: 16px; }
   .shop-filter, .shop-result-count, .shop-category { font-size: 14px; }
 }
+
+/* Desktop: keep the category filters on one predictable row.
+   A Thai font swap previously changed chip widths and wrapped the next
+   search row, producing CLS in live Lighthouse reports. On narrower
+   desktop screens the filter strip scrolls inside its own container. */
+@media (min-width: 801px) {
+  .shop-filters {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    overscroll-behavior-inline: contain;
+    scrollbar-width: thin;
+    padding-block: 8px;
+  }
+  .shop-filter {
+    flex: 0 0 auto;
+    white-space: nowrap;
+  }
+}
