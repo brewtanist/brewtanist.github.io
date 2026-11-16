@@ -1,0 +1,42 @@
+name: Check Brewtanist OEM transport without sending requests
+
+on:
+  pull_request:
+    paths:
+      - '_data/oem_intake.yml'
+      - 'tools/check_oem_transport.py'
+      - '.github/workflows/oem-transport-smoke.yml'
+  push:
+    branches: [main]
+    paths:
+      - '_data/oem_intake.yml'
+      - 'tools/check_oem_transport.py'
+      - '.github/workflows/oem-transport-smoke.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: brewtanist-oem-transport-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  read-only-transport:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 4
+    steps:
+      - name: Check out exact public site configuration
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - name: Validate CORS checks using synthetic fixtures (no network)
+        run: python3 tools/check_oem_transport.py --self-test
+      - name: Check preflight and staff-page reachability only
+        run: python3 tools/check_oem_transport.py --report qa/oem-transport-report.json
+      - name: Preserve non-sensitive transport status report
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: brewtanist-oem-transport-readonly
+          path: qa/oem-transport-report.json
+          if-no-files-found: warn
+          retention-days: 14
