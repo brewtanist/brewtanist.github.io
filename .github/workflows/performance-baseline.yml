@@ -13,10 +13,16 @@ on:
     paths:
       - '_includes/shop-page.html'
       - '_includes/home-page.html'
+      - 'favicon.ico'
+      - 'favicon.svg'
       - '_includes/oem-form.html'
       - 'brewtanist/shop.css'
       - 'brewtanist/site.css'
       - '.github/workflows/performance-baseline.yml'
+  # Weekly live diagnostics: Monday 09:00 Asia/Bangkok (02:00 UTC).
+  # No external notification, private API, cookies or tracking added.
+  schedule:
+    - cron: '0 2 * * 1'
   workflow_dispatch:
 
 permissions:
