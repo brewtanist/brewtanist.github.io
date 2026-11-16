@@ -58,6 +58,8 @@ def inspect(build: Path) -> None:
                 ctx.close()
                 browser.close()
                 print("PASS: " + engine + " OEM form visible with JS, fallback visible without JS")
+    finally:
+        server.shutdown()
 
 
 def main():
