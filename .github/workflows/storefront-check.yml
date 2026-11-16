@@ -17,6 +17,7 @@ on:
       - '_config.yml'
       - 'sitemap.xml'
       - 'tools/test_storefront.py'
+      - 'tools/test_favicon.py'
       - 'tools/test_hero_preload.py'
       - 'tools/test_shop_font_preloads.py'
       - 'tools/test_shop_filter_stability.py'
@@ -35,6 +36,7 @@ on:
       - 'en/**'
       - 'zh/**'
       - 'tools/test_storefront.py'
+      - 'tools/test_favicon.py'
       - 'tools/test_hero_preload.py'
       - 'tools/test_shop_font_preloads.py'
       - 'tools/test_shop_filter_stability.py'
@@ -67,6 +69,8 @@ jobs:
           destination: ./_site
       - name: Verify rendered products, Shopee links, assets and navigation
         run: python3 tools/test_storefront.py _site --report "$RUNNER_TEMP/brewtanist-storefront-report.json"
+      - name: Verify site icon on all localized public routes
+        run: python3 tools/test_favicon.py _site
       - name: Verify responsive hero preload markup and actual AVIF assets
         run: python3 tools/test_hero_preload.py _site
       - name: Verify desktop Shop font preloads without mobile duplicate loads
@@ -109,6 +113,8 @@ jobs:
         run: python3 tools/test_shop_filter_stability.py _site
       - name: Check Coffee Finder in Thai, English and Chinese
         run: python3 tools/test_shop_finder.py _site --report "$RUNNER_TEMP/brewtanist-finder-report.json"
+      - name: Verify favicon without default-icon console errors
+        run: python3 tools/test_favicon.py _site --browser
       - name: Verify OEM initial form layout and no-JS fallback
         run: python3 tools/test_oem_form_layout.py _site
       - name: Confirm hero AVIF loads once in Chromium and WebKit
