@@ -6,6 +6,14 @@
   const cards = [...grid.querySelectorAll('[data-shop-card]')];
   const controls = document.querySelector('[data-shop-controls]');
   const filters = [...document.querySelectorAll('[data-filter]')];
+  // A desktop-only horizontally scrollable chip row must keep keyboard focus visible.
+  const filterStrip = controls?.querySelector('.shop-filters');
+  filterStrip?.addEventListener('focusin', event => {
+    const chip = event.target.closest?.('[data-filter]');
+    if (chip && window.matchMedia('(min-width: 801px)').matches) {
+      chip.scrollIntoView({block: 'nearest', inline: 'nearest', behavior: 'auto'});
+    }
+  });
   const search = document.querySelector('#shop-search');
   const result = document.querySelector('[data-result-count]');
   const empty = document.querySelector('[data-shop-empty]');
