@@ -40,7 +40,7 @@ def verify(build: Path) -> None:
             require("crossorigin" in attrs, f"{lang}: missing font preload CORS mode")
             name = attrs["href"]
             require((build / name.lstrip("/")).is_file(), f"{lang}: missing font asset {name}")
-            if name in DESKTOP_ONLY:
+            if lang == "th" and name in DESKTOP_ONLY:
                 require(attrs.get("media") == "(min-width: 801px)",
                         f"{lang}: CLS font preload must be desktop-only: {name}")
             else:
