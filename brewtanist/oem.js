@@ -136,7 +136,7 @@
     document.getElementById("oem-ref").textContent = request.reference;
     document.getElementById("oem-next").textContent = confirmed ? copy.success : root.dataset.endpoint ? copy.review_online : root.dataset.email ? copy.manual_email : copy.manual;
     title.textContent = confirmed ? copy.sent_title : copy.result;
-    send.hidden = !root.dataset.endpoint || confirmed;
+    send.hidden = !root.dataset.endpoint || confirmed || deliveryMessage === "ref_conflict";
     edit.hidden = confirmed;
     status.textContent = confirmed ? "" : copy[deliveryMessage] || "";
     configureEmail(Boolean(deliveryMessage));
@@ -234,11 +234,9 @@
         credentials: "omit", referrerPolicy: "no-referrer", signal: controller.signal
       });
       if (!response.ok) {
-        if (response.status === 409) {
-          request.reference = reference();
-          attempted = false;
-          startReview();
-        }
+        // A 409 can be an existing saved request after an uncertain network
+        // response. Preserve its reference: generating a new one may create
+        // two leads for the same customer. Offer manual verification instead.
         const reason = {409: "ref_conflict", 413: "too_large", 422: "invalid_request", 429: "rate_limit"};
         throw Object.assign(new Error("Intake unavailable"), {displayKey: reason[response.status]});
       }
@@ -251,6 +249,7 @@
       status.textContent = "";
     } catch (error) {
       deliveryMessage = error.displayKey || "failed";
+      if (deliveryMessage === "ref_conflict") send.hidden = true;
       configureEmail(true);
       status.textContent = copy[deliveryMessage];
     }
