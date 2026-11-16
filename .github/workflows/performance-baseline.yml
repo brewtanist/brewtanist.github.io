@@ -8,6 +8,14 @@ on:
     paths:
       - 'tools/audit_performance.py'
       - '.github/workflows/performance-baseline.yml'
+  push:
+    branches: [main]
+    paths:
+      - '_includes/shop-page.html'
+      - '_includes/home-page.html'
+      - 'brewtanist/shop.css'
+      - 'brewtanist/site.css'
+      - '.github/workflows/performance-baseline.yml'
   workflow_dispatch:
 
 permissions:
