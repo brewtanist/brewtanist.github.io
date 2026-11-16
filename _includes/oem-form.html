@@ -29,6 +29,7 @@
   <link rel="stylesheet" href="/brewtanist/site.css?v=20261110-speed">
   <link rel="stylesheet" href="/brewtanist/refinement.css?v=20261110-languages">
   <link rel="stylesheet" href="/brewtanist/oem.css?v=1">
+  <noscript><style>#oem-form { display: none !important; }</style></noscript>
   <script defer src="/brewtanist/site.js?v=20261110-languages"></script>
   <script defer src="/brewtanist/form-feedback.js?v=2"></script>
   <script defer src="/brewtanist/oem.js?v=20261110-switch"></script>
@@ -59,7 +60,7 @@
     <div class="oem-grid">
       <div>
         <noscript><p>{{ tx.noscript | escape }}</p><p><a href="tel:{{ contact_phone | remove: ' ' | remove: '-' | escape }}">{{ contact_phone | escape }}</a> · <a href="{% include brewtanist-url.html url=chat %}">{{ tx.chat | escape }}</a></p></noscript>
-        <form id="oem-form" method="post" hidden>
+        <form id="oem-form" method="post">
           <p class="oem-required">{{ tx.required_help | escape }}</p>
           <fieldset class="oem-section">
             <legend>{{ tx.products | escape }}</legend>
