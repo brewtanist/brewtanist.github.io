@@ -13,6 +13,7 @@ on:
     paths:
       - '_includes/shop-page.html'
       - '_includes/home-page.html'
+      - '_includes/oem-form.html'
       - 'brewtanist/shop.css'
       - 'brewtanist/site.css'
       - '.github/workflows/performance-baseline.yml'
