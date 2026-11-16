@@ -22,6 +22,14 @@ class Quiet(SimpleHTTPRequestHandler):
 
 
 def inspect(build):
+    # Some browser engines request /favicon.ico even with an SVG icon link.
+    # The binary ICO fallback is intentionally served at the root, not via a fake SVG extension.
+    ico = build / "favicon.ico"
+    require(ico.is_file(), "Missing /favicon.ico fallback")
+    data = ico.read_bytes()
+    require(len(data) >= 22 and data[:4] == b"\\x00\\x00\\x01\\x00",
+            "Root favicon.ico is not a valid icon file")
+    require(int.from_bytes(data[4:6], "little") >= 1, "ICO must contain at least one image")
     icon = build / "favicon.svg"
     require(icon.is_file(), "Missing local /favicon.svg")
     root = ET.parse(icon).getroot()
@@ -36,7 +44,7 @@ def inspect(build):
         require(len(links) == 1, route + ": exactly one site icon required")
         require(links[0].attrs.get("type") == "image/svg+xml", route + ": incorrect icon format")
         require(links[0].attrs.get("href") == "/favicon.svg", route + ": incorrect icon path")
-    print("PASS: valid SVG favicon and nine public routes", flush=True)
+    print("PASS: valid SVG + genuine ICO fallback and nine public routes", flush=True)
 
 
 def browser_inspect(build):
