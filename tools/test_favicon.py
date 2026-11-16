@@ -27,7 +27,7 @@ def inspect(build):
     ico = build / "favicon.ico"
     require(ico.is_file(), "Missing /favicon.ico fallback")
     data = ico.read_bytes()
-    require(len(data) >= 22 and data[:4] == b"\\x00\\x00\\x01\\x00",
+    require(len(data) >= 22 and data[:4] == b"\x00\x00\x01\x00",
             "Root favicon.ico is not a valid icon file")
     require(int.from_bytes(data[4:6], "little") >= 1, "ICO must contain at least one image")
     icon = build / "favicon.svg"
