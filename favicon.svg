@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="The Brewtanist">
+  <rect width="64" height="64" rx="14" fill="#f7f3ea"/>
+  <path d="M18 12h16c12 0 19 5 19 14 0 6-3 10-9 12 8 2 11 6 11 12 0 10-7 15-21 15H18V12zm11 10v12h5c5 0 8-2 8-6s-3-6-8-6h-5zm0 21v12h6c6 0 9-2 9-6s-3-6-9-6h-6z" transform="translate(0 -6) scale(1 .92)" fill="#203a30"/>
+  <circle cx="53" cy="53" r="4" fill="#7f996e"/>
+</svg>
