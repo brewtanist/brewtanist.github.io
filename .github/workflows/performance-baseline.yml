@@ -1,0 +1,53 @@
+# Read-only performance baseline of the LIVE published site.
+# Runs on PR to validate the audit setup and manually with Run workflow later.
+# Not a Core Web Vitals field report; the data comes from simulated Lighthouse loads.
+name: Audit Brewtanist public-site performance
+
+on:
+  pull_request:
+    paths:
+      - 'tools/audit_performance.py'
+      - '.github/workflows/performance-baseline.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: brew-performance-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lighthouse-lab:
+    name: ${{ matrix.page }} / ${{ matrix.device }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    strategy:
+      fail-fast: false
+      max-parallel: 3
+      matrix:
+        page: [home, shop, oem]
+        device: [mobile, desktop]
+    steps:
+      - name: Checkout audit script
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - name: Verify runner's installed Chrome and Node
+        run: |
+          node --version
+          npm --version
+          (google-chrome --version || google-chrome-stable --version)
+      - name: Install pinned Lighthouse without updating site dependencies
+        run: npm install --no-save --no-package-lock --no-audit --no-fund lighthouse@13.6.0
+      - name: Audit the live public URL (no private login, no cookies)
+        run: |
+          python3 tools/audit_performance.py --page '${{ matrix.page }}' --device '${{ matrix.device }}'
+      - name: Upload exact Lighthouse results and summary
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: lighthouse-${{ matrix.page }}-${{ matrix.device }}
+          path: |
+            qa/performance-lab/${{ matrix.page }}-${{ matrix.device }}.lhr.json
+            qa/performance-lab/${{ matrix.page }}-${{ matrix.device }}.summary.json
+          if-no-files-found: warn
+          retention-days: 30
