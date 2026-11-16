@@ -88,6 +88,6 @@
   "sent_title": "Quote request received",
   "too_large": "Your request is too long to send. Shorten the notes and try again, or download the request and email it to the roastery.",
   "invalid_request": "Check your details and try again. You can also download your quote request and email it to the roastery.",
-  "ref_conflict": "That reference is already in use. Check the new request reference above and send your request again.",
+  "ref_conflict": "The system reports that this request reference already exists. We have kept it because your earlier request may have arrived. Copy the summary and reference, then ask the roastery to check before submitting again.",
   "rate_limit": "Too many requests have come through at once. Try again later with the same reference, or email the roastery."
 }
