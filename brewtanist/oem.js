@@ -136,7 +136,7 @@
     document.getElementById("oem-ref").textContent = request.reference;
     document.getElementById("oem-next").textContent = confirmed ? copy.success : root.dataset.endpoint ? copy.review_online : root.dataset.email ? copy.manual_email : copy.manual;
     title.textContent = confirmed ? copy.sent_title : copy.result;
-    send.hidden = !root.dataset.endpoint || confirmed || deliveryMessage === "ref_conflict";
+    send.hidden = !root.dataset.endpoint || confirmed || ["ref_conflict", "receipt_unverified"].includes(deliveryMessage);
     edit.hidden = confirmed;
     status.textContent = confirmed ? "" : copy[deliveryMessage] || "";
     configureEmail(Boolean(deliveryMessage));
@@ -240,8 +240,12 @@
         const reason = {409: "ref_conflict", 413: "too_large", 422: "invalid_request", 429: "rate_limit"};
         throw Object.assign(new Error("Intake unavailable"), {displayKey: reason[response.status]});
       }
-      const receipt = await response.json();
-      if (receipt.ok !== true || receipt.reference !== request.reference) throw Error("Receipt could not be verified");
+      const receipt = await response.json().catch(() => null);
+      if (receipt?.ok !== true || receipt.reference !== request.reference) {
+        // The server returned 2xx, so a request may already be stored.
+        // Do not invite an automatic retry when its receipt is invalid.
+        throw Object.assign(new Error("Receipt could not be verified"), {displayKey: "receipt_unverified"});
+      }
       confirmed = true; deliveryMessage = ""; send.hidden = true; edit.hidden = true; configureEmail();
       window.BrewtanistAnalytics?.track("generate_lead", {lead_source: "oem_form"});
       title.textContent = copy.sent_title; title.focus();
@@ -249,7 +253,7 @@
       status.textContent = "";
     } catch (error) {
       deliveryMessage = error.displayKey || "failed";
-      if (deliveryMessage === "ref_conflict") send.hidden = true;
+      if (["ref_conflict", "receipt_unverified"].includes(deliveryMessage)) send.hidden = true;
       configureEmail(true);
       status.textContent = copy[deliveryMessage];
     }
