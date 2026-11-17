@@ -11,8 +11,8 @@ th:
   steps:
     - 'เปิด Pages CMS แล้วเลือก <strong>Sign in with GitHub</strong> เข้าสู่ระบบด้วยบัญชี <code>pumplcrs-hub</code> หรือบัญชีที่มีสิทธิ์แก้ไขเว็บไซต์ของร้านบน GitHub'
     - 'เมื่อระบบขอติดตั้ง Pages CMS GitHub App ให้เลือก <strong>Only select repositories</strong> ในองค์กร <code>brewtanist</code> แล้วเลือก <code>brewtanist.github.io</code>'
-    - 'เปิด <code>brewtanist/brewtanist.github.io</code> เลือกสาขา <strong>main</strong> และเปิดหมวดที่จะแก้'
-    - 'ตรวจข้อความและรูปก่อนกด <strong>Save</strong> เมื่อบันทึกบนสาขา <code>main</code> แล้ว GitHub Pages จะเริ่มเผยแพร่'
+    - 'เปิด <code>brewtanist/brewtanist.github.io</code> แล้วเลือกสาขา <code>qa/pages-cms-owner-check</code> เพื่อลอง Save และอัปโหลดรูปก่อน อย่าเลือก main ระหว่างทดสอบ'
+    - 'เมื่อทดสอบบนสาขา QA ผ่านแล้ว ค่อยเปลี่ยนเป็น <code>main</code> สำหรับข้อมูลจริงที่อนุมัติ เพราะ Save บน main จะเริ่มเผยแพร่เว็บทันที'
   menu_heading: เลือกหมวดที่จะแก้
   section: หมวดใน CMS
   fields: ข้อมูลที่แก้ได้
@@ -53,8 +53,8 @@ en:
   steps:
     - 'In Pages CMS, choose <strong>Sign in with GitHub</strong>. Use <code>pumplcrs-hub</code> or another account with permission to edit the café’s repository.'
     - 'If GitHub asks you to install the Pages CMS app, choose the <code>brewtanist</code> organisation and <strong>Only select repositories</strong>. Select <code>brewtanist.github.io</code>.'
-    - 'Open <code>brewtanist/brewtanist.github.io</code>, select the <strong>main</strong> branch and choose the section you want to edit.'
-    - 'Check the text and photos, then choose <strong>Save</strong>. Saving to <code>main</code> starts the website update.'
+    - 'Open <code>brewtanist/brewtanist.github.io</code> and select <code>qa/pages-cms-owner-check</code> for the first Save and image-upload test. Do not use main for testing.'
+    - 'After testing on the QA branch, switch to <code>main</code> only for approved production content. Saving to main starts publication.'
   menu_heading: Where to make each change
   section: Section in Pages CMS
   fields: What you can edit
@@ -95,8 +95,8 @@ zh:
   steps:
     - '打开 Pages CMS，点击 <strong>Sign in with GitHub</strong>，使用 <code>pumplcrs-hub</code> 或其他有权编辑门店仓库的 GitHub 账号登录。'
     - '如果系统提示安装 Pages CMS GitHub App，请在 <code>brewtanist</code> 组织下选择 <strong>Only select repositories</strong>，再选中 <code>brewtanist.github.io</code>。'
-    - '打开 <code>brewtanist/brewtanist.github.io</code>，选择 <strong>main</strong> 分支，再进入要编辑的栏目。'
-    - '核对文字和图片后点击 <strong>Save</strong>。保存到 main 分支即可触发发布。'
+    - '打开 <code>brewtanist/brewtanist.github.io</code>，首次测试保存和上传图片时选择 <code>qa/pages-cms-owner-check</code> 分支；测试期间不要使用 main。'
+    - '先在 QA 分支完成测试。正式内容确认后才切换到 <code>main</code>；保存到 main 会触发网站发布。'
   menu_heading: 在哪里修改内容
   section: CMS 栏目
   fields: 可修改的内容

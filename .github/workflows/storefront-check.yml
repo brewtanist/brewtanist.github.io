@@ -2,8 +2,9 @@ name: Verify Brewtanist Jekyll storefront
 
 on:
   push:
-    branches: [feature/shopee-storefront-20261109, main]
+    branches: [feature/shopee-storefront-20261109, qa/pages-cms-owner-check, main]
     paths:
+      - '.pages.yml'
       - '_data/**'
       - 'en/**'
       - 'zh/**'

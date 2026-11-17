@@ -7,6 +7,8 @@
 
 First use requires the owner to sign in to Pages CMS with GitHub and grant its GitHub App access to this repository. ChatGPT's GitHub connection does not grant Pages CMS access. Select only this repository, not all repositories. Do not paste credentials into chat or commit tokens.
 
+**Safe owner acceptance test:** Before publishing the first CMS edit, use the pre-created `qa/pages-cms-owner-check` branch in Pages CMS, not `main`. Follow [CMS-SANDBOX-ACCEPTANCE.md](CMS-SANDBOX-ACCEPTANCE.md) to test an owner-authenticated Save, media upload, GitHub commit and automated storefront validation without updating the live site. Confirm the CMS branch selector before saving: editing `main` immediately triggers production publishing. The QA branch is still a **public GitHub branch**; never upload private images, customer data or credentials.
+
 ## Architecture
 - Jekyll reads `_data/brewtanist/*.json` and renders root `index.html` on the existing GitHub Pages build.
 - `.pages.yml` defines eight Thai-labeled forms and a media library.
@@ -34,9 +36,11 @@ Pre-redesign snapshot: branch `backup/brewtanist-before-cms-20260912`, commit `e
 Prefer reverting only the affected content file through a new commit. Do not force-push or delete the repository. The original website in the personal repository was left unchanged during migration.
 
 ## Legacy workflow caution
-The old ZIP-mirror workflow was deliberately not copied. Use Pages CMS on brewtanist/brewtanist.github.io, branch main. The migration workflow is one-time and refuses to overwrite an existing site.
+The old ZIP-mirror workflow was deliberately not copied. Use Pages CMS on brewtanist/brewtanist.github.io: the QA branch for first-time acceptance, then `main` for approved production content. The migration workflow is one-time and refuses to overwrite an existing site.
 
 ## Verify after saving
+For the non-production CMS acceptance test, check the **Verify Brewtanist Jekyll storefront** workflow on `qa/pages-cms-owner-check`. Do not expect the live GitHub Pages site to change. Once the owner has checked and approved a real content change, switch to `main` for publication.
+
 Check the latest `pages build and deployment` run, load `/`, inspect the changed section, verify image paths, mobile layout, and Google Maps/phone/Shopee links. Pages CMS owner login and image-upload flow must be completed/tested in the owner's browser.
 
 Docs: https://pagescms.org/docs/quick-start/ ; https://pagescms.org/docs/configuration/ ; https://jekyllrb.com/docs/datafiles/
