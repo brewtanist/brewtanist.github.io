@@ -1,0 +1,46 @@
+# Public, read-only availability and SEO sanity check, not Google indexing.
+# Runs on the LIVE deployed production website; PR runs do not preview PR content.
+name: Monitor Brewtanist published website (read-only)
+
+on:
+  pull_request:
+    paths:
+      - 'tools/check_live_storefront.py'
+      - '.github/workflows/live-site-health.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'tools/check_live_storefront.py'
+      - '.github/workflows/live-site-health.yml'
+  # Every day around 09:30 Asia/Bangkok (02:30 UTC).
+  # GitHub may delay scheduled jobs and does not push a ChatGPT notification.
+  schedule:
+    - cron: '30 2 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: brewtanist-public-health-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  public-health:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Check out monitor
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - name: Test live monitor against synthetic HTML and XML fixtures
+        run: python3 tools/check_live_storefront.py --self-test
+      - name: Inspect public deployed pages via anonymous GET only
+        run: python3 tools/check_live_storefront.py --report qa/live-site-health.json
+      - name: Upload redacted metadata-only status report
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: brewtanist-public-live-health
+          path: qa/live-site-health.json
+          if-no-files-found: warn
+          retention-days: 14
