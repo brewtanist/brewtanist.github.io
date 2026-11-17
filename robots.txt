@@ -1,8 +1,7 @@
+# Public editing guides and the local quote desk carry HTML meta noindex.
+# Keep these routes crawlable so Googlebot can see their noindex rule.
+# robots.txt is not access control; the private Staff Inbox is on another host.
 User-agent: *
 Allow: /
-Disallow: /admin/
-Disallow: /en/admin/
-Disallow: /zh/admin/
-Disallow: /brewtanist/admin/
 
 Sitemap: https://brewtanist.github.io/sitemap.xml
