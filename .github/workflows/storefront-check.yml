@@ -17,6 +17,8 @@ on:
       - 'brewtanist/**'
       - '_config.yml'
       - 'sitemap.xml'
+      - 'robots.txt'
+      - 'tools/test_public_index_controls.py'
       - 'tools/test_storefront.py'
       - 'tools/test_favicon.py'
       - 'tools/test_hero_preload.py'
@@ -32,6 +34,9 @@ on:
       - '.github/workflows/storefront-check.yml'
   pull_request:
     paths:
+      - 'robots.txt'
+      - 'sitemap.xml'
+      - 'tools/test_public_index_controls.py'
       - '_data/**'
       - '_includes/**'
       - 'index.html'
@@ -72,6 +77,8 @@ jobs:
         with:
           source: ./
           destination: ./_site
+      - name: Verify crawlability and noindex on public editing/quote pages
+        run: python3 tools/test_public_index_controls.py _site
       - name: Verify rendered products, Shopee links, assets and navigation
         run: python3 tools/test_storefront.py _site --report "$RUNNER_TEMP/brewtanist-storefront-report.json"
       - name: Verify site icon on all localized public routes
