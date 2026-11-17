@@ -64,8 +64,8 @@ jobs:
       - name: Audit the live public URL (no private login, no cookies)
         run: |
           python3 tools/audit_performance.py --page '${{ matrix.page }}' --device '${{ matrix.device }}' --sample 1
-      - name: Repeat OEM mobile samples for median and variance (weekly/manual only)
-        if: ${{ matrix.page == 'oem' && matrix.device == 'mobile' && (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch') }}
+      - name: Repeat OEM mobile samples for median and variance (non-PR runs)
+        if: ${{ matrix.page == 'oem' && matrix.device == 'mobile' && github.event_name != 'pull_request' }}
         run: |
           python3 tools/audit_performance.py --page oem --device mobile --sample 2
           python3 tools/audit_performance.py --page oem --device mobile --sample 3
