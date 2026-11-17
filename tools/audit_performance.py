@@ -28,13 +28,14 @@ METRICS = {
 CATEGORIES = ("performance", "accessibility", "best-practices", "seo")
 
 
-def measure(page: str, device: str) -> dict:
+def measure(page: str, device: str, sample: int = 1) -> dict:
     route = ROUTES[page]
     url = ORIGIN + route
     report_dir = ROOT / "qa" / "performance-lab"
     report_dir.mkdir(parents=True, exist_ok=True)
-    full_report = report_dir / f"{page}-{device}.lhr.json"
-    summary_file = report_dir / f"{page}-{device}.summary.json"
+    suffix = "" if sample == 1 else f".sample{sample}"
+    full_report = report_dir / f"{page}-{device}{suffix}.lhr.json"
+    summary_file = report_dir / f"{page}-{device}{suffix}.summary.json"
 
     cmd = [
         str(ROOT / "node_modules" / ".bin" / "lighthouse"),
@@ -78,8 +79,18 @@ def measure(page: str, device: str) -> dict:
             savings.append({"audit": code, "title": entry.get("title"), "estimatedSavingsMs": round(ms)})
     savings.sort(key=lambda x: -x["estimatedSavingsMs"])
 
+    mainthread = report.get("audits", {}).get("mainthread-work-breakdown", {})
+    work = (mainthread.get("details") or {}).get("items") or []
+    by_group = {row.get("group"): row.get("duration") for row in work}
+    for group, label in (("styleLayout", "StyleLayout_ms"),
+                         ("scriptEvaluation", "ScriptEvaluation_ms")):
+        value = by_group.get(group)
+        timing[label] = round(value, 3) if isinstance(value, (int, float)) else None
+
     result = {
         "audit": "Lighthouse 13.6.0",
+        "sample_number": sample,
+        "runner_benchmark_index": report.get("environment", {}).get("benchmarkIndex"),
         "measured_at_utc": datetime.now(timezone.utc).isoformat(),
         "url": url,
         "device": device,
@@ -117,8 +128,10 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--page", choices=ROUTES, required=True)
     parser.add_argument("--device", choices=("mobile", "desktop"), required=True)
+    parser.add_argument("--sample", type=int, choices=(1, 2, 3), default=1,
+                        help="Keep sample 1 filenames backward-compatible; 2/3 use distinct files.")
     args = parser.parse_args()
-    measure(args.page, args.device)
+    measure(args.page, args.device, args.sample)
 
 
 if __name__ == "__main__":

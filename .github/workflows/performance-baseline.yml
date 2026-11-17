@@ -7,6 +7,8 @@ on:
   pull_request:
     paths:
       - 'tools/audit_performance.py'
+      - 'tools/summarize_performance_samples.py'
+      - 'tools/test_performance_samples.py'
       - '.github/workflows/performance-baseline.yml'
   push:
     branches: [main]
@@ -19,6 +21,9 @@ on:
       - 'brewtanist/shop.css'
       - 'brewtanist/site.css'
       - '.github/workflows/performance-baseline.yml'
+      - 'tools/audit_performance.py'
+      - 'tools/summarize_performance_samples.py'
+      - 'tools/test_performance_samples.py'
   # Weekly live diagnostics: Monday 09:00 Asia/Bangkok (02:00 UTC).
   # No external notification, private API, cookies or tracking added.
   schedule:
@@ -36,7 +41,7 @@ jobs:
   lighthouse-lab:
     name: ${{ matrix.page }} / ${{ matrix.device }}
     runs-on: ubuntu-24.04
-    timeout-minutes: 12
+    timeout-minutes: 20
     strategy:
       fail-fast: false
       max-parallel: 3
@@ -53,16 +58,28 @@ jobs:
           (google-chrome --version || google-chrome-stable --version)
       - name: Install pinned Lighthouse without updating site dependencies
         run: npm install --no-save --no-package-lock --no-audit --no-fund lighthouse@13.6.0
+      - name: Validate repeated-sample aggregation with offline fixtures
+        if: ${{ matrix.page == 'oem' && matrix.device == 'mobile' }}
+        run: python3 tools/test_performance_samples.py
       - name: Audit the live public URL (no private login, no cookies)
         run: |
-          python3 tools/audit_performance.py --page '${{ matrix.page }}' --device '${{ matrix.device }}'
+          python3 tools/audit_performance.py --page '${{ matrix.page }}' --device '${{ matrix.device }}' --sample 1
+      - name: Repeat OEM mobile samples for median and variance (non-PR runs)
+        if: ${{ matrix.page == 'oem' && matrix.device == 'mobile' && github.event_name != 'pull_request' }}
+        run: |
+          python3 tools/audit_performance.py --page oem --device mobile --sample 2
+          python3 tools/audit_performance.py --page oem --device mobile --sample 3
+          python3 tools/summarize_performance_samples.py \
+            qa/performance-lab/oem-mobile.summary.json \
+            qa/performance-lab/oem-mobile.sample2.summary.json \
+            qa/performance-lab/oem-mobile.sample3.summary.json \
+            --output qa/performance-lab/oem-mobile.variability.json
       - name: Upload exact Lighthouse results and summary
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
           name: lighthouse-${{ matrix.page }}-${{ matrix.device }}
           path: |
-            qa/performance-lab/${{ matrix.page }}-${{ matrix.device }}.lhr.json
-            qa/performance-lab/${{ matrix.page }}-${{ matrix.device }}.summary.json
+            qa/performance-lab/${{ matrix.page }}-${{ matrix.device }}*.json
           if-no-files-found: warn
           retention-days: 30
