@@ -12,6 +12,10 @@ on:
       - '_data/oem_intake.yml'
       - 'tools/check_oem_transport.py'
       - '.github/workflows/oem-transport-smoke.yml'
+  # Daily, about 09:15 Asia/Bangkok (02:15 UTC). GitHub may delay scheduled jobs.
+  # Sends only an anonymous GET and OPTIONS; no leads, sessions or secrets.
+  schedule:
+    - cron: '15 2 * * *'
   workflow_dispatch:
 
 permissions:
@@ -30,13 +34,13 @@ jobs:
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
       - name: Validate CORS checks using synthetic fixtures (no network)
         run: python3 tools/check_oem_transport.py --self-test
-      - name: Check preflight and staff-page reachability only
+      - name: Check preflight and anonymous Staff Inbox access gate
         run: python3 tools/check_oem_transport.py --report qa/oem-transport-report.json
       - name: Preserve non-sensitive transport status report
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
-          name: brewtanist-oem-transport-readonly
+          name: brewtanist-oem-access-guard-readonly
           path: qa/oem-transport-report.json
           if-no-files-found: warn
           retention-days: 14

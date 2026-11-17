@@ -3,9 +3,11 @@
 This script NEVER sends POST, customer data, credentials, or test RFQs.
 It probes only:
 - OPTIONS /api/requests with the same CORS preflight as the customer form
-- GET /staff/ with redirects disabled (does not authenticate or read its body)
+- GET /staff/ without credentials, redirects disabled and response body unread
 
-Passing does NOT prove a quote request is persisted or visible to staff.
+A passing HTTP 401/403 confirms only that this exact public-facing route denies
+anonymous requests at the time of the check. It does NOT verify authenticated
+role permissions, RFQ persistence or private inbox delivery.
 """
 from __future__ import annotations
 
@@ -64,6 +66,28 @@ def assess_preflight(status: int, headers) -> tuple[bool, list[str]]:
     return not failures, failures
 
 
+
+def assess_staff_gate(status: int) -> tuple[bool, list[str]]:
+    """Treat an unexpected anonymous 200 or redirect as a review requirement.
+
+    We never read the staff response body or follow a redirect. A 401/403
+    only verifies anonymous denial on this route, not staff role isolation.
+    """
+    if status in (401, 403):
+        return True, []
+    if status == 200:
+        return False, [
+            "Unauthenticated staff GET returned HTTP 200. This is not proof of a data leak; "
+            "manually verify no private inbox content is available without sign-in."
+        ]
+    if status in (301, 302, 303, 307, 308):
+        return False, [
+            "Unauthenticated staff route redirected. Review the login destination "
+            "and authorization before treating this response as protected."
+        ]
+    return False, ["Unexpected staff route HTTP status; verify access control manually"]
+
+
 def request_headers(endpoint: str, method: str, headers: dict[str, str]) -> tuple[int, object]:
     # Do not read response body: a backend might contain sensitive information.
     request = urllib.request.Request(
@@ -116,22 +140,23 @@ def check() -> dict:
     # does NOT prove the private inbox is authenticated or safe.
     try:
         status, headers = request_headers(base + "/staff/", "GET", {})
-        reachable = status in (200, 301, 302, 303, 307, 308, 401, 403)
-        report["checks"]["staff_page_reachable"] = {
+        protected, problems = assess_staff_gate(status)
+        report["checks"]["staff_anonymous_access_denied"] = {
             "status": status,
-            "pass": reachable,
-            "problems": [] if reachable else ["Unexpected staff route HTTP status"],
+            "pass": protected,
+            "problems": problems,
         }
     except (OSError, ValueError, TimeoutError, urllib.error.URLError) as error:
-        report["checks"]["staff_page_reachable"] = {
+        report["checks"]["staff_anonymous_access_denied"] = {
             "pass": False, "problems": ["Connection failed: " + type(error).__name__]
         }
 
     if all(item.get("pass") for item in report["checks"].values()):
         report["result"] = "PASS"
     report["interpretation"] = (
-        "Checks public transport and CORS only. Actual request persistence, "
-        "staff authorization and inbox receipt still require an owner-approved end-to-end test."
+        "Checks public CORS and denial of anonymous access to the staff route. "
+        "Authenticated role permissions, RFQ storage and staff inbox delivery "
+        "still require an owner-approved end-to-end test."
     )
     return report
 
@@ -148,7 +173,12 @@ def self_test():
     assert not assess_preflight(204, {**ok, "Access-Control-Allow-Methods": "GET"})[0]
     assert not assess_preflight(204, {**ok, "Access-Control-Allow-Headers": "X-Requested-With"})[0]
     assert configured_endpoint().startswith("https://" + EXPECTED_HOST + "/")
-    print("PASS: CORS validator fixtures and endpoint allowlist", flush=True)
+    for status in (401, 403):
+        assert assess_staff_gate(status) == (True, [])
+    for status in (200, 301, 302, 303, 307, 308, 404, 500):
+        permitted, problems = assess_staff_gate(status)
+        assert not permitted and problems, f"Unsafe staff response accepted: {status}"
+    print("PASS: CORS fixtures, anonymous staff-gate checks and endpoint allowlist", flush=True)
 
 
 def main() -> int:
@@ -167,13 +197,13 @@ def main() -> int:
     summary = os.environ.get("GITHUB_STEP_SUMMARY")
     if summary:
         preflight = report["checks"].get("browser_preflight", {})
-        staff = report["checks"].get("staff_page_reachable", {})
+        staff = report["checks"].get("staff_anonymous_access_denied", {})
         with open(summary, "a", encoding="utf-8") as output:
             output.write("## Brewtanist OEM transport (read-only)\n\n")
             output.write(f"Overall: **{report['result']}**\n\n")
             output.write(f"Browser CORS preflight: {preflight.get('pass')} (HTTP {preflight.get('status', 'N/A')})\n\n")
-            output.write(f"Staff page reachable: {staff.get('pass')} (HTTP {staff.get('status', 'N/A')})\n\n")
-            output.write("**Not tested:** POST delivery, storage, staff login, inbox visibility or customer data.\n")
+            output.write(f"Staff route denies anonymous requests: {staff.get('pass')} (HTTP {staff.get('status', 'N/A')})\n\n")
+            output.write("**Not tested:** POST delivery, storage, authenticated staff permissions, inbox visibility or customer data.\n")
     return 0 if report["result"] == "PASS" else 1
 
 
