@@ -26,6 +26,7 @@ on:
       - 'tools/test_analytics_consent.py'
       - 'tools/test_oem_form_layout.py'
       - 'tools/test_oem_retry_reference.py'
+      - 'tools/test_oem_quote_handoff.py'
       - 'tools/test_quote_model.mjs'
       - '.github/workflows/storefront-check.yml'
   pull_request:
@@ -46,6 +47,7 @@ on:
       - 'tools/test_analytics_consent.py'
       - 'tools/test_oem_form_layout.py'
       - 'tools/test_oem_retry_reference.py'
+      - 'tools/test_oem_quote_handoff.py'
       - 'brewtanist/**'
       - 'tools/verify_languages.py'
       - '.github/workflows/storefront-check.yml'
@@ -121,6 +123,8 @@ jobs:
         run: python3 tools/test_oem_form_layout.py _site
       - name: Verify OEM 409 preserves reference and 429 retries are safe
         run: python3 tools/test_oem_retry_reference.py _site
+      - name: Verify customer RFQ receipt through offline quotation export in three languages
+        run: python3 tools/test_oem_quote_handoff.py _site
       - name: Confirm hero AVIF loads once in Chromium and WebKit
         run: python3 tools/test_hero_preload.py _site --browser
       - name: Confirm tracking is off in the published configuration

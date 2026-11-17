@@ -115,6 +115,40 @@ def inspect(build: Path) -> list[str]:
                 expect(page.locator("#oem-submit")).to_be_hidden()
                 page.close()
                 checks.append(engine + ": rate limit retry keeps original reference and confirms one receipt")
+
+                # HTTP 200 is not a verified delivery when the receipt is
+                # malformed or carries another RFQ number. Never blind-resend.
+                for scenario in ("mismatched_reference", "malformed_json"):
+                    page = browser.new_page()
+                    payloads = []
+                    errors = []
+                    page.on("pageerror", lambda error: errors.append(str(error)))
+
+                    def ambiguous_receipt(route):
+                        if route.request.method == "OPTIONS":
+                            return route.fulfill(status=204, headers=cors)
+                        payloads.append(json.loads(route.request.post_data))
+                        body = (json.dumps({"ok": True, "reference": "RFQ-20260101-DEADBEEF"})
+                                if scenario == "mismatched_reference" else '{"ok":')
+                        route.fulfill(status=200, headers=cors,
+                                      content_type="application/json", body=body)
+
+                    page.route("**/api/requests", ambiguous_receipt)
+                    page.goto(origin + "/oem/", wait_until="domcontentloaded")
+                    reference = fill_form(page)
+                    page.locator("#oem-submit").click()
+                    expect(page.locator("#oem-status")).to_have_text(text["receipt_unverified"])
+                    expect(page.locator("#oem-ref")).to_have_text(reference)
+                    expect(page.locator("#oem-submit")).to_be_hidden()
+                    expect(page.locator("#oem-email")).to_be_visible()
+                    assert reference in page.locator("#oem-email").get_attribute("href")
+                    page.locator("#oem-edit").click()
+                    page.locator("#oem-form button[type=submit]").click()
+                    expect(page.locator("#oem-submit")).to_be_hidden()
+                    assert len(payloads) == 1 and payloads[0]["reference"] == reference
+                    assert not errors, errors
+                    page.close()
+                    checks.append(engine + ": " + scenario + " keeps reference and blocks blind resubmission")
                 browser.close()
     finally:
         server.shutdown()
