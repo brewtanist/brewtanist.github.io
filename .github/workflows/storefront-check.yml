@@ -19,6 +19,7 @@ on:
       - 'sitemap.xml'
       - 'robots.txt'
       - 'tools/test_public_index_controls.py'
+      - 'tools/test_client_csp.py'
       - 'tools/test_storefront.py'
       - 'tools/test_favicon.py'
       - 'tools/test_hero_preload.py'
@@ -38,6 +39,7 @@ on:
       - 'robots.txt'
       - 'sitemap.xml'
       - 'tools/test_public_index_controls.py'
+      - 'tools/test_client_csp.py'
       - '_data/**'
       - '_includes/**'
       - 'index.html'
@@ -81,6 +83,8 @@ jobs:
           destination: ./_site
       - name: Verify crawlability and noindex on public editing/quote pages
         run: python3 tools/test_public_index_controls.py _site
+      - name: Verify early, least-privilege CSP and Referrer-Policy on 15 routes
+        run: python3 tools/test_client_csp.py _site
       - name: Verify rendered products, Shopee links, assets and navigation
         run: python3 tools/test_storefront.py _site --report "$RUNNER_TEMP/brewtanist-storefront-report.json"
       - name: Verify site icon on all localized public routes
@@ -137,6 +141,8 @@ jobs:
         run: python3 tools/test_oem_quote_handoff.py _site
       - name: Verify untrusted OEM fields and Quote Desk imports do not execute HTML
         run: python3 tools/test_oem_dom_injection.py _site
+      - name: Block injected scripts while preserving OEM/Shop and admin workflows
+        run: python3 tools/test_client_csp.py _site --browser
       - name: Confirm hero AVIF loads once in Chromium and WebKit
         run: python3 tools/test_hero_preload.py _site --browser
       - name: Confirm tracking is off in the published configuration
