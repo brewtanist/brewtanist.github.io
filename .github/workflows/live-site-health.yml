@@ -31,7 +31,7 @@ jobs:
     timeout-minutes: 5
     steps:
       - name: Check out monitor
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
       - name: Test live monitor against synthetic HTML and XML fixtures
         run: python3 tools/check_live_storefront.py --self-test
       - name: Inspect public deployed pages via anonymous GET only
