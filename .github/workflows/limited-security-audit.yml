@@ -1,0 +1,42 @@
+name: Brewtanist limited authorized security assessment
+
+on:
+  pull_request:
+    paths:
+      - 'tools/audit_brewtanist_security.py'
+      - '.github/workflows/limited-security-audit.yml'
+      - '_data/oem_intake.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'tools/audit_brewtanist_security.py'
+      - '.github/workflows/limited-security-audit.yml'
+      - '_data/oem_intake.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: brewtanist-bounded-security-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  public-boundary:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 4
+    steps:
+      - name: Read only the website's known source
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - name: Validate target allowlist and non-mutating methods without network
+        run: python3 tools/audit_brewtanist_security.py --self-test
+      - name: Limited external CORS, anonymous access and header probes
+        run: python3 tools/audit_brewtanist_security.py --report qa/security-review-public.json
+      - name: Preserve sanitized assessment results
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: brewtanist-public-security-review
+          path: qa/security-review-public.json
+          retention-days: 14
+          if-no-files-found: warn
