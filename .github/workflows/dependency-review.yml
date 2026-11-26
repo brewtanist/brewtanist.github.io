@@ -1,6 +1,11 @@
 name: Review dependency vulnerabilities
 on:
   pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+  schedule:
+    - cron: '25 20 * * 0'
 permissions:
   contents: read
 jobs:
@@ -11,9 +16,10 @@ jobs:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           persist-credentials: false
-      - uses: actions/dependency-review-action@bbc44d14a204704ccc493733616cd1e93a0321ec # v5.0.1
-        with:
-          fail-on-severity: high
-          fail-on-scopes: runtime, development, unknown
-          license-check: false
-          comment-summary-in-pr: never
+      - name: Validate scanner failure and version resolution behavior
+        run: python3 tools/audit_action_dependencies.py --self-test
+      - name: Check direct action commits and verified release versions against OSV
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python3 tools/audit_action_dependencies.py
+
