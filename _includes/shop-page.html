@@ -12,6 +12,8 @@
 <html lang="{{ locale.tag }}">
 <head>
   <meta charset="utf-8">
+  {% include browser-security-meta.html %}
+  <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <title>{{ ui.shop_title | escape }}</title>
