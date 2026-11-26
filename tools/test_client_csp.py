@@ -13,7 +13,6 @@ from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 import threading
 
-from playwright.sync_api import expect, sync_playwright
 from test_storefront import Page, require
 
 LOCALES = ("", "/en", "/zh")
@@ -89,6 +88,7 @@ def static_check(build: Path):
 
 
 def browser_check(build: Path):
+    from playwright.sync_api import expect, sync_playwright
     server = ThreadingHTTPServer(("127.0.0.1", 0), partial(Quiet, directory=str(build)))
     threading.Thread(target=server.serve_forever, daemon=True).start()
     origin = "http://127.0.0.1:" + str(server.server_address[1])
