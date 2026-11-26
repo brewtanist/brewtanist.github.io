@@ -12,6 +12,10 @@ on:
       - 'tools/audit_brewtanist_security.py'
       - '.github/workflows/limited-security-audit.yml'
       - '_data/oem_intake.yml'
+  # Non-destructive check every Tuesday 09:00 Asia/Bangkok (02:00 UTC).
+  # Only seven fixed HEAD/GET/OPTIONS requests; never creates or reads RFQs.
+  schedule:
+    - cron: '0 2 * * 2'
   workflow_dispatch:
 
 permissions:
