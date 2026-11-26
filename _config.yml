@@ -13,3 +13,4 @@ exclude:
 - qa
 - render.yaml
 - RELEASE.md
+- SECURITY.md
