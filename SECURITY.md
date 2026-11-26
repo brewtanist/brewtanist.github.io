@@ -12,6 +12,7 @@ The backend counter permits 12 new requests/hour per pseudonymous bucket, with a
 
 - Checksum-verified Gitleaks 8.30.1 checks all fetched Git refs and the current files on pull requests, main pushes and weekly. Output is redacted. On a finding, rotate/revoke the credential first; do not paste it into a public issue.
 - Dependabot reviews GitHub Actions versions weekly. The storefront has no npm/pip application dependency manifest; Jekyll/Pages is provider-managed. Review and test update PRs instead of automatically merging them.
+- GitHub Dependency Review checks supported dependency changes in PRs for known vulnerabilities and fails on new high/critical findings across runtime, development and unknown scopes. Provider-managed and arbitrary vendored software are outside that coverage.
 - Local environment files, common private-key files, logs and backup bundles are ignored. This is an accident-prevention measure, not access control or secret deletion.
 - Source backups are made after successful scanning on main pushes and weekly. Each Git bundle is verified by a fresh mirror restore and HEAD comparison, retained as an Actions artifact for 30 days. Keep independent copies in a private backup location.
 
