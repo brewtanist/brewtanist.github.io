@@ -1,0 +1,15 @@
+{%- comment -%}
+Defense in depth for GitHub Pages, which cannot set per-repository CSP response
+headers. This meta policy must be the first policy in <head>, before resources.
+Do NOT put frame-ancestors, sandbox, report-uri or Report-Only here: browsers
+ignore those directives in meta CSP. Real staff permissions, HSTS and anti-
+framing HTTP headers must be configured on the serving infrastructure.
+
+Optional GA4 is allowed ONLY when analytics has explicitly been enabled with a
+nonempty public Measurement ID. Production has it disabled by default.
+{%- endcomment -%}
+{%- assign allow_ga = false -%}
+{%- if site.data.brewtanist.analytics.enabled == true and site.data.brewtanist.analytics.measurement_id != '' -%}
+  {%- assign allow_ga = true -%}
+{%- endif -%}
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'none'; object-src 'none'; frame-src 'none'; script-src 'self'{% if allow_ga %} https://www.googletagmanager.com{% endif %}; script-src-attr 'none'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self'{% if include.oem %} https://brewtanist-oem-requests.pumplcrs.chatgpt.site{% endif %}{% if allow_ga %} https://www.google-analytics.com https://region1.google-analytics.com https://www.googletagmanager.com{% endif %}; form-action 'self'; media-src 'self'; manifest-src 'self'">
