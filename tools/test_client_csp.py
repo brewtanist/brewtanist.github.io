@@ -73,8 +73,9 @@ def static_check(build: Path):
             require(not any(key in policy for key in ("frame-ancestors", "sandbox", "report-uri")),
                     path + ": these security directives are not supported in META CSP")
             pos = source.lower().find('http-equiv="content-security-policy"')
-            require(pos > 0 and pos < source.lower().find('<script'),
-                    path + ": CSP must be placed before scripts")
+            first_script = source.lower().find('<script')
+            require(pos > 0 and (first_script < 0 or pos < first_script),
+                    path + ": CSP must be placed before any executable scripts")
             ref = [el.attrs.get("content") for el in page.select(tag="meta")
                    if el.attrs.get("name") == "referrer"]
             require(len(ref) == 1, path + ": Referrer-Policy metadata missing/duplicated")
