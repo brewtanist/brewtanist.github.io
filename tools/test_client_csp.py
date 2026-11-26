@@ -7,6 +7,7 @@ blocked. External requests are aborted and never reach the network.
 from __future__ import annotations
 
 import argparse
+import json
 from functools import partial
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
@@ -158,7 +159,7 @@ def browser_check(build: Path):
                         route.fulfill(status=204, headers=cors)
                         return
                     assert route.request.method == "POST", route.request.method
-                    posts.append(route.request.post_data_json["reference"])
+                    posts.append(json.loads(route.request.post_data)["reference"])
                     route.fulfill(status=200, headers=cors, content_type="application/json",
                                   body='{"ok":true,"reference":"' + posts[-1] + '"}')
                 customer.route("**/api/requests", fake_oem)
