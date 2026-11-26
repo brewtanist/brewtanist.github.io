@@ -36,6 +36,8 @@ on:
       - '.github/workflows/storefront-check.yml'
   pull_request:
     paths:
+      - '_config.yml'
+      - '.github/workflows/security.yml'
       - 'robots.txt'
       - 'sitemap.xml'
       - 'tools/test_public_index_controls.py'
